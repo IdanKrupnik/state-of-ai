@@ -143,7 +143,7 @@ export const Events: React.FC = () => {
             return (
               <div
                 key={evt.id}
-                className="border border-outline-variant/30 p-5 bg-brand-clay/5 flex flex-col gap-3 hover:border-brand-black/40 transition-colors"
+                className="border border-outline-variant/30 p-5 bg-brand-clay/5 flex flex-col gap-3 hover:border-brand-black hover:shadow-sm transition-all duration-200"
                 data-testid={`past-event-card-${evt.id}`}
               >
                 <div className="flex justify-between items-baseline flex-wrap gap-2 text-xs font-geist-mono text-brand-warm-grey">
