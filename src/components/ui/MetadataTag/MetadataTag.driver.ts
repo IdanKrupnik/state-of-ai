@@ -12,7 +12,6 @@ export class MetadataTagDriver {
     if (this.container) {
       el = this.container.querySelector('span');
     } else {
-      // Find element by text content or look for standard tags
       el = screen.queryByText((_, element) => element?.tagName.toLowerCase() === 'span') as HTMLElement | null;
     }
     

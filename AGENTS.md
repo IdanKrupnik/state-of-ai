@@ -67,3 +67,9 @@ Guidelines:
 - Components should be extracted to smaller components as much as possible to ensure maximum modularity and reusability.
 - Test files must never query the DOM or assert CSS classes directly; they must interact solely through the driver. This ensures that future visual changes or Tailwind updates will never break our test suites.
 - High-level feature components should leverage the drivers of the atomic UI components they compose to maintain complete isolation.
+
+---
+
+# CODE COMMENTING RULE
+
+- You should never add comments to code. All code must be self-documenting and clear. Do not include any code comments (including inline, block, JS/TS comments) in any newly created or modified files. Unrelated pre-existing comments should be preserved.

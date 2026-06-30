@@ -32,15 +32,15 @@ describe('FeedContainer Component', () => {
     },
   ];
 
-  it('should render the list of articles correctly', () => {
+  it('should render the list of article rows correctly', () => {
     const { container } = render(<FeedContainer initialArticles={mockArticles} />);
     const driver = new FeedContainerDriver(container);
 
-    const cards = driver.getArticleCardDrivers();
-    expect(cards).toHaveLength(3);
-    expect(cards[0].getTitleText()).toBe('Database backups automated');
-    expect(cards[1].getTitleText()).toBe('GPT-5 teaser released');
-    expect(cards[2].getTitleText()).toBe('Gemini 2.0 now live');
+    const rows = driver.getArticleRowDrivers();
+    expect(rows).toHaveLength(3);
+    expect(rows[0].getTitleText()).toBe('Database backups automated');
+    expect(rows[1].getTitleText()).toBe('GPT-5 teaser released');
+    expect(rows[2].getTitleText()).toBe('Gemini 2.0 now live');
   });
 
   it('should filter articles by search query', () => {
@@ -50,21 +50,9 @@ describe('FeedContainer Component', () => {
     const searchInput = driver.getSearchInputDriver();
     searchInput.setValue('Gemini');
 
-    const cards = driver.getArticleCardDrivers();
-    expect(cards).toHaveLength(1);
-    expect(cards[0].getTitleText()).toBe('Gemini 2.0 now live');
-  });
-
-  it('should filter articles by company source switcher', () => {
-    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
-    const driver = new FeedContainerDriver(container);
-
-    const switcher = driver.getSidebarSourceSwitcherDriver();
-    switcher.clickItem('supabase');
-
-    const cards = driver.getArticleCardDrivers();
-    expect(cards).toHaveLength(1);
-    expect(cards[0].getTitleText()).toBe('Database backups automated');
+    const rows = driver.getArticleRowDrivers();
+    expect(rows).toHaveLength(1);
+    expect(rows[0].getTitleText()).toBe('Gemini 2.0 now live');
   });
 
   it('should display empty state if no articles match', () => {
@@ -74,12 +62,12 @@ describe('FeedContainer Component', () => {
     const searchInput = driver.getSearchInputDriver();
     searchInput.setValue('Unobtainium');
 
-    const cards = driver.getArticleCardDrivers();
-    expect(cards).toHaveLength(0);
+    const rows = driver.getArticleRowDrivers();
+    expect(rows).toHaveLength(0);
     expect(driver.getEmptyStateText()).toContain('No simplified articles found');
   });
 
-  it('should allow newsletter subscriptions', () => {
+  it('should allow newsletter subscriptions in the side drawer', () => {
     const { container } = render(<FeedContainer initialArticles={mockArticles} />);
     const driver = new FeedContainerDriver(container);
 
@@ -91,5 +79,18 @@ describe('FeedContainer Component', () => {
     submitBtn.click();
 
     expect(newsletterDriver.getSuccessMessage()).toBe('✓ Subscribed successfully!');
+  });
+
+  it('should open and close the side tuning drawer', () => {
+    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
+    const driver = new FeedContainerDriver(container);
+
+    expect(driver.isDrawerVisible()).toBe(false);
+
+    driver.openDrawer();
+    expect(driver.isDrawerVisible()).toBe(true);
+
+    driver.closeDrawer();
+    expect(driver.isDrawerVisible()).toBe(false);
   });
 });

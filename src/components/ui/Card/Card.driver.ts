@@ -12,7 +12,6 @@ export class CardDriver {
     if (this.container) {
       el = this.container.firstElementChild as HTMLElement;
     } else {
-      // Find card by top border class or similar
       el = screen.queryByText((_, element) => {
         return element?.tagName.toLowerCase() === 'h3';
       })?.parentElement?.parentElement as HTMLElement | null;
@@ -31,13 +30,11 @@ export class CardDriver {
   }
 
   getSubtitleText(): string | null {
-    // Find the element with Geist Mono and warm-grey classes for subtitle
     const subtitleEl = this.elementToUse.querySelector('.font-geist-mono');
     return subtitleEl ? subtitleEl.textContent : null;
   }
 
   getBodyText(): string | null {
-    // Body is the direct child of card that doesn't have h3 or footer classes
     const bodyEl = this.elementToUse.querySelector('.leading-relaxed');
     return bodyEl ? bodyEl.textContent : null;
   }

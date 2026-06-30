@@ -44,12 +44,9 @@ describe('Button Component', () => {
 
     expect(driver.isDisabled()).toBe(true);
     
-    // We try to click but it shouldn't fire if disabled (HTML button handles this natively,
-    // and if driver tries to fireEvent, it won't execute if disabled, or we can check isDisabled).
     try {
       driver.click();
     } catch {
-      // ignore
     }
     expect(handleClick).not.toHaveBeenCalled();
   });

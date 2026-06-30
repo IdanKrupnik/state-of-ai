@@ -43,7 +43,7 @@ export class SystemStatusDriver {
       rootClasses.includes('font-geist-mono') &&
       dotClasses.includes('w-2') &&
       dotClasses.includes('h-2') &&
-      dotClasses.includes('rounded-full') // Dot must be a circle!
+      dotClasses.includes('rounded-full')
     );
   }
 }

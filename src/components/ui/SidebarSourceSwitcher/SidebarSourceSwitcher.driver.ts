@@ -12,7 +12,6 @@ export class SidebarSourceSwitcherDriver {
     if (this.container) {
       el = this.container.firstElementChild as HTMLElement;
     } else {
-      // Find switcher root
       el = screen.queryByTestId(/source-/i)?.parentElement as HTMLElement | null;
     }
     
