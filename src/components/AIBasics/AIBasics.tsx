@@ -17,6 +17,7 @@ const LearnSection: React.FC<SectionProps> = ({ id, number, title, children }) =
 
 export const AIBasics: React.FC = () => {
   const [latency, setLatency] = useState(12.4);
+  const [isTocOpen, setIsTocOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -60,18 +61,42 @@ export const AIBasics: React.FC = () => {
         </p>
       </section>
 
-      <nav className="flex md:hidden overflow-x-auto whitespace-nowrap gap-5 pb-3 border-b border-outline-variant/30 hide-scrollbar" data-testid="learn-toc-mobile">
-        {tocItems.map((item) => (
-          <a
-            key={item.id}
-            href={`#learn/${item.id}`}
-            onClick={(e) => handleTocClick(item.id, e)}
-            className="text-xs font-geist-mono text-brand-warm-grey hover:text-brand-black transition-colors shrink-0 uppercase tracking-wider"
+      <div className="flex md:hidden flex-col w-full border border-outline-variant/50 bg-brand-clay/5 relative" data-testid="learn-toc-mobile-container">
+        <button
+          onClick={() => setIsTocOpen(!isTocOpen)}
+          className="flex justify-between items-center px-4 py-3.5 text-xs font-geist-mono uppercase tracking-wider text-brand-black w-full"
+          data-testid="learn-toc-mobile-toggle"
+        >
+          <span>Jump to Section</span>
+          <svg
+            className={`w-4 h-4 text-brand-black transition-transform duration-300 ${isTocOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
           >
-            {item.label}
-          </a>
-        ))}
-      </nav>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {isTocOpen && (
+          <div className="flex flex-col border-t border-outline-variant/30 bg-brand-offwhite" data-testid="learn-toc-mobile-dropdown">
+            {tocItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#learn/${item.id}`}
+                onClick={(e) => {
+                  handleTocClick(item.id, e);
+                  setIsTocOpen(false);
+                }}
+                className="px-4 py-3.5 text-xs font-geist-mono text-brand-warm-grey hover:text-brand-black hover:bg-brand-clay/10 transition-colors border-b border-outline-variant/15 last:border-b-0 uppercase tracking-wider text-left"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-12 items-start">
         <aside className="hidden md:flex flex-col gap-4 sticky top-24 font-geist-mono text-xs uppercase tracking-wider text-brand-warm-grey" data-testid="learn-toc">

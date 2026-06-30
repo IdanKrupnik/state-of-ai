@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import { AIBasics } from './AIBasics';
 import { AIBasicsDriver } from './AIBasics.driver';
 
@@ -31,11 +31,22 @@ describe('AIBasics Component', () => {
     ]);
 
     expect(driver.hasMobileTOC()).toBe(true);
+    expect(driver.isMobileTOCDropdownVisible()).toBe(false);
+
+    act(() => {
+      driver.clickMobileTOCToggle();
+    });
+    expect(driver.isMobileTOCDropdownVisible()).toBe(true);
     expect(driver.getMobileTOCLinks()).toEqual([
       '01 // Definition',
       '02 // Architecture',
       '03 // Capabilities',
       '04 // Deployment',
     ]);
+
+    act(() => {
+      driver.clickMobileTOCToggle();
+    });
+    expect(driver.isMobileTOCDropdownVisible()).toBe(false);
   });
 });
