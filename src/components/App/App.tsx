@@ -78,7 +78,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                 <section className="flex flex-col gap-6">
                   <FeedHeader
                     category="CURATION FEED_v4.2"
-                    title="State of AI Intelligence"
+                    title="Latest AI News & Technical Curation"
                     description="High fidelity technical feed with matching metrics and real-time sub-layer reasoning telemetry."
                   />
 
