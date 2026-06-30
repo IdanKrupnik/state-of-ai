@@ -5,15 +5,35 @@ import { Button } from '../ui/Button/Button';
 
 export interface TopNavBarProps {
   onTuneClick: () => void;
+  activeTab?: string;
+  onTabChange?: (tabId: string) => void;
 }
 
-export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
+export const TopNavBar: React.FC<TopNavBarProps> = ({
+  onTuneClick,
+  activeTab = 'feed',
+  onTabChange,
+}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleTuneClick = () => {
     setIsMobileMenuOpen(false);
     onTuneClick();
   };
+
+  const handleTabClick = (tabId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    onTabChange?.(tabId);
+    setIsMobileMenuOpen(false);
+  };
+
+  const tabs = [
+    { id: 'feed', label: 'Feed' },
+    { id: 'benchmarks', label: 'Benchmarks' },
+    { id: 'events', label: 'Events' },
+    { id: 'about', label: 'About' },
+    { id: 'basics', label: 'AI Basics' },
+  ];
 
   return (
     <header className="fixed top-0 w-full z-50 bg-brand-offwhite border-b border-outline-variant">
@@ -43,9 +63,24 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
         </div>
 
         <nav className="hidden md:flex gap-8 text-[14px]">
-          <a className="font-semibold text-brand-black border-b-2 border-brand-black pb-1" href="#">Feed</a>
-          <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">Benchmarks</a>
-          <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">About</a>
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <a
+                key={tab.id}
+                onClick={(e) => handleTabClick(tab.id, e)}
+                className={`transition-colors cursor-pointer ${
+                  isActive
+                    ? 'font-semibold text-brand-black border-b-2 border-brand-black pb-1'
+                    : 'text-brand-warm-grey hover:text-brand-black'
+                }`}
+                href="#"
+                data-testid={`nav-tab-${tab.id}`}
+              >
+                {tab.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">
@@ -82,27 +117,22 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
           className="md:hidden w-full bg-brand-offwhite border-b border-outline-variant flex flex-col p-6 gap-6 font-geist-mono text-xs uppercase tracking-wider"
           data-testid="mobile-dropdown"
         >
-          <a
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="font-bold text-brand-black py-2 border-b border-outline-variant/30"
-            href="#"
-          >
-            Feed
-          </a>
-          <a
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-brand-warm-grey hover:text-brand-black py-2 border-b border-outline-variant/30"
-            href="#"
-          >
-            Benchmarks
-          </a>
-          <a
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-brand-warm-grey hover:text-brand-black py-2 border-b border-outline-variant/30"
-            href="#"
-          >
-            About
-          </a>
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <a
+                key={tab.id}
+                onClick={(e) => handleTabClick(tab.id, e)}
+                className={`py-2 border-b border-outline-variant/30 ${
+                  isActive ? 'font-bold text-brand-black' : 'text-brand-warm-grey hover:text-brand-black'
+                }`}
+                href="#"
+                data-testid={`mobile-nav-tab-${tab.id}`}
+              >
+                {tab.label}
+              </a>
+            );
+          })}
           <Button
             variant="primary"
             onClick={handleTuneClick}

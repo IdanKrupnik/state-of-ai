@@ -72,4 +72,28 @@ describe('App Component', () => {
     drawer.clickClose();
     expect(drawer.isOpen()).toBe(false);
   });
+
+  it('should switch tabs and render appropriate active sections', () => {
+    const { container } = render(<App initialArticles={mockArticles} />);
+    const driver = new AppDriver(container);
+    const nav = driver.getTopNavBarDriver();
+
+    expect(driver.getArticleRowDrivers()).toHaveLength(3);
+
+    nav.clickTab('benchmarks');
+    expect(driver.getPlaceholderTitle('benchmarks')).toBe('benchmarks');
+
+    nav.clickTab('events');
+    expect(driver.getPlaceholderTitle('events')).toBe('events');
+
+    nav.clickTab('about');
+    expect(driver.getPlaceholderTitle('about')).toBe('about');
+
+    nav.clickTab('basics');
+    const basicsDriver = driver.getAIBasicsDriver();
+    expect(basicsDriver.getTitle()).toBe('AI Fundamentals Primer');
+
+    nav.clickTab('feed');
+    expect(driver.getArticleRowDrivers()).toHaveLength(3);
+  });
 });

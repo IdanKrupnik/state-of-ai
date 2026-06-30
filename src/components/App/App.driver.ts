@@ -8,6 +8,7 @@ import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
 import { TuningDrawerDriver } from '../TuningDrawer/TuningDrawer.driver';
+import { AIBasicsDriver } from '../AIBasics/AIBasics.driver';
 
 export class AppDriver {
   private element: HTMLElement | null = null;
@@ -70,5 +71,20 @@ export class AppDriver {
 
   getTuningDrawerDriver(): TuningDrawerDriver {
     return new TuningDrawerDriver(this.elementToUse);
+  }
+
+  getAIBasicsDriver(): AIBasicsDriver {
+    return new AIBasicsDriver(this.elementToUse);
+  }
+
+  getPlaceholderSection(tabId: string): HTMLElement | null {
+    return this.elementToUse.querySelector(`[data-testid="placeholder-section-${tabId}"]`);
+  }
+
+  getPlaceholderTitle(tabId: string): string | null {
+    const section = this.getPlaceholderSection(tabId);
+    if (!section) return null;
+    const title = section.querySelector('h2');
+    return title ? title.textContent : null;
   }
 }

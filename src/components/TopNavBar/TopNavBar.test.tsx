@@ -29,4 +29,45 @@ describe('TopNavBar Component', () => {
     expect(handleTuneClick).toHaveBeenCalledTimes(1);
     expect(driver.isMobileMenuOpen()).toBe(false);
   });
+
+  it('should highlight active tab and trigger tab change on click', () => {
+    const handleTabChange = vi.fn();
+    const { container, rerender } = render(
+      <TopNavBar onTuneClick={vi.fn()} activeTab="feed" onTabChange={handleTabChange} />
+    );
+    const driver = new TopNavBarDriver(container);
+
+    expect(driver.isTabActive('feed')).toBe(true);
+    expect(driver.isTabActive('benchmarks')).toBe(false);
+    expect(driver.isTabActive('events')).toBe(false);
+    expect(driver.isTabActive('about')).toBe(false);
+    expect(driver.isTabActive('basics')).toBe(false);
+
+    driver.clickTab('benchmarks');
+    expect(handleTabChange).toHaveBeenCalledWith('benchmarks');
+
+    rerender(
+      <TopNavBar onTuneClick={vi.fn()} activeTab="benchmarks" onTabChange={handleTabChange} />
+    );
+
+    expect(driver.isTabActive('feed')).toBe(false);
+    expect(driver.isTabActive('benchmarks')).toBe(true);
+  });
+
+  it('should toggle tabs in mobile menu', () => {
+    const handleTabChange = vi.fn();
+    const { container } = render(
+      <TopNavBar onTuneClick={vi.fn()} activeTab="feed" onTabChange={handleTabChange} />
+    );
+    const driver = new TopNavBarDriver(container);
+
+    driver.toggleMobileMenu();
+    expect(driver.isMobileMenuOpen()).toBe(true);
+    expect(driver.isMobileTabActive('feed')).toBe(true);
+    expect(driver.isMobileTabActive('basics')).toBe(false);
+
+    driver.clickMobileTab('basics');
+    expect(handleTabChange).toHaveBeenCalledWith('basics');
+    expect(driver.isMobileMenuOpen()).toBe(false);
+  });
 });

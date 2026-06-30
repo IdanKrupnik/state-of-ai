@@ -56,4 +56,37 @@ export class TopNavBarDriver {
     fireEvent.click(btn);
     return this;
   }
+
+  clickTab(tabId: string): this {
+    const tab = this.elementToUse.querySelector(`[data-testid="nav-tab-${tabId}"]`);
+    if (!tab) throw new Error(`Tab "${tabId}" not found`);
+    fireEvent.click(tab);
+    return this;
+  }
+
+  clickMobileTab(tabId: string): this {
+    const tab = this.elementToUse.querySelector(`[data-testid="mobile-nav-tab-${tabId}"]`);
+    if (!tab) throw new Error(`Mobile tab "${tabId}" not found`);
+    fireEvent.click(tab);
+    return this;
+  }
+
+  getActiveTabId(): string | null {
+    const activeLink = this.elementToUse.querySelector('nav a.text-brand-black');
+    if (!activeLink) return null;
+    const testId = activeLink.getAttribute('data-testid');
+    return testId ? testId.replace('nav-tab-', '') : null;
+  }
+
+  isTabActive(tabId: string): boolean {
+    const tab = this.elementToUse.querySelector(`[data-testid="nav-tab-${tabId}"]`);
+    if (!tab) return false;
+    return tab.className.includes('text-brand-black') && tab.className.includes('font-semibold');
+  }
+
+  isMobileTabActive(tabId: string): boolean {
+    const tab = this.elementToUse.querySelector(`[data-testid="mobile-nav-tab-${tabId}"]`);
+    if (!tab) return false;
+    return tab.className.includes('text-brand-black') && tab.className.includes('font-bold');
+  }
 }
