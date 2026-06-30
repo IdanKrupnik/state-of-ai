@@ -10,7 +10,8 @@ export class SystemStatusDriver {
     
     let el: HTMLElement | null = null;
     if (this.container) {
-      el = this.container.firstElementChild as HTMLElement;
+      const dot = this.container.querySelector('[data-testid="status-dot"]');
+      el = dot ? (dot.parentElement as HTMLElement) : (this.container.firstElementChild as HTMLElement);
     } else {
       el = screen.queryByTestId('status-dot')?.parentElement as HTMLElement | null;
     }

@@ -67,30 +67,27 @@ describe('FeedContainer Component', () => {
     expect(driver.getEmptyStateText()).toContain('No simplified articles found');
   });
 
-  it('should allow newsletter subscriptions in the side drawer', () => {
+  it('should allow opening and closing side drawer and subscribing to newsletter', () => {
     const { container } = render(<FeedContainer initialArticles={mockArticles} />);
     const driver = new FeedContainerDriver(container);
 
-    const newsletterDriver = driver.getSidebarNewsletterDriver();
-    const emailInput = newsletterDriver.getEmailInputDriver();
-    const submitBtn = newsletterDriver.getSubmitButtonDriver();
+    const nav = driver.getTopNavBarDriver();
+    const drawer = driver.getTuningDrawerDriver();
 
-    emailInput.setValue('test@example.com');
-    submitBtn.click();
+    expect(drawer.isOpen()).toBe(false);
 
-    expect(newsletterDriver.getSuccessMessage()).toBe('✓ Subscribed successfully!');
-  });
+    nav.clickTuneFilter();
+    expect(drawer.isOpen()).toBe(true);
 
-  it('should open and close the side tuning drawer', () => {
-    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
-    const driver = new FeedContainerDriver(container);
+    const newsletter = drawer.getNewsletterDriver();
+    const input = newsletter.getEmailInputDriver();
+    const submit = newsletter.getSubmitButtonDriver();
 
-    expect(driver.isDrawerVisible()).toBe(false);
+    input.setValue('test@example.com');
+    submit.click();
+    expect(newsletter.getSuccessMessage()).toBe('✓ Subscribed successfully!');
 
-    driver.openDrawer();
-    expect(driver.isDrawerVisible()).toBe(true);
-
-    driver.closeDrawer();
-    expect(driver.isDrawerVisible()).toBe(false);
+    drawer.clickClose();
+    expect(drawer.isOpen()).toBe(false);
   });
 });

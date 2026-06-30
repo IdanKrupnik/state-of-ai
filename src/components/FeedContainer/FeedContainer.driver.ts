@@ -1,8 +1,14 @@
-import { screen, fireEvent } from '@testing-library/react';
-import { InputFieldDriver } from '../ui/InputField/InputField.driver';
-import { SidebarNewsletterDriver } from '../SidebarNewsletter/SidebarNewsletter.driver';
+import { screen } from '@testing-library/react';
+import { TopNavBarDriver } from '../TopNavBar/TopNavBar.driver';
+import { TelemetryTickerDriver } from '../TelemetryTicker/TelemetryTicker.driver';
+import { CollapsibleFundamentalsDriver } from '../CollapsibleFundamentals/CollapsibleFundamentals.driver';
+import { SentimentPollDriver } from '../SentimentPoll/SentimentPoll.driver';
+import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
+import { InputFieldDriver } from '../ui/InputField/InputField.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
+import { FooterDriver } from '../Footer/Footer.driver';
+import { TuningDrawerDriver } from '../TuningDrawer/TuningDrawer.driver';
 
 export class FeedContainerDriver {
   private element: HTMLElement | null = null;
@@ -26,17 +32,33 @@ export class FeedContainerDriver {
     return el;
   }
 
-  getSearchInputDriver(): InputFieldDriver {
-    const el = this.elementToUse.querySelector('#search-input')?.parentElement as HTMLElement;
-    return new InputFieldDriver(el);
+  getTopNavBarDriver(): TopNavBarDriver {
+    return new TopNavBarDriver(this.elementToUse);
   }
 
-  getSidebarNewsletterDriver(): SidebarNewsletterDriver {
-    return new SidebarNewsletterDriver(this.elementToUse);
+  getTelemetryTickerDriver(): TelemetryTickerDriver {
+    return new TelemetryTickerDriver(this.elementToUse);
+  }
+
+  getCollapsibleFundamentalsDriver(): CollapsibleFundamentalsDriver {
+    return new CollapsibleFundamentalsDriver(this.elementToUse);
+  }
+
+  getSentimentPollDriver(): SentimentPollDriver {
+    return new SentimentPollDriver(this.elementToUse);
+  }
+
+  getLatencyMapDriver(): LatencyMapDriver {
+    return new LatencyMapDriver(this.elementToUse);
   }
 
   getFeedHeaderDriver(): FeedHeaderDriver {
     return new FeedHeaderDriver(this.elementToUse);
+  }
+
+  getSearchInputDriver(): InputFieldDriver {
+    const el = this.elementToUse.querySelector('#search-input')?.parentElement as HTMLElement;
+    return new InputFieldDriver(el);
   }
 
   getArticleRowDrivers(): FeedRowDriver[] {
@@ -58,22 +80,11 @@ export class FeedContainerDriver {
     return null;
   }
 
-  isDrawerVisible(): boolean {
-    const drawer = this.elementToUse.querySelector('[data-testid="side-drawer"]');
-    if (!drawer) return false;
-    return !drawer.className.includes('translate-x-full');
+  getFooterDriver(): FooterDriver {
+    return new FooterDriver(this.elementToUse);
   }
 
-  openDrawer(): this {
-    const btn = screen.getByRole('button', { name: /tune filter/i });
-    fireEvent.click(btn);
-    return this;
-  }
-
-  closeDrawer(): this {
-    const btn = this.elementToUse.querySelector('[data-testid="side-drawer"] button');
-    if (!btn) throw new Error('Close button not found in drawer');
-    fireEvent.click(btn);
-    return this;
+  getTuningDrawerDriver(): TuningDrawerDriver {
+    return new TuningDrawerDriver(this.elementToUse);
   }
 }
