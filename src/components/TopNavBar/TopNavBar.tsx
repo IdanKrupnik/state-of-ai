@@ -13,9 +13,8 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
           STATE OF AI
         </div>
         <nav className="hidden md:flex gap-8 text-[14px]">
-          <a className="font-semibold text-brand-black border-b-2 border-brand-black pb-1" href="#">Research</a>
-          <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">Signals</a>
-          <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">Archive</a>
+          <a className="font-semibold text-brand-black border-b-2 border-brand-black pb-1" href="#">Feed</a>
+          <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">Benchmarks</a>
           <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">About</a>
         </nav>
         <Button
