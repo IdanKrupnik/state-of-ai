@@ -57,11 +57,12 @@ AI assistants and human developers must ensure that any commit generated or sugg
 
 ## COMPONENT-DRIVER TESTING ARCHITECTURE RULE
 
-Whenever you build, generate, or modify any component (whether it belongs to the core atomic design system in `src/components/ui/` or is a high-level composed feature component), you must generate three co-located files:
+Whenever you build, generate, or modify any component (whether it belongs to the core atomic design system in `src/components/ui/` or is a high-level composed feature component), each component must have its own dedicated directory (e.g., `src/components/ui/[ComponentName]/` or `src/components/[ComponentName]/`). In that directory, you must generate three co-located files:
 1. The component file itself (`[ComponentName].tsx`).
 2. A component driver file (`[ComponentName].driver.ts`) that completely abstracts all DOM querying, user interactions, and styling assertions (e.g., encapsulating Tailwind CSS class string checks).
 3. A clean specification file (`[ComponentName].test.tsx`) that tests the component's functionality by interacting exclusively through its companion driver.
 
 Guidelines:
+- Each component must reside in its own folder named after the component.
 - Test files must never query the DOM or assert CSS classes directly; they must interact solely through the driver. This ensures that future visual changes or Tailwind updates will never break our test suites.
 - High-level feature components should leverage the drivers of the atomic UI components they compose to maintain complete isolation.
