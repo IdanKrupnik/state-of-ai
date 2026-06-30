@@ -29,5 +29,13 @@ describe('AIBasics Component', () => {
       '03 // Capabilities',
       '04 // Deployment',
     ]);
+
+    expect(driver.hasMobileTOC()).toBe(true);
+    expect(driver.getMobileTOCLinks()).toEqual([
+      '01 // Definition',
+      '02 // Architecture',
+      '03 // Capabilities',
+      '04 // Deployment',
+    ]);
   });
 });

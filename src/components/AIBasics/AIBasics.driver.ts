@@ -57,4 +57,15 @@ export class AIBasicsDriver {
     const anchors = Array.from(toc.querySelectorAll('a'));
     return anchors.map(a => a.textContent || '');
   }
+
+  hasMobileTOC(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="learn-toc-mobile"]');
+  }
+
+  getMobileTOCLinks(): string[] {
+    const toc = this.elementToUse.querySelector('[data-testid="learn-toc-mobile"]');
+    if (!toc) return [];
+    const anchors = Array.from(toc.querySelectorAll('a'));
+    return anchors.map(a => a.textContent || '');
+  }
 }

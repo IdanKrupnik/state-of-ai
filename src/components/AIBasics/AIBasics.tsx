@@ -60,6 +60,19 @@ export const AIBasics: React.FC = () => {
         </p>
       </section>
 
+      <nav className="flex md:hidden overflow-x-auto whitespace-nowrap gap-5 pb-3 border-b border-outline-variant/30 hide-scrollbar" data-testid="learn-toc-mobile">
+        {tocItems.map((item) => (
+          <a
+            key={item.id}
+            href={`#learn/${item.id}`}
+            onClick={(e) => handleTocClick(item.id, e)}
+            className="text-xs font-geist-mono text-brand-warm-grey hover:text-brand-black transition-colors shrink-0 uppercase tracking-wider"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
       <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-12 items-start">
         <aside className="hidden md:flex flex-col gap-4 sticky top-24 font-geist-mono text-xs uppercase tracking-wider text-brand-warm-grey" data-testid="learn-toc">
           <span className="font-bold text-brand-black pb-2 border-b border-outline-variant/30">
