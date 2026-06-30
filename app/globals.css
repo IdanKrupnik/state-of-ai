@@ -29,6 +29,11 @@ body {
   font-family: var(--font-inter);
 }
 
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
 .ticker-wrap {
   overflow: hidden;
   white-space: nowrap;
