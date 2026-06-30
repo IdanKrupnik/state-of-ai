@@ -89,7 +89,7 @@ describe('App Component', () => {
     nav.clickTab('about');
     expect(driver.getPlaceholderTitle('about')).toBe('about');
 
-    nav.clickTab('basics');
+    nav.clickTab('learn');
     const basicsDriver = driver.getAIBasicsDriver();
     expect(basicsDriver.getTitle()).toBe('AI Fundamentals Primer');
 

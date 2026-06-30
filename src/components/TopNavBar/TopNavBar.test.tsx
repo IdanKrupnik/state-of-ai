@@ -41,7 +41,7 @@ describe('TopNavBar Component', () => {
     expect(driver.isTabActive('benchmarks')).toBe(false);
     expect(driver.isTabActive('events')).toBe(false);
     expect(driver.isTabActive('about')).toBe(false);
-    expect(driver.isTabActive('basics')).toBe(false);
+    expect(driver.isTabActive('learn')).toBe(false);
 
     driver.clickTab('benchmarks');
     expect(handleTabChange).toHaveBeenCalledWith('benchmarks');
@@ -64,10 +64,10 @@ describe('TopNavBar Component', () => {
     driver.toggleMobileMenu();
     expect(driver.isMobileMenuOpen()).toBe(true);
     expect(driver.isMobileTabActive('feed')).toBe(true);
-    expect(driver.isMobileTabActive('basics')).toBe(false);
+    expect(driver.isMobileTabActive('learn')).toBe(false);
 
-    driver.clickMobileTab('basics');
-    expect(handleTabChange).toHaveBeenCalledWith('basics');
+    driver.clickMobileTab('learn');
+    expect(handleTabChange).toHaveBeenCalledWith('learn');
     expect(driver.isMobileMenuOpen()).toBe(false);
   });
 });

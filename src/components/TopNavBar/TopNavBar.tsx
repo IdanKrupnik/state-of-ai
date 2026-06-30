@@ -32,7 +32,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     { id: 'benchmarks', label: 'Benchmarks' },
     { id: 'events', label: 'Events' },
     { id: 'about', label: 'About' },
-    { id: 'basics', label: 'AI Basics' },
+    { id: 'learn', label: 'Learn' },
   ];
 
   return (

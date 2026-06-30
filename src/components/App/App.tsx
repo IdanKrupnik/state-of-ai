@@ -69,7 +69,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
           </>
         )}
 
-        {activeTab === 'basics' && <AIBasics />}
+        {activeTab === 'learn' && <AIBasics />}
 
         {(activeTab === 'benchmarks' || activeTab === 'events' || activeTab === 'about') && (
           <div className="border-t border-brand-black/15 pt-8 flex flex-col gap-4" data-testid={`placeholder-section-${activeTab}`}>
