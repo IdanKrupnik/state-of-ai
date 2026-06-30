@@ -49,7 +49,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
       />
       <TelemetryTicker />
 
-      <main className="max-w-[42rem] w-full mx-auto px-4 py-8 flex-grow flex flex-col gap-10">
+      <main className="max-w-[56rem] w-full mx-auto px-4 py-8 flex-grow flex flex-col gap-10">
         {!isMounted ? (
           <div className="flex-grow flex items-center justify-center py-20" data-testid="app-loader">
             <div className="w-8 h-8 border-2 border-brand-black border-t-transparent animate-spin" />
