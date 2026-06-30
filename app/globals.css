@@ -38,6 +38,10 @@ body {
   animation: ticker 30s linear infinite;
 }
 
+.ticker-wrap:hover .ticker-content {
+  animation-play-state: paused;
+}
+
 @keyframes ticker {
   0% {
     transform: translateX(100%);
