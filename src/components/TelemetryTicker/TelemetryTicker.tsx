@@ -34,64 +34,64 @@ export const TelemetryTicker: React.FC<TelemetryTickerProps> = ({
 }) => {
   const content = (
     <>
-      <div className="flex items-center gap-2 shrink-0 whitespace-nowrap">
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <SystemStatus label="Pipeline Active" isActive={true} className="text-[10px] leading-none text-brand-black/70" />
         <span className="text-[9px] text-brand-warm-grey/60">({scannedTime})</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Best Model:</span>
         <span className="text-brand-black font-semibold">{bestModel}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Market Index:</span>
         <span className="text-brand-black font-semibold">{marketIndex}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Latest Block:</span>
         <span className="text-brand-black font-semibold">{latestBlock}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Gas Price:</span>
         <span className="text-brand-black font-semibold">{gasPrice}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Sentiment:</span>
         <span className="text-brand-black font-semibold">{sentiment}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Next Cron:</span>
         <span className="text-brand-black font-semibold">{nextCron}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Active Runs:</span>
         <span className="text-brand-black font-semibold">{activeRuns}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Queued Jobs:</span>
         <span className="text-brand-black font-semibold">{queuedJobs}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>API Latency:</span>
         <span className="text-brand-black font-semibold">{apiLatency}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Server Uptime:</span>
         <span className="text-brand-black font-semibold">{serverUptime}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Memory Usage:</span>
         <span className="text-brand-black font-semibold">{memoryUsage}</span>
-      </div>
-      <div className="flex gap-2 shrink-0 whitespace-nowrap">
+      </span>
+      <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
         <span>Load Average:</span>
         <span className="text-brand-black font-semibold">{loadAverage}</span>
-      </div>
+      </span>
     </>
   );
 
   return (
     <div className="mt-16 w-full bg-brand-clay/30 border-b border-outline-variant h-8 flex items-center overflow-hidden ticker-wrap">
-      <div className="ticker-content inline-flex items-center gap-12 font-label-mono text-[10px] leading-none text-brand-warm-grey uppercase tracking-wider animate-ticker">
+      <div className="ticker-content inline-flex flex-row flex-nowrap items-center gap-12 font-label-mono text-[10px] leading-none text-brand-warm-grey uppercase tracking-wider animate-ticker">
         {content}
         <div className="w-12 shrink-0" />
         {content}
