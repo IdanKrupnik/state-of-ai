@@ -84,7 +84,8 @@ describe('App Component', () => {
     expect(driver.getPlaceholderTitle('benchmarks')).toBe('benchmarks');
 
     nav.clickTab('events');
-    expect(driver.getPlaceholderTitle('events')).toBe('events');
+    const eventsDriver = driver.getEventsDriver();
+    expect(eventsDriver.hasEventsSection()).toBe(true);
 
     nav.clickTab('about');
     expect(driver.getPlaceholderTitle('about')).toBe('about');
