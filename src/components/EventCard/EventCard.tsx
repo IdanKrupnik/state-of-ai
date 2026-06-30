@@ -63,7 +63,7 @@ export const EventCard: React.FC<EventProps> = ({
           </span>
           <button
             onClick={() => onToggleAlert(id)}
-            className={`font-geist-mono text-xs border px-4 py-1.5 transition-all active:scale-95 flex items-center gap-2 ${
+            className={`font-geist-mono text-xs border px-4 py-1.5 transition-all active:scale-95 flex items-center gap-2 cursor-pointer ${
               isAlertSet
                 ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
                 : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'

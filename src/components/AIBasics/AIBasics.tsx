@@ -64,7 +64,7 @@ export const AIBasics: React.FC = () => {
       <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40" data-testid="learn-toc-mobile-container">
         <button
           onClick={() => setIsTocOpen(true)}
-          className="bg-brand-black text-brand-offwhite px-5 py-3 rounded-full flex items-center gap-2.5 shadow-xl border border-brand-offwhite/10 hover:scale-105 active:scale-95 transition-all text-xs font-geist-mono uppercase tracking-wider"
+          className="bg-brand-black text-brand-offwhite px-5 py-3 rounded-full flex items-center gap-2.5 shadow-xl border border-brand-offwhite/10 hover:scale-105 active:scale-95 transition-all text-xs font-geist-mono uppercase tracking-wider cursor-pointer"
           data-testid="learn-toc-mobile-toggle"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -77,7 +77,7 @@ export const AIBasics: React.FC = () => {
       {isTocOpen && (
         <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end" data-testid="learn-toc-mobile-dropdown">
           <div
-            className="absolute inset-0 bg-brand-black/45 backdrop-blur-sm transition-opacity duration-300"
+            className="absolute inset-0 bg-brand-black/45 backdrop-blur-sm transition-opacity duration-300 cursor-pointer"
             onClick={() => setIsTocOpen(false)}
             data-testid="learn-toc-mobile-backdrop"
           />
@@ -91,7 +91,7 @@ export const AIBasics: React.FC = () => {
               </span>
               <button
                 onClick={() => setIsTocOpen(false)}
-                className="text-brand-warm-grey hover:text-brand-black p-1"
+                className="text-brand-warm-grey hover:text-brand-black p-1 cursor-pointer"
                 aria-label="Close index"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

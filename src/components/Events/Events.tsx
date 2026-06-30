@@ -159,7 +159,7 @@ export const Events: React.FC = () => {
                   <div className="flex justify-between items-center mt-2">
                     <button
                       onClick={() => setExpandedEventId(isExpanded ? null : evt.id)}
-                      className="font-geist-mono text-xs border border-brand-black px-4 py-1.5 hover:bg-brand-black hover:text-brand-offwhite transition-all active:scale-95 bg-brand-clay/5 hover:border-secondary"
+                      className="font-geist-mono text-xs border border-brand-black px-4 py-1.5 hover:bg-brand-black hover:text-brand-offwhite transition-all active:scale-95 bg-brand-clay/5 hover:border-secondary cursor-pointer"
                       data-testid={`past-details-toggle-${evt.id}`}
                     >
                       {isExpanded ? '[ HIDE DETAILS ]' : '[ VIEW DETAILS ]'}

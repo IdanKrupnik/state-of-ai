@@ -99,7 +99,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="block md:hidden p-2 text-brand-black hover:bg-brand-clay/40 transition-colors"
+          className="block md:hidden p-2 text-brand-black hover:bg-brand-clay/40 transition-colors cursor-pointer"
           aria-label="Toggle menu"
           data-testid="hamburger-button"
         >
