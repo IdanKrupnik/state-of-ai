@@ -1,4 +1,5 @@
 import React from 'react';
+import { Bell, Check } from 'lucide-react';
 
 export interface EventProps {
   id: string;
@@ -62,10 +63,24 @@ export const EventCard: React.FC<EventProps> = ({
           </span>
           <button
             onClick={() => onToggleAlert(id)}
-            className="font-geist-mono text-xs border border-brand-black px-4 py-1.5 hover:bg-brand-black hover:text-brand-offwhite transition-all active:scale-95 bg-brand-clay/5 hover:border-secondary"
+            className={`font-geist-mono text-xs border px-4 py-1.5 transition-all active:scale-95 flex items-center gap-2 ${
+              isAlertSet
+                ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
+                : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
+            }`}
             data-testid={`alert-btn-${id}`}
           >
-            {isLive ? (isAlertSet ? '[ SILENCED ]' : '[ NOTIFY ME ]') : (isAlertSet ? '[ ALERT SET ]' : '[ SET ALERT ]')}
+            {isAlertSet ? (
+              <>
+                <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
+                <span>{isLive ? '[ SILENCED ]' : '[ ALERT SET ]'}</span>
+              </>
+            ) : (
+              <>
+                <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
+                <span>{isLive ? '[ NOTIFY ME ]' : '[ SET ALERT ]'}</span>
+              </>
+            )}
           </button>
         </div>
       </div>

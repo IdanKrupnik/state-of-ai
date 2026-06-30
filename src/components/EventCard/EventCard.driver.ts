@@ -65,4 +65,12 @@ export class EventCardDriver {
     const link = this.elementToUse.querySelector('[data-testid="live-stream-link"]');
     return link ? link.getAttribute('href') : null;
   }
+
+  isAlertActiveIconPresent(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="alert-icon-active"]');
+  }
+
+  isAlertInactiveIconPresent(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="alert-icon-inactive"]');
+  }
 }
