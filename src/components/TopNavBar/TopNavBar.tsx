@@ -10,7 +10,19 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
     <header className="fixed top-0 w-full z-50 bg-brand-offwhite border-b border-outline-variant">
       <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="flex items-center gap-2.5">
-          <div className="logo-triangle shrink-0" data-testid="logo-triangle" aria-hidden="true" />
+          <svg
+            className="w-4 h-4 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[360deg] cursor-pointer shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            data-testid="logo-triangle"
+            aria-hidden="true"
+          >
+            <polygon points="12 3 2 21 22 21" />
+          </svg>
           <div className="text-xl font-bold tracking-tighter text-brand-black">
             STATE OF AI
           </div>
