@@ -71,10 +71,6 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
           <>
             {activeTab === 'feed' && (
               <>
-
-                <SentimentPoll />
-                <LatencyMap />
-
                 <section className="flex flex-col gap-6">
                   <FeedHeader
                     category="CURATION FEED_v4.2"
@@ -101,6 +97,11 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                     )}
                   </div>
                 </section>
+
+                <div className="border-t border-brand-black/15 my-6" />
+
+                <SentimentPoll />
+                <LatencyMap />
               </>
             )}
 
