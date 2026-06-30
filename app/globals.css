@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap');
+
+@theme {
+  --color-bg-base: #fdf8f8;
+  --color-text-primary: #1c1b1b;
+  --color-text-muted: #747878;
+  
+  --color-brand-black: #111111;
+  --color-brand-offwhite: #fdf8f8;
+  --color-brand-clay: #ecece8;
+  --color-brand-warm-grey: #787870;
+  --color-brand-neon-green: #10b981;
+  
+  --font-inter: 'Inter', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+  
+  --spacing-stack-sm: 0.5rem;
+  --spacing-stack-md: 1.5rem;
+  --spacing-stack-lg: 3rem;
+  --spacing-section-gap: 4rem;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-inter);
+}
