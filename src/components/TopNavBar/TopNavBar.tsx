@@ -8,7 +8,7 @@ export interface TopNavBarProps {
 export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
   return (
     <header className="fixed top-0 w-full z-50 bg-brand-offwhite border-b border-outline-variant">
-      <div className="max-w-[42rem] mx-auto flex justify-between items-center h-16 px-4">
+      <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="text-xl font-bold tracking-tighter text-brand-black">
           STATE OF AI
         </div>
