@@ -36,4 +36,29 @@ export class EventsDriver {
       return new EventCardDriver(this.elementToUse, id);
     });
   }
+
+  hasPastEventsLog(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="past-events-log"]');
+  }
+
+  clickPastEventDetails(id: string): void {
+    const btn = this.elementToUse.querySelector(`[data-testid="past-details-toggle-${id}"]`) as HTMLButtonElement | null;
+    if (btn) {
+      btn.click();
+    }
+  }
+
+  isPastEventDetailsVisible(id: string): boolean {
+    return !!this.elementToUse.querySelector(`[data-testid="past-details-dropdown-${id}"]`);
+  }
+
+  getPastEventSummary(id: string): string | null {
+    const el = this.elementToUse.querySelector(`[data-testid="past-ai-summary-${id}"]`);
+    return el ? el.textContent : null;
+  }
+
+  getPastEventYoutubeLink(id: string): string | null {
+    const el = this.elementToUse.querySelector(`[data-testid="past-youtube-link-${id}"]`);
+    return el ? el.getAttribute('href') : null;
+  }
 }

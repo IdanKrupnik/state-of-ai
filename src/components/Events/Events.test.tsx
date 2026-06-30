@@ -23,5 +23,20 @@ describe('Events Component', () => {
       initialCards[0].clickAlertButton();
     });
     expect(initialCards[0].getAlertButtonText()).toBe('[ SILENCED ]');
+
+    expect(driver.hasPastEventsLog()).toBe(true);
+    expect(driver.isPastEventDetailsVisible('openai-devday-2023')).toBe(false);
+
+    act(() => {
+      driver.clickPastEventDetails('openai-devday-2023');
+    });
+    expect(driver.isPastEventDetailsVisible('openai-devday-2023')).toBe(true);
+    expect(driver.getPastEventYoutubeLink('openai-devday-2023')).toBe('https://youtube.com');
+    expect(driver.getPastEventSummary('openai-devday-2023')).toContain('Unveiled GPT-4 Turbo');
+
+    act(() => {
+      driver.clickPastEventDetails('openai-devday-2023');
+    });
+    expect(driver.isPastEventDetailsVisible('openai-devday-2023')).toBe(false);
   });
 });
