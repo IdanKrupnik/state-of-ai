@@ -73,7 +73,7 @@ export const EventCard: React.FC<EventProps> = ({
             {isAlertSet ? (
               <>
                 <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
-                <span>{isLive ? '[ SILENCED ]' : '[ ALERT SET ]'}</span>
+                <span>{isLive ? '[ NOTIFICATION ACTIVE ]' : '[ ALERT ACTIVE ]'}</span>
               </>
             ) : (
               <>

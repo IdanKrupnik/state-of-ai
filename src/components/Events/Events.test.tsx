@@ -22,7 +22,7 @@ describe('Events Component', () => {
     act(() => {
       initialCards[0].clickAlertButton();
     });
-    expect(initialCards[0].getAlertButtonText()).toBe('[ SILENCED ]');
+    expect(initialCards[0].getAlertButtonText()).toBe('[ NOTIFICATION ACTIVE ]');
 
     expect(driver.hasPastEventsLog()).toBe(true);
     expect(driver.isPastEventDetailsVisible('openai-devday-2023')).toBe(false);
