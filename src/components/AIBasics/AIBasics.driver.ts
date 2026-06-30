@@ -46,4 +46,15 @@ export class AIBasicsDriver {
     const img = this.elementToUse.querySelector('img');
     return img ? img.getAttribute('alt') : null;
   }
+
+  hasTOC(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="learn-toc"]');
+  }
+
+  getTOCLinks(): string[] {
+    const toc = this.elementToUse.querySelector('[data-testid="learn-toc"]');
+    if (!toc) return [];
+    const anchors = Array.from(toc.querySelectorAll('a'));
+    return anchors.map(a => a.textContent || '');
+  }
 }

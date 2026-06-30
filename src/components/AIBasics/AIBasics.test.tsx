@@ -21,5 +21,13 @@ describe('AIBasics Component', () => {
 
     expect(driver.getLatencyText()).toContain('ms');
     expect(driver.getDatacenterTopologyImageAlt()).toBe('Conceptual datacenter topology');
+
+    expect(driver.hasTOC()).toBe(true);
+    expect(driver.getTOCLinks()).toEqual([
+      '01 // Definition',
+      '02 // Architecture',
+      '03 // Capabilities',
+      '04 // Deployment',
+    ]);
   });
 });
