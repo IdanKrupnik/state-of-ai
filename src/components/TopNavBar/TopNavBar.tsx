@@ -11,7 +11,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
       <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="flex items-center gap-3">
           <svg
-            className="w-10 h-10 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
+            className="w-5 h-5 md:w-6 md:h-6 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
