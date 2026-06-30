@@ -1,8 +1,10 @@
 import { screen } from '@testing-library/react';
-import { ButtonDriver } from '../ui/Button/Button.driver';
-import { InputFieldDriver } from '../ui/InputField/InputField.driver';
 import { CardDriver } from '../ui/Card/Card.driver';
+import { InputFieldDriver } from '../ui/InputField/InputField.driver';
 import { SidebarSourceSwitcherDriver } from '../ui/SidebarSourceSwitcher/SidebarSourceSwitcher.driver';
+import { SidebarHeaderDriver } from '../SidebarHeader/SidebarHeader.driver';
+import { SidebarNewsletterDriver } from '../SidebarNewsletter/SidebarNewsletter.driver';
+import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
 
 export class FeedContainerDriver {
   private element: HTMLElement | null = null;
@@ -31,14 +33,16 @@ export class FeedContainerDriver {
     return new InputFieldDriver(el);
   }
 
-  getNewsletterEmailInputDriver(): InputFieldDriver {
-    const el = this.elementToUse.querySelector('#newsletter-email')?.parentElement as HTMLElement;
-    return new InputFieldDriver(el);
+  getSidebarHeaderDriver(): SidebarHeaderDriver {
+    return new SidebarHeaderDriver(this.elementToUse);
   }
 
-  getNewsletterSubmitButtonDriver(): ButtonDriver {
-    const form = this.elementToUse.querySelector('form') as HTMLElement;
-    return new ButtonDriver(form);
+  getSidebarNewsletterDriver(): SidebarNewsletterDriver {
+    return new SidebarNewsletterDriver(this.elementToUse);
+  }
+
+  getFeedHeaderDriver(): FeedHeaderDriver {
+    return new FeedHeaderDriver(this.elementToUse);
   }
 
   getSidebarSourceSwitcherDriver(): SidebarSourceSwitcherDriver {
@@ -51,7 +55,6 @@ export class FeedContainerDriver {
     if (!list) return [];
     
     const children = Array.from(list.children) as HTMLElement[];
-    // Filter out potential empty-state divs
     const cardChildren = children.filter(c => c.querySelector('h3') !== null);
     return cardChildren.map(el => new CardDriver(el));
   }

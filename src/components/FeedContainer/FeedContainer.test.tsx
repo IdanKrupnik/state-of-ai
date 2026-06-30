@@ -83,12 +83,13 @@ describe('FeedContainer Component', () => {
     const { container } = render(<FeedContainer initialArticles={mockArticles} />);
     const driver = new FeedContainerDriver(container);
 
-    const emailInput = driver.getNewsletterEmailInputDriver();
-    const submitBtn = driver.getNewsletterSubmitButtonDriver();
+    const newsletterDriver = driver.getSidebarNewsletterDriver();
+    const emailInput = newsletterDriver.getEmailInputDriver();
+    const submitBtn = newsletterDriver.getSubmitButtonDriver();
 
     emailInput.setValue('test@example.com');
     submitBtn.click();
 
-    expect(container.textContent).toContain('Subscribed successfully');
+    expect(newsletterDriver.getSuccessMessage()).toBe('✓ Subscribed successfully!');
   });
 });

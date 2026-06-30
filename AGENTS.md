@@ -64,5 +64,6 @@ Whenever you build, generate, or modify any component (whether it belongs to the
 
 Guidelines:
 - Each component must reside in its own folder named after the component.
+- Components should be extracted to smaller components as much as possible to ensure maximum modularity and reusability.
 - Test files must never query the DOM or assert CSS classes directly; they must interact solely through the driver. This ensures that future visual changes or Tailwind updates will never break our test suites.
 - High-level feature components should leverage the drivers of the atomic UI components they compose to maintain complete isolation.
