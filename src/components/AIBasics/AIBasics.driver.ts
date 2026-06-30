@@ -79,4 +79,18 @@ export class AIBasicsDriver {
     const anchors = Array.from(dropdown.querySelectorAll('a'));
     return anchors.map(a => a.textContent?.trim() || '');
   }
+
+  clickMobileTOCClose(): void {
+    const btn = this.elementToUse.querySelector('[aria-label="Close index"]') as HTMLButtonElement | null;
+    if (btn) {
+      btn.click();
+    }
+  }
+
+  clickMobileTOCBackdrop(): void {
+    const el = this.elementToUse.querySelector('[data-testid="learn-toc-mobile-backdrop"]') as HTMLElement | null;
+    if (el) {
+      el.click();
+    }
+  }
 }

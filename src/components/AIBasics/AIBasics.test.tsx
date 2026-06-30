@@ -45,7 +45,17 @@ describe('AIBasics Component', () => {
     ]);
 
     act(() => {
+      driver.clickMobileTOCClose();
+    });
+    expect(driver.isMobileTOCDropdownVisible()).toBe(false);
+
+    act(() => {
       driver.clickMobileTOCToggle();
+    });
+    expect(driver.isMobileTOCDropdownVisible()).toBe(true);
+
+    act(() => {
+      driver.clickMobileTOCBackdrop();
     });
     expect(driver.isMobileTOCDropdownVisible()).toBe(false);
   });

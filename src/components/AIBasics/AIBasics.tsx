@@ -61,42 +61,63 @@ export const AIBasics: React.FC = () => {
         </p>
       </section>
 
-      <div className="flex md:hidden flex-col w-full border border-outline-variant/50 bg-brand-clay/5 relative" data-testid="learn-toc-mobile-container">
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40" data-testid="learn-toc-mobile-container">
         <button
-          onClick={() => setIsTocOpen(!isTocOpen)}
-          className="flex justify-between items-center px-4 py-3.5 text-xs font-geist-mono uppercase tracking-wider text-brand-black w-full"
+          onClick={() => setIsTocOpen(true)}
+          className="bg-brand-black text-brand-offwhite px-5 py-3 rounded-full flex items-center gap-2.5 shadow-xl border border-brand-offwhite/10 hover:scale-105 active:scale-95 transition-all text-xs font-geist-mono uppercase tracking-wider"
           data-testid="learn-toc-mobile-toggle"
         >
-          <span>Jump to Section</span>
-          <svg
-            className={`w-4 h-4 text-brand-black transition-transform duration-300 ${isTocOpen ? 'rotate-180' : ''}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
+          <span>Sections</span>
         </button>
-
-        {isTocOpen && (
-          <div className="flex flex-col border-t border-outline-variant/30 bg-brand-offwhite" data-testid="learn-toc-mobile-dropdown">
-            {tocItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#learn/${item.id}`}
-                onClick={(e) => {
-                  handleTocClick(item.id, e);
-                  setIsTocOpen(false);
-                }}
-                className="px-4 py-3.5 text-xs font-geist-mono text-brand-warm-grey hover:text-brand-black hover:bg-brand-clay/10 transition-colors border-b border-outline-variant/15 last:border-b-0 uppercase tracking-wider text-left"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        )}
       </div>
+
+      {isTocOpen && (
+        <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end" data-testid="learn-toc-mobile-dropdown">
+          <div
+            className="absolute inset-0 bg-brand-black/45 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setIsTocOpen(false)}
+            data-testid="learn-toc-mobile-backdrop"
+          />
+
+          <div className="relative bg-brand-offwhite w-full rounded-t-2xl p-6 flex flex-col gap-6 shadow-2xl border-t border-outline-variant transform translate-y-0 transition-transform duration-300 z-10">
+            <div className="w-12 h-1 bg-brand-clay/40 rounded-full mx-auto" />
+
+            <div className="flex justify-between items-center pb-2 border-b border-outline-variant/30">
+              <span className="font-geist-mono text-xs font-bold text-brand-black tracking-wider">
+                DOCUMENT INDEX
+              </span>
+              <button
+                onClick={() => setIsTocOpen(false)}
+                className="text-brand-warm-grey hover:text-brand-black p-1"
+                aria-label="Close index"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <nav className="flex flex-col gap-1">
+              {tocItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#learn/${item.id}`}
+                  onClick={(e) => {
+                    handleTocClick(item.id, e);
+                    setIsTocOpen(false);
+                  }}
+                  className="py-4 border-b border-outline-variant/20 font-geist-mono text-sm uppercase tracking-wide text-brand-warm-grey hover:text-brand-black active:text-brand-black transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-12 items-start">
         <aside className="hidden md:flex flex-col gap-4 sticky top-24 font-geist-mono text-xs uppercase tracking-wider text-brand-warm-grey" data-testid="learn-toc">
