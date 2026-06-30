@@ -36,4 +36,24 @@ export class TopNavBarDriver {
     this.getButtonDriver().click();
     return this;
   }
+
+  toggleMobileMenu(): this {
+    const btn = this.elementToUse.querySelector('[data-testid="hamburger-button"]');
+    if (!btn) throw new Error('Hamburger button not found');
+    fireEvent.click(btn);
+    return this;
+  }
+
+  isMobileMenuOpen(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="mobile-dropdown"]');
+  }
+
+  clickMobileTuneFilter(): this {
+    const dropdown = this.elementToUse.querySelector('[data-testid="mobile-dropdown"]');
+    if (!dropdown) throw new Error('Mobile dropdown not open');
+    const btn = dropdown.querySelector('button');
+    if (!btn) throw new Error('Tune Filter button inside mobile dropdown not found');
+    fireEvent.click(btn);
+    return this;
+  }
 }

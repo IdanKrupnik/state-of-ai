@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { Button } from '../ui/Button/Button';
 
 export interface TopNavBarProps {
@@ -6,12 +8,19 @@ export interface TopNavBarProps {
 }
 
 export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleTuneClick = () => {
+    setIsMobileMenuOpen(false);
+    onTuneClick();
+  };
+
   return (
     <header className="fixed top-0 w-full z-50 bg-brand-offwhite border-b border-outline-variant">
       <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="flex items-center gap-3">
           <svg
-            className="w-5 h-5 md:w-6 md:h-6 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
+            className="w-8 h-8 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -32,20 +41,78 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
             STATE OF AI
           </div>
         </div>
+
         <nav className="hidden md:flex gap-8 text-[14px]">
           <a className="font-semibold text-brand-black border-b-2 border-brand-black pb-1" href="#">Feed</a>
           <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">Benchmarks</a>
           <a className="text-brand-warm-grey hover:text-brand-black transition-colors" href="#">About</a>
         </nav>
-        <Button
-          variant="primary"
-          onClick={onTuneClick}
-          className="flex items-center gap-2 text-xs py-1.5 px-3 uppercase tracking-wider"
+
+        <div className="hidden md:block">
+          <Button
+            variant="primary"
+            onClick={onTuneClick}
+            className="flex items-center gap-2 text-xs py-1.5 px-3 uppercase tracking-wider"
+          >
+            <span>Tune Filter</span>
+            <span className="material-symbols-outlined text-[16px]">tune</span>
+          </Button>
+        </div>
+
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="block md:hidden p-2 text-brand-black hover:bg-brand-clay/40 transition-colors"
+          aria-label="Toggle menu"
+          data-testid="hamburger-button"
         >
-          <span>Tune Filter</span>
-          <span className="material-symbols-outlined text-[16px]">tune</span>
-        </Button>
+          {isMobileMenuOpen ? (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
       </div>
+
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden w-full bg-brand-offwhite border-b border-outline-variant flex flex-col p-6 gap-6 font-geist-mono text-xs uppercase tracking-wider"
+          data-testid="mobile-dropdown"
+        >
+          <a
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-bold text-brand-black py-2 border-b border-outline-variant/30"
+            href="#"
+          >
+            Feed
+          </a>
+          <a
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-brand-warm-grey hover:text-brand-black py-2 border-b border-outline-variant/30"
+            href="#"
+          >
+            Benchmarks
+          </a>
+          <a
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-brand-warm-grey hover:text-brand-black py-2 border-b border-outline-variant/30"
+            href="#"
+          >
+            About
+          </a>
+          <Button
+            variant="primary"
+            onClick={handleTuneClick}
+            className="w-full flex items-center justify-center gap-2 py-3 mt-2 uppercase tracking-widest text-[11px] font-bold"
+          >
+            <span>Tune Filter</span>
+            <span className="material-symbols-outlined text-[16px]">tune</span>
+          </Button>
+        </div>
+      )}
     </header>
   );
 };
