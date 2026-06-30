@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { TopNavBarDriver } from '../TopNavBar/TopNavBar.driver';
 import { TelemetryTickerDriver } from '../TelemetryTicker/TelemetryTicker.driver';
-import { CollapsibleFundamentalsDriver } from '../CollapsibleFundamentals/CollapsibleFundamentals.driver';
+
 import { SentimentPollDriver } from '../SentimentPoll/SentimentPoll.driver';
 import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
@@ -41,9 +41,7 @@ export class AppDriver {
     return new TelemetryTickerDriver(this.elementToUse);
   }
 
-  getCollapsibleFundamentalsDriver(): CollapsibleFundamentalsDriver {
-    return new CollapsibleFundamentalsDriver(this.elementToUse);
-  }
+
 
   getSentimentPollDriver(): SentimentPollDriver {
     return new SentimentPollDriver(this.elementToUse);

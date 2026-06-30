@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { TopNavBar } from '../TopNavBar/TopNavBar';
 import { TelemetryTicker } from '../TelemetryTicker/TelemetryTicker';
-import { CollapsibleFundamentals } from '../CollapsibleFundamentals/CollapsibleFundamentals';
+
 import { SentimentPoll } from '../SentimentPoll/SentimentPoll';
 import { LatencyMap } from '../LatencyMap/LatencyMap';
 import { FeedHeader } from '../FeedHeader/FeedHeader';
@@ -71,7 +71,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
           <>
             {activeTab === 'feed' && (
               <>
-                <CollapsibleFundamentals />
+
                 <SentimentPoll />
                 <LatencyMap />
 
