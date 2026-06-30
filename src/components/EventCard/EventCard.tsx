@@ -32,14 +32,19 @@ export const EventCard: React.FC<EventProps> = ({
           <div className="flex items-center gap-3">
             <span className="font-geist-mono text-xs text-brand-warm-grey">{date}</span>
             {isLive && (
-              <div className="flex items-center gap-1.5" data-testid="live-indicator">
-                <div className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
-                <span className="font-geist-mono text-xs text-secondary font-bold">[ LIVE ]</span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/25 px-2 py-0.5 text-red-600 dark:text-red-500 font-geist-mono text-[10px] font-bold tracking-wider" data-testid="live-indicator">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                  </span>
+                  <span>LIVE</span>
+                </div>
                 <a
                   href="https://youtube.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-geist-mono text-xs text-secondary hover:underline ml-2"
+                  className="font-geist-mono text-xs text-red-600 hover:underline flex items-center gap-0.5"
                   data-testid="live-stream-link"
                 >
                   ↗ WATCH STREAM
