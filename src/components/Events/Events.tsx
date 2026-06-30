@@ -53,7 +53,6 @@ const MOCK_EVENTS: MockEvent[] = [
 ];
 
 export const Events: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState('ALL_SIGNALS');
   const [alerts, setAlerts] = useState<string[]>([]);
 
   const handleToggleAlert = (id: string) => {
@@ -61,18 +60,6 @@ export const Events: React.FC = () => {
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
-
-  const filteredEvents =
-    selectedCategory === 'ALL_SIGNALS'
-      ? MOCK_EVENTS
-      : MOCK_EVENTS.filter((e) => e.category === selectedCategory);
-
-  const categories = [
-    { id: 'ALL_SIGNALS', label: 'ALL_SIGNALS' },
-    { id: 'GLOBAL_POLICY', label: 'GLOBAL_POLICY' },
-    { id: 'DEVELOPER_OPS', label: 'DEVELOPER_OPS' },
-    { id: 'HARDWARE_ARCH', label: 'HARDWARE_ARCH' },
-  ];
 
   return (
     <div className="flex flex-col gap-10 py-4" data-testid="events-section">
@@ -84,33 +71,16 @@ export const Events: React.FC = () => {
           </span>
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-brand-black">
-          Upcoming Signals
+          Upcoming Events
         </h1>
         <p className="text-brand-warm-grey text-base leading-relaxed max-w-prose mt-2">
           Tracking the pivotal moments in artificial intelligence. From foundational model releases to global regulatory summits.
         </p>
       </header>
 
-      <div className="flex items-center gap-6 border-b border-outline-variant/30 pb-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setSelectedCategory(cat.id)}
-            className={`font-geist-mono text-xs pb-2 transition-all uppercase tracking-wider ${
-              selectedCategory === cat.id
-                ? 'text-brand-black font-bold border-b-2 border-brand-black'
-                : 'text-brand-warm-grey hover:text-brand-black'
-            }`}
-            data-testid={`category-btn-${cat.id}`}
-          >
-            {cat.label}
-          </button>
-        ))}
-      </div>
-
       <div className="relative pl-8 space-y-12">
         <div className="absolute left-[3px] top-0 bottom-0 w-[1px] bg-outline-variant/40" />
-        {filteredEvents.map((evt) => (
+        {MOCK_EVENTS.map((evt) => (
           <EventCard
             key={evt.id}
             id={evt.id}

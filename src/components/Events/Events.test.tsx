@@ -18,25 +18,10 @@ describe('Events Component', () => {
     expect(initialCards[2].getTitle()).toBe('OpenAI DevDay');
     expect(initialCards[3].getTitle()).toBe('Apple WWDC24');
 
+    expect(initialCards[0].getAlertButtonText()).toBe('[ NOTIFY ME ]');
     act(() => {
-      driver.clickCategory('HARDWARE_ARCH');
+      initialCards[0].clickAlertButton();
     });
-    const hardwareCards = driver.getEventCardDrivers();
-    expect(hardwareCards).toHaveLength(1);
-    expect(hardwareCards[0].getTitle()).toBe('NVIDIA GTC 2024');
-
-    act(() => {
-      driver.clickCategory('DEVELOPER_OPS');
-    });
-    const devOpsCards = driver.getEventCardDrivers();
-    expect(devOpsCards).toHaveLength(2);
-    expect(devOpsCards[0].getTitle()).toBe('Google I/O');
-    expect(devOpsCards[1].getTitle()).toBe('OpenAI DevDay');
-
-    expect(devOpsCards[0].getAlertButtonText()).toBe('[ SET ALERT ]');
-    act(() => {
-      devOpsCards[0].clickAlertButton();
-    });
-    expect(devOpsCards[0].getAlertButtonText()).toBe('[ ALERT SET ]');
+    expect(initialCards[0].getAlertButtonText()).toBe('[ SILENCED ]');
   });
 });

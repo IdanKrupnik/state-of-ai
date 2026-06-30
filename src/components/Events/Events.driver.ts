@@ -27,17 +27,7 @@ export class EventsDriver {
     return !!this.elementToUse;
   }
 
-  getCategoryButtonText(id: string): string | null {
-    const btn = this.elementToUse.querySelector(`[data-testid="category-btn-${id}"]`);
-    return btn ? btn.textContent : null;
-  }
 
-  clickCategory(id: string): void {
-    const btn = this.elementToUse.querySelector(`[data-testid="category-btn-${id}"]`) as HTMLButtonElement | null;
-    if (btn) {
-      btn.click();
-    }
-  }
 
   getEventCardDrivers(): EventCardDriver[] {
     const cards = Array.from(this.elementToUse.querySelectorAll('[data-testid^="event-card-"]'));
