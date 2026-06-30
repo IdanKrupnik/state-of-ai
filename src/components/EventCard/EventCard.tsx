@@ -47,9 +47,34 @@ export const EventCard: React.FC<EventProps> = ({
               </div>
             )}
           </div>
-          <span className="font-geist-mono text-xs px-2 py-0.5 bg-brand-clay/10 text-brand-warm-grey">
-            {location}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="font-geist-mono text-xs px-2 py-0.5 bg-brand-clay/10 text-brand-warm-grey">
+              {location}
+            </span>
+            {!isLive && (
+              <button
+                onClick={() => onToggleAlert(id)}
+                className={`font-geist-mono text-[10px] border px-3 py-1 transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer ${
+                  isAlertSet
+                    ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
+                    : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
+                }`}
+                data-testid={`alert-btn-${id}`}
+              >
+                {isAlertSet ? (
+                  <>
+                    <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
+                    <span>[ ALERT ACTIVE ]</span>
+                  </>
+                ) : (
+                  <>
+                    <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
+                    <span>[ NOTIFY ME ]</span>
+                  </>
+                )}
+              </button>
+            )}
+          </div>
         </div>
         <h2 className="text-xl md:text-2xl font-bold text-brand-black group-hover:text-secondary transition-colors">
           {title}
@@ -57,33 +82,10 @@ export const EventCard: React.FC<EventProps> = ({
         <p className="text-brand-warm-grey text-sm md:text-base leading-relaxed">
           {description}
         </p>
-        <div className="mt-4 flex items-center justify-between border-t border-outline-variant/30 pt-4">
-          <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase tracking-widest">
+        <div className="mt-2 flex items-center justify-between">
+          <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase tracking-widest" data-testid="event-type">
             {type}
           </span>
-          {!isLive && (
-            <button
-              onClick={() => onToggleAlert(id)}
-              className={`font-geist-mono text-xs border px-4 py-1.5 transition-all active:scale-95 flex items-center gap-2 cursor-pointer ${
-                isAlertSet
-                  ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
-                  : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
-              }`}
-              data-testid={`alert-btn-${id}`}
-            >
-              {isAlertSet ? (
-                <>
-                  <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
-                  <span>[ ALERT ACTIVE ]</span>
-                </>
-              ) : (
-                <>
-                  <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
-                  <span>[ NOTIFY ME ]</span>
-                </>
-              )}
-            </button>
-          )}
         </div>
       </div>
     </article>

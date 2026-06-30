@@ -41,7 +41,7 @@ export class EventCardDriver {
   }
 
   getTypeText(): string | null {
-    const typeEl = this.elementToUse.querySelector('.mt-4 span');
+    const typeEl = this.elementToUse.querySelector('[data-testid="event-type"]');
     return typeEl ? typeEl.textContent : null;
   }
 
