@@ -49,30 +49,6 @@ describe('App Component', () => {
     expect(rows[2].getTitleText()).toBe('Gemini 2.0 now live');
   });
 
-  it('should filter articles by search query', () => {
-    const { container } = render(<App initialArticles={mockArticles} />);
-    const driver = new AppDriver(container);
-
-    const searchInput = driver.getSearchInputDriver();
-    searchInput.setValue('Gemini');
-
-    const rows = driver.getArticleRowDrivers();
-    expect(rows).toHaveLength(1);
-    expect(rows[0].getTitleText()).toBe('Gemini 2.0 now live');
-  });
-
-  it('should display empty state if no articles match', () => {
-    const { container } = render(<App initialArticles={mockArticles} />);
-    const driver = new AppDriver(container);
-
-    const searchInput = driver.getSearchInputDriver();
-    searchInput.setValue('Unobtainium');
-
-    const rows = driver.getArticleRowDrivers();
-    expect(rows).toHaveLength(0);
-    expect(driver.getEmptyStateText()).toContain('No simplified articles found');
-  });
-
   it('should allow opening and closing side drawer and subscribing to newsletter', () => {
     const { container } = render(<App initialArticles={mockArticles} />);
     const driver = new AppDriver(container);

@@ -5,7 +5,6 @@ import { CollapsibleFundamentalsDriver } from '../CollapsibleFundamentals/Collap
 import { SentimentPollDriver } from '../SentimentPoll/SentimentPoll.driver';
 import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
-import { InputFieldDriver } from '../ui/InputField/InputField.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
 import { TuningDrawerDriver } from '../TuningDrawer/TuningDrawer.driver';
@@ -56,11 +55,6 @@ export class AppDriver {
     return new FeedHeaderDriver(this.elementToUse);
   }
 
-  getSearchInputDriver(): InputFieldDriver {
-    const el = this.elementToUse.querySelector('#search-input')?.parentElement as HTMLElement;
-    return new InputFieldDriver(el);
-  }
-
   getArticleRowDrivers(): FeedRowDriver[] {
     const list = this.elementToUse.querySelector('[data-testid="articles-list"]');
     if (!list) return [];
@@ -68,16 +62,6 @@ export class AppDriver {
     const children = Array.from(list.children) as HTMLElement[];
     const rowChildren = children.filter(c => c.getAttribute('data-testid') === 'feed-row');
     return rowChildren.map(el => new FeedRowDriver(el));
-  }
-  
-  getEmptyStateText(): string | null {
-    const list = this.elementToUse.querySelector('[data-testid="articles-list"]');
-    if (!list) return null;
-    const firstChild = list.firstElementChild;
-    if (firstChild && firstChild.getAttribute('data-testid') !== 'feed-row') {
-      return firstChild.textContent;
-    }
-    return null;
   }
 
   getFooterDriver(): FooterDriver {

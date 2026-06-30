@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { TopNavBar } from '../TopNavBar/TopNavBar';
 import { TelemetryTicker } from '../TelemetryTicker/TelemetryTicker';
 import { CollapsibleFundamentals } from '../CollapsibleFundamentals/CollapsibleFundamentals';
 import { SentimentPoll } from '../SentimentPoll/SentimentPoll';
 import { LatencyMap } from '../LatencyMap/LatencyMap';
 import { FeedHeader } from '../FeedHeader/FeedHeader';
-import { InputField } from '../ui/InputField/InputField';
 import { FeedRow } from '../FeedRow/FeedRow';
 import { Footer } from '../Footer/Footer';
 import { TuningDrawer } from '../TuningDrawer/TuningDrawer';
@@ -22,17 +21,6 @@ export interface AppProps {
 
 export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const filteredArticles = useMemo(() => {
-    return initialArticles.filter((article) => {
-      const matchesSearch =
-        article.simplified_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.short_summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.company.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesSearch;
-    });
-  }, [initialArticles, searchQuery]);
 
   return (
     <div className="min-h-screen bg-brand-offwhite text-brand-black flex flex-col font-inter antialiased">
@@ -51,24 +39,13 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
             description="High fidelity technical feed with matching metrics and real-time sub-layer reasoning telemetry."
           />
 
-          <div className="w-full">
-            <InputField
-              variant="bottom"
-              placeholder="Search breakthroughs, companies, or insights..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-base"
-              id="search-input"
-            />
-          </div>
-
           <div className="flex flex-col" data-testid="articles-list">
-            {filteredArticles.length === 0 ? (
+            {initialArticles.length === 0 ? (
               <div className="border-t border-brand-black/15 pt-8 text-center text-brand-warm-grey italic text-sm">
                 No simplified articles found. Try another search or filter.
               </div>
             ) : (
-              filteredArticles.map((article) => (
+              initialArticles.map((article) => (
                 <FeedRow
                   key={article.id}
                   company={article.company}
