@@ -91,7 +91,7 @@ describe('App Component', () => {
 
     nav.clickTab('learn');
     const basicsDriver = driver.getAIBasicsDriver();
-    expect(basicsDriver.getTitle()).toBe('AI Fundamentals Primer');
+    expect(basicsDriver.getTitle()).toBe('AI Fundamentals');
 
     nav.clickTab('feed');
     expect(driver.getArticleRowDrivers()).toHaveLength(3);

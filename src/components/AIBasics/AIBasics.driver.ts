@@ -23,7 +23,7 @@ export class AIBasicsDriver {
   }
 
   getTitle(): string | null {
-    const header = this.elementToUse.querySelector('h2');
+    const header = this.elementToUse.querySelector('h1');
     return header ? header.textContent : null;
   }
 
@@ -32,21 +32,18 @@ export class AIBasicsDriver {
     return subtitle ? subtitle.textContent : null;
   }
 
-  getConceptCard(conceptId: string): HTMLElement | null {
-    return this.elementToUse.querySelector(`[data-testid="concept-card-${conceptId}"]`);
+  getSectionTitle(index: number): string | null {
+    const headers = Array.from(this.elementToUse.querySelectorAll('h2'));
+    return headers[index] ? headers[index].textContent : null;
   }
 
-  getConceptTitle(conceptId: string): string | null {
-    const card = this.getConceptCard(conceptId);
-    if (!card) return null;
-    const title = card.querySelector('h3');
-    return title ? title.textContent : null;
+  getLatencyText(): string | null {
+    const latencyEl = this.elementToUse.querySelector('[data-testid="latency-value"]');
+    return latencyEl ? latencyEl.textContent : null;
   }
 
-  getConceptDescription(conceptId: string): string | null {
-    const card = this.getConceptCard(conceptId);
-    if (!card) return null;
-    const desc = card.querySelector('p');
-    return desc ? desc.textContent : null;
+  getDatacenterTopologyImageAlt(): string | null {
+    const img = this.elementToUse.querySelector('img');
+    return img ? img.getAttribute('alt') : null;
   }
 }

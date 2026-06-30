@@ -1,84 +1,98 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const AIBasics: React.FC = () => {
-  const concepts = [
-    {
-      id: 'neural-networks',
-      title: 'Neural Networks',
-      description: 'Layered nodes processing computational signals similar to biological synapses.',
-      visual: (
-        <div className="flex justify-between items-center h-12 px-4 bg-brand-clay/10 border border-outline-variant/30">
-          <div className="w-3 h-3 bg-brand-black rounded-full" />
-          <div className="h-[1px] flex-grow bg-brand-black/30 mx-2 border-t border-dashed" />
-          <div className="w-3 h-3 bg-brand-black rounded-full" />
-          <div className="h-[1px] flex-grow bg-brand-black/30 mx-2 border-t border-dashed" />
-          <div className="w-3 h-3 bg-brand-black rounded-full" />
-        </div>
-      ),
-    },
-    {
-      id: 'weights-biases',
-      title: 'Weights & Biases',
-      description: 'Numerical parameters adjusting node activation strength during model tuning.',
-      visual: (
-        <div className="flex flex-col gap-2 p-2 bg-brand-clay/10 border border-outline-variant/30 font-geist-mono text-[10px]">
-          <div className="flex justify-between items-center">
-            <span>WEIGHTS [W]</span>
-            <span className="font-bold">0.824</span>
-          </div>
-          <div className="h-2 bg-brand-clay/35 w-full relative">
-            <div className="h-full bg-brand-black w-[82.4%]" />
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'cost-optimization',
-      title: 'Cost & Optimization',
-      description: 'Mathematical loss minimization algorithms ensuring target model calibration.',
-      visual: (
-        <div className="flex gap-1.5 items-end h-12 p-2 bg-brand-clay/10 border border-outline-variant/30">
-          <div className="w-full bg-brand-black/20 h-[80%]" />
-          <div className="w-full bg-brand-black/40 h-[60%]" />
-          <div className="w-full bg-brand-black/60 h-[40%]" />
-          <div className="w-full bg-brand-black h-[20%]" />
-        </div>
-      ),
-    },
-  ];
+  const [latency, setLatency] = useState(12.4);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLatency(12.0 + Math.random() * 0.8);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section className="flex flex-col gap-8 py-4" data-testid="ai-basics-section">
-      <div className="border-b border-brand-black pb-4">
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-black">
-          AI Fundamentals Primer
-        </h2>
-        <p className="text-brand-warm-grey text-sm mt-1">
-          A minimalist introduction to standard structural architectures.
+    <div className="flex flex-col gap-12 py-4" data-testid="ai-basics-section">
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+          <span className="font-geist-mono text-[10px] text-brand-warm-grey tracking-wider">
+            LIVE_DOCUMENT // v4.0.2
+          </span>
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight text-brand-black">
+          AI Fundamentals
+        </h1>
+        <p className="text-brand-warm-grey text-base leading-relaxed max-w-prose">
+          A foundational inquiry into the mechanisms, architectures, and deployment paradigms governing contemporary synthetic intelligence.
         </p>
-      </div>
+      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {concepts.map((concept) => (
-          <div
-            key={concept.id}
-            className="border border-outline-variant p-5 flex flex-col gap-4 bg-brand-offwhite"
-            data-testid={`concept-card-${concept.id}`}
-          >
-            <div>
-              <h3 className="font-semibold text-[15px] text-brand-black">
-                {concept.title}
-              </h3>
-              <p className="text-brand-warm-grey text-xs mt-1.5 leading-relaxed text-left">
-                {concept.description}
-              </p>
-            </div>
-            <div className="mt-auto pt-2">
-              {concept.visual}
-            </div>
+      <section className="flex flex-col gap-4 border-t border-outline-variant/30 pt-8">
+        <span className="font-geist-mono text-[10px] text-brand-warm-grey">01 // DEFINITION</span>
+        <h2 className="text-xl font-bold text-brand-black">What is Artificial Intelligence?</h2>
+        <div className="text-brand-warm-grey text-sm space-y-4 leading-relaxed max-w-prose">
+          <p>
+            Artificial Intelligence (AI) encompasses systems designed to perform tasks that typically require human cognition. Rather than static code, modern AI utilizes autonomous agents that adapt through experience.
+          </p>
+          <p>
+            Machine Learning (ML) acts as the engine, allowing algorithms to parse vast datasets, identify patterns, and make high-probability decisions without explicit instruction.
+          </p>
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-4 border-t border-outline-variant/30 pt-8">
+        <span className="font-geist-mono text-[10px] text-brand-warm-grey">02 // ARCHITECTURE</span>
+        <h2 className="text-xl font-bold text-brand-black">Neural Networks</h2>
+        <p className="text-brand-warm-grey text-sm leading-relaxed max-w-prose">
+          At the core of deep learning are neural networks—computational structures loosely inspired by the biological connectivity of the human brain. These layers of "neurons" process information non-linearly, enabling the mapping of complex inputs to specific outputs.
+        </p>
+        <div className="bg-brand-clay/10 p-4 border-l-2 border-brand-black font-geist-mono text-[10px] text-brand-warm-grey">
+          [ ARCH_TYPE: TRANSFORMER_MODEL_V4 ]
+        </div>
+      </section>
+
+      <section className="w-full aspect-[21/9] bg-brand-clay/10 border border-outline-variant relative overflow-hidden group">
+        <img
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          alt="Conceptual datacenter topology"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidcdwOGwwl6kuCqioATRKPTpUuTw3r8GhWiiY7O6gWyXFISugMvHy1ncZ6iykqFJOGOTOTT2jSFDSvjVX49Cf80wyqkKlRCXkNquTwbU3vyFBSMC1egTfiP3c4b6MvoFXFqi6b28FAALj4Pzs6ZvHQCzomGN4HSTdHkqnYSzZTjkb-mbhpk8bhSliCI4_XFJM1pctkLhSr53wGRw6mJCu6XLhCU9N2rJ_oUNxNZEWolHYe_9krodQMuJ7RDhRDrFwlQj94zR9VawT"
+        />
+        <div className="absolute bottom-3 left-3 bg-brand-black text-brand-offwhite text-[10px] font-geist-mono px-2.5 py-1">
+          FIG_01: CONCEPTUAL DATACENTER TOPOLOGY
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-4 border-t border-outline-variant/30 pt-8">
+        <span className="font-geist-mono text-[10px] text-brand-warm-grey">03 // CAPABILITIES</span>
+        <h2 className="text-xl font-bold text-brand-black">Large Language Models (LLMs)</h2>
+        <p className="text-brand-warm-grey text-sm leading-relaxed max-w-prose">
+          LLMs represent the current frontier of natural language processing. By predicting the next token in a sequence, these models exhibit emergent properties such as logical reasoning, creative synthesis, and multi-step problem solving.
+        </p>
+        <div className="flex gap-2 font-geist-mono text-[10px] text-brand-warm-grey">
+          <span className="px-2.5 py-1 bg-brand-clay/10 border border-outline-variant/30">[ PARAMETER_COUNT: 1.8T+ ]</span>
+          <span className="px-2.5 py-1 bg-brand-clay/10 border border-outline-variant/30">[ TOKEN_WINDOW: 128K ]</span>
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-4 border-t border-outline-variant/30 pt-8">
+        <span className="font-geist-mono text-[10px] text-brand-warm-grey">04 // DEPLOYMENT</span>
+        <h2 className="text-xl font-bold text-brand-black">What is Inference?</h2>
+        <p className="text-brand-warm-grey text-sm leading-relaxed max-w-prose">
+          While "Training" is the process of building a model's knowledge, "Inference" is the execution of that knowledge. It is the real-time "thinking" process where a trained model applies its learned patterns to new, unseen data to generate an output.
+        </p>
+        <div className="grid grid-cols-2 gap-4 mt-2">
+          <div className="p-4 border border-outline-variant hover:border-brand-black transition-colors">
+            <span className="font-geist-mono text-[10px] text-brand-warm-grey block mb-1">MEAN LATENCY</span>
+            <span className="font-geist-mono text-lg font-bold text-brand-black" data-testid="latency-value">
+              {latency.toFixed(1)}ms
+            </span>
           </div>
-        ))}
-      </div>
-    </section>
+          <div className="p-4 border border-outline-variant hover:border-brand-black transition-colors">
+            <span className="font-geist-mono text-[10px] text-brand-warm-grey block mb-1">ACTIVE NODES</span>
+            <span className="font-geist-mono text-lg font-bold text-brand-black">1,024</span>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };

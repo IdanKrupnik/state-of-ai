@@ -5,26 +5,21 @@ import { AIBasics } from './AIBasics';
 import { AIBasicsDriver } from './AIBasics.driver';
 
 describe('AIBasics Component', () => {
-  it('should render header and educational concepts cards', () => {
+  it('should render main headers and technical subsections correctly', () => {
     const { container } = render(<AIBasics />);
     const driver = new AIBasicsDriver(container);
 
-    expect(driver.getTitle()).toBe('AI Fundamentals Primer');
-    expect(driver.getSubtitle()).toBe('A minimalist introduction to standard structural architectures.');
-
-    expect(driver.getConceptTitle('neural-networks')).toBe('Neural Networks');
-    expect(driver.getConceptDescription('neural-networks')).toBe(
-      'Layered nodes processing computational signals similar to biological synapses.'
+    expect(driver.getTitle()).toBe('AI Fundamentals');
+    expect(driver.getSubtitle()).toBe(
+      'A foundational inquiry into the mechanisms, architectures, and deployment paradigms governing contemporary synthetic intelligence.'
     );
 
-    expect(driver.getConceptTitle('weights-biases')).toBe('Weights & Biases');
-    expect(driver.getConceptDescription('weights-biases')).toBe(
-      'Numerical parameters adjusting node activation strength during model tuning.'
-    );
+    expect(driver.getSectionTitle(0)).toBe('What is Artificial Intelligence?');
+    expect(driver.getSectionTitle(1)).toBe('Neural Networks');
+    expect(driver.getSectionTitle(2)).toBe('Large Language Models (LLMs)');
+    expect(driver.getSectionTitle(3)).toBe('What is Inference?');
 
-    expect(driver.getConceptTitle('cost-optimization')).toBe('Cost & Optimization');
-    expect(driver.getConceptDescription('cost-optimization')).toBe(
-      'Mathematical loss minimization algorithms ensuring target model calibration.'
-    );
+    expect(driver.getLatencyText()).toContain('ms');
+    expect(driver.getDatacenterTopologyImageAlt()).toBe('Conceptual datacenter topology');
   });
 });
