@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { MetadataTag } from '../ui/MetadataTag/MetadataTag';
 
 export interface FeedRowProps {
   company: string;
-  hypeScore: number;
   title: string;
   summary: string;
   sourceUrl: string;
@@ -12,7 +10,6 @@ export interface FeedRowProps {
 
 export const FeedRow: React.FC<FeedRowProps> = ({
   company,
-  hypeScore,
   title,
   summary,
   sourceUrl,
@@ -27,9 +24,6 @@ export const FeedRow: React.FC<FeedRowProps> = ({
       className="group border-b border-outline-variant py-6 cursor-pointer hover:bg-surface-container-low transition-colors px-2 -mx-2"
     >
       <div className="flex items-start gap-4">
-        <MetadataTag className="shrink-0 mt-1">
-          {`[${hypeScore}% Hype]`}
-        </MetadataTag>
         <div className="flex-grow">
           <h4 className="font-headline-sm text-headline-sm group-hover:underline underline-offset-4 text-brand-black">
             {title}

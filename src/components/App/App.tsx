@@ -49,7 +49,6 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                 <FeedRow
                   key={article.id}
                   company={article.company}
-                  hypeScore={article.hype_score}
                   title={article.simplified_title}
                   summary={article.short_summary}
                   sourceUrl={article.source_url}

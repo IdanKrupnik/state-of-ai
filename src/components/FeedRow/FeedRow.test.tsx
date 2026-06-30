@@ -9,7 +9,6 @@ describe('FeedRow Component', () => {
     const { container } = render(
       <FeedRow
         company="OpenAI"
-        hypeScore={80}
         title="GPT-4 Release"
         summary="A major update to our LLM model."
         sourceUrl="https://openai.com"
