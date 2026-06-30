@@ -11,7 +11,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
       <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="flex items-center gap-3">
           <svg
-            className="w-8 h-8 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
+            className="w-10 h-10 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -28,7 +28,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({ onTuneClick }) => {
             <line x1="17" y1="12" x2="21" y2="12" />
             <circle cx="12" cy="12" r="2.2" fill="currentColor" />
           </svg>
-          <div className="text-2xl md:text-3xl font-extrabold tracking-tighter text-brand-black">
+          <div className="text-xl md:text-2xl font-bold tracking-tighter text-brand-black">
             STATE OF AI
           </div>
         </div>
