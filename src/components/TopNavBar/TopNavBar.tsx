@@ -23,6 +23,9 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
   const handleTabClick = (tabId: string, e: React.MouseEvent) => {
     e.preventDefault();
+    if (typeof window !== 'undefined') {
+      window.location.hash = tabId;
+    }
     onTabChange?.(tabId);
     setIsMobileMenuOpen(false);
   };
@@ -74,7 +77,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                     ? 'font-semibold text-brand-black border-b-2 border-brand-black pb-1'
                     : 'text-brand-warm-grey hover:text-brand-black'
                 }`}
-                href="#"
+                href={`#${tab.id}`}
                 data-testid={`nav-tab-${tab.id}`}
               >
                 {tab.label}
@@ -126,7 +129,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 className={`py-2 border-b border-outline-variant/30 ${
                   isActive ? 'font-bold text-brand-black' : 'text-brand-warm-grey hover:text-brand-black'
                 }`}
-                href="#"
+                href={`#${tab.id}`}
                 data-testid={`mobile-nav-tab-${tab.id}`}
               >
                 {tab.label}

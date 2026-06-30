@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TopNavBar } from '../TopNavBar/TopNavBar';
 import { TelemetryTicker } from '../TelemetryTicker/TelemetryTicker';
 import { CollapsibleFundamentals } from '../CollapsibleFundamentals/CollapsibleFundamentals';
@@ -23,6 +23,20 @@ export interface AppProps {
 export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('feed');
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      const validTabs = ['feed', 'benchmarks', 'events', 'about', 'learn'];
+      if (validTabs.includes(hash)) {
+        setActiveTab(hash);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   return (
     <div className="min-h-screen bg-brand-offwhite text-brand-black flex flex-col font-inter antialiased">
