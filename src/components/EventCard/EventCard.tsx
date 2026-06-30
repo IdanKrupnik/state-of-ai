@@ -61,27 +61,29 @@ export const EventCard: React.FC<EventProps> = ({
           <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase tracking-widest">
             {type}
           </span>
-          <button
-            onClick={() => onToggleAlert(id)}
-            className={`font-geist-mono text-xs border px-4 py-1.5 transition-all active:scale-95 flex items-center gap-2 cursor-pointer ${
-              isAlertSet
-                ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
-                : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
-            }`}
-            data-testid={`alert-btn-${id}`}
-          >
-            {isAlertSet ? (
-              <>
-                <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
-                <span>{isLive ? '[ NOTIFICATION ACTIVE ]' : '[ ALERT ACTIVE ]'}</span>
-              </>
-            ) : (
-              <>
-                <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
-                <span>{isLive ? '[ NOTIFY ME ]' : '[ SET ALERT ]'}</span>
-              </>
-            )}
-          </button>
+          {!isLive && (
+            <button
+              onClick={() => onToggleAlert(id)}
+              className={`font-geist-mono text-xs border px-4 py-1.5 transition-all active:scale-95 flex items-center gap-2 cursor-pointer ${
+                isAlertSet
+                  ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
+                  : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
+              }`}
+              data-testid={`alert-btn-${id}`}
+            >
+              {isAlertSet ? (
+                <>
+                  <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
+                  <span>[ ALERT ACTIVE ]</span>
+                </>
+              ) : (
+                <>
+                  <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
+                  <span>[ NOTIFY ME ]</span>
+                </>
+              )}
+            </button>
+          )}
         </div>
       </div>
     </article>

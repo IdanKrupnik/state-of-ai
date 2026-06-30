@@ -18,11 +18,13 @@ describe('Events Component', () => {
     expect(initialCards[2].getTitle()).toBe('OpenAI DevDay');
     expect(initialCards[3].getTitle()).toBe('Apple WWDC24');
 
-    expect(initialCards[0].getAlertButtonText()).toBe('[ NOTIFY ME ]');
+    expect(initialCards[0].getAlertButtonText()).toBeNull();
+
+    expect(initialCards[1].getAlertButtonText()).toBe('[ NOTIFY ME ]');
     act(() => {
-      initialCards[0].clickAlertButton();
+      initialCards[1].clickAlertButton();
     });
-    expect(initialCards[0].getAlertButtonText()).toBe('[ NOTIFICATION ACTIVE ]');
+    expect(initialCards[1].getAlertButtonText()).toBe('[ ALERT ACTIVE ]');
 
     expect(driver.hasPastEventsLog()).toBe(true);
     expect(driver.isPastEventDetailsVisible('openai-devday-2023')).toBe(false);
