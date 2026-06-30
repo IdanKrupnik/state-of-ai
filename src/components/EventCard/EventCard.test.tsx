@@ -28,6 +28,7 @@ describe('EventCard Component', () => {
     expect(driver.getTypeText()).toBe('Type: Hardware / Compute');
     expect(driver.getAlertButtonText()).toBe('[ NOTIFY ME ]');
     expect(driver.isLiveIndicatorPresent()).toBe(true);
+    expect(driver.getLiveStreamLink()).toBe('https://youtube.com');
 
     driver.clickAlertButton();
     expect(handleToggleAlert).toHaveBeenCalledWith('test-event');

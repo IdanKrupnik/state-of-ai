@@ -60,4 +60,9 @@ export class EventCardDriver {
   isLiveIndicatorPresent(): boolean {
     return !!this.elementToUse.querySelector('[data-testid="live-indicator"]');
   }
+
+  getLiveStreamLink(): string | null {
+    const link = this.elementToUse.querySelector('[data-testid="live-stream-link"]');
+    return link ? link.getAttribute('href') : null;
+  }
 }

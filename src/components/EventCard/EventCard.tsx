@@ -34,6 +34,15 @@ export const EventCard: React.FC<EventProps> = ({
               <div className="flex items-center gap-1.5" data-testid="live-indicator">
                 <div className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
                 <span className="font-geist-mono text-xs text-secondary font-bold">[ LIVE ]</span>
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-geist-mono text-xs text-secondary hover:underline ml-2"
+                  data-testid="live-stream-link"
+                >
+                  ↗ WATCH STREAM
+                </a>
               </div>
             )}
           </div>
