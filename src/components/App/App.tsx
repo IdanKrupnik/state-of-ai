@@ -28,9 +28,21 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
+      const parts = hash.split('/');
+      const primaryTab = parts[0];
       const validTabs = ['feed', 'benchmarks', 'events', 'about', 'learn'];
-      if (validTabs.includes(hash)) {
-        setActiveTab(hash);
+      if (validTabs.includes(primaryTab)) {
+        setActiveTab(primaryTab);
+        
+        const sectionId = parts[1];
+        if (sectionId) {
+          setTimeout(() => {
+            const el = document.getElementById(sectionId);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100);
+        }
       }
     };
 

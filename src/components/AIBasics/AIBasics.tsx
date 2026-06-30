@@ -25,6 +25,24 @@ export const AIBasics: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const handleTocClick = (sectionId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (typeof window !== 'undefined') {
+      window.location.hash = `learn/${sectionId}`;
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const tocItems = [
+    { id: 'definition', label: '01 // Definition' },
+    { id: 'architecture', label: '02 // Architecture' },
+    { id: 'capabilities', label: '03 // Capabilities' },
+    { id: 'deployment', label: '04 // Deployment' },
+  ];
+
   return (
     <div className="flex flex-col gap-16 py-4" data-testid="ai-basics-section">
       <section className="flex flex-col gap-4">
@@ -47,10 +65,16 @@ export const AIBasics: React.FC = () => {
           <span className="font-bold text-brand-black pb-2 border-b border-outline-variant/30">
             Navigation
           </span>
-          <a href="#definition" className="hover:text-brand-black transition-colors">01 // Definition</a>
-          <a href="#architecture" className="hover:text-brand-black transition-colors">02 // Architecture</a>
-          <a href="#capabilities" className="hover:text-brand-black transition-colors">03 // Capabilities</a>
-          <a href="#deployment" className="hover:text-brand-black transition-colors">04 // Deployment</a>
+          {tocItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#learn/${item.id}`}
+              onClick={(e) => handleTocClick(item.id, e)}
+              className="hover:text-brand-black transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
         </aside>
 
         <div className="flex flex-col gap-16">
