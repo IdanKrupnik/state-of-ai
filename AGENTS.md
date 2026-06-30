@@ -67,6 +67,7 @@ Guidelines:
 - Components should be extracted to smaller components as much as possible to ensure maximum modularity and reusability. A single component file should not exceed approximately 100 lines of code.
 - Test files must never query the DOM or assert CSS classes directly; they must interact solely through the driver. This ensures that future visual changes or Tailwind updates will never break our test suites.
 - High-level feature components should leverage the drivers of the atomic UI components they compose to maintain complete isolation.
+- High-level composed components should be named with generic and easy-to-understand names (e.g., naming the main dashboard layout component App instead of FeedContainer).
 
 ---
 

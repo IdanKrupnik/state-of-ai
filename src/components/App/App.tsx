@@ -22,11 +22,11 @@ export interface Article {
   created_at?: string;
 }
 
-export interface FeedContainerProps {
+export interface AppProps {
   initialArticles: Article[];
 }
 
-export const FeedContainer: React.FC<FeedContainerProps> = ({ initialArticles = [] }) => {
+export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 

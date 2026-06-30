@@ -10,7 +10,7 @@ import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
 import { TuningDrawerDriver } from '../TuningDrawer/TuningDrawer.driver';
 
-export class FeedContainerDriver {
+export class AppDriver {
   private element: HTMLElement | null = null;
 
   constructor(private container?: HTMLElement) {}
@@ -26,7 +26,7 @@ export class FeedContainerDriver {
     }
     
     if (!el) {
-      throw new Error('FeedContainer element not found');
+      throw new Error('App element not found');
     }
     this.element = el;
     return el;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import { FeedContainer, Article } from './FeedContainer';
-import { FeedContainerDriver } from './FeedContainer.driver';
+import { App, Article } from './App';
+import { AppDriver } from './App.driver';
 
-describe('FeedContainer Component', () => {
+describe('App Component', () => {
   const mockArticles: Article[] = [
     {
       id: 1,
@@ -33,8 +33,8 @@ describe('FeedContainer Component', () => {
   ];
 
   it('should render the list of article rows correctly', () => {
-    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
-    const driver = new FeedContainerDriver(container);
+    const { container } = render(<App initialArticles={mockArticles} />);
+    const driver = new AppDriver(container);
 
     const rows = driver.getArticleRowDrivers();
     expect(rows).toHaveLength(3);
@@ -44,8 +44,8 @@ describe('FeedContainer Component', () => {
   });
 
   it('should filter articles by search query', () => {
-    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
-    const driver = new FeedContainerDriver(container);
+    const { container } = render(<App initialArticles={mockArticles} />);
+    const driver = new AppDriver(container);
 
     const searchInput = driver.getSearchInputDriver();
     searchInput.setValue('Gemini');
@@ -56,8 +56,8 @@ describe('FeedContainer Component', () => {
   });
 
   it('should display empty state if no articles match', () => {
-    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
-    const driver = new FeedContainerDriver(container);
+    const { container } = render(<App initialArticles={mockArticles} />);
+    const driver = new AppDriver(container);
 
     const searchInput = driver.getSearchInputDriver();
     searchInput.setValue('Unobtainium');
@@ -68,8 +68,8 @@ describe('FeedContainer Component', () => {
   });
 
   it('should allow opening and closing side drawer and subscribing to newsletter', () => {
-    const { container } = render(<FeedContainer initialArticles={mockArticles} />);
-    const driver = new FeedContainerDriver(container);
+    const { container } = render(<App initialArticles={mockArticles} />);
+    const driver = new AppDriver(container);
 
     const nav = driver.getTopNavBarDriver();
     const drawer = driver.getTuningDrawerDriver();

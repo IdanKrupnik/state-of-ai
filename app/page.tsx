@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { FeedContainer } from '../src/components/FeedContainer/FeedContainer';
+import { App } from '../src/components/App/App';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,12 +7,10 @@ export const metadata: Metadata = {
   description: "Aggregating and simplifying complex AI research, releases, and policy updates for developers and professionals.",
 };
 
-// 1. Initialize Supabase safely on the server
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
 
-// 2. Database fetching logic (Runs securely on the backend)
 async function getArticles() {
   const { data, error } = await supabase
     .from('articles')
@@ -26,11 +24,10 @@ async function getArticles() {
   return data;
 }
 
-// 3. The Server Component
 export default async function HomePage() {
   const articles = await getArticles();
 
   return (
-    <FeedContainer initialArticles={articles} />
+    <App initialArticles={articles} />
   );
 }
