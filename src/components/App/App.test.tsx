@@ -7,28 +7,34 @@ import { AppDriver } from './App.driver';
 describe('App Component', () => {
   const mockArticles: Article[] = [
     {
-      id: 1,
+      id: '1',
       company: 'Supabase',
       hype_score: 45,
       simplified_title: 'Database backups automated',
       short_summary: 'Supabase has introduced point-in-time recovery for databases.',
       source_url: 'https://supabase.com/blog/pitr',
+      original_title: 'Database backups automated original',
+      created_at: '2026-06-30T14:00:00Z',
     },
     {
-      id: 2,
+      id: '2',
       company: 'OpenAI',
       hype_score: 90,
       simplified_title: 'GPT-5 teaser released',
       short_summary: 'OpenAI previewed its next-generation reasoning model.',
       source_url: 'https://openai.com/blog/gpt5',
+      original_title: 'GPT-5 teaser released original',
+      created_at: '2026-06-30T14:00:00Z',
     },
     {
-      id: 3,
+      id: '3',
       company: 'Google',
       hype_score: 75,
       simplified_title: 'Gemini 2.0 now live',
       short_summary: 'Google released Gemini 2.0 Flash in public preview.',
       source_url: 'https://deepmind.google/gemini',
+      original_title: 'Gemini 2.0 now live original',
+      created_at: '2026-06-30T14:00:00Z',
     },
   ];
 

@@ -12,15 +12,9 @@ import { FeedRow } from '../FeedRow/FeedRow';
 import { Footer } from '../Footer/Footer';
 import { TuningDrawer } from '../TuningDrawer/TuningDrawer';
 
-export interface Article {
-  id: string | number;
-  company: string;
-  hype_score: number;
-  simplified_title: string;
-  short_summary: string;
-  source_url: string;
-  created_at?: string;
-}
+import { Tables } from '@/types/database.types';
+
+export type Article = Tables<'articles'>;
 
 export interface AppProps {
   initialArticles: Article[];

@@ -2,11 +2,13 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+import { Database } from '@/types/database.types';
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const geminiApiKey = process.env.GEMINI_API_KEY;
 
-const supabase = createClient(supabaseUrl || '', supabaseServiceKey || '');
+const supabase = createClient<Database>(supabaseUrl || '', supabaseServiceKey || '');
 const genAI = new GoogleGenerativeAI(geminiApiKey || '');
 
 export async function GET() {
