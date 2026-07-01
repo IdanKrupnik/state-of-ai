@@ -8,50 +8,49 @@ export interface StepperProps {
 
 export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, onStepChange }) => {
   return (
-    <div className="flex items-center justify-between w-full" data-testid="stepper">
+    <nav aria-label="Progress" className="flex justify-between items-center relative w-full" data-testid="stepper">
+      <div className="absolute top-5 left-0 w-full h-[1px] bg-outline-variant -z-10" />
+
       {steps.map((label, idx) => {
         const stepNum = idx + 1;
         const isCompleted = stepNum < currentStep;
         const isActive = stepNum === currentStep;
 
         return (
-          <React.Fragment key={label}>
-            <div className="flex flex-col items-center gap-2 relative">
-              <button
-                onClick={() => onStepChange(stepNum)}
-                className={`flex items-center justify-center w-8 h-8 rounded-full border-2 text-xs font-geist-mono font-bold transition-all cursor-pointer z-10 ${
-                  isActive
-                    ? 'bg-brand-black border-brand-black text-brand-offwhite scale-110 shadow-md'
-                    : isCompleted
-                    ? 'bg-brand-black border-brand-black text-brand-offwhite'
-                    : 'bg-brand-offwhite border-outline-variant text-brand-warm-grey hover:border-brand-black hover:text-brand-black'
-                }`}
-                data-testid={`stepper-node-${stepNum}`}
-                aria-label={`Go to step ${stepNum}: ${label}`}
-              >
-                {stepNum}
-              </button>
-              <span
-                className={`text-[10px] font-geist-mono uppercase tracking-wider font-bold transition-colors ${
-                  isActive ? 'text-brand-black' : 'text-brand-warm-grey/60'
-                }`}
-                data-testid={`stepper-label-${stepNum}`}
-              >
-                {label}
+          <div key={label} className="flex flex-col items-center gap-3 bg-brand-offwhite px-3 relative">
+            <button
+              onClick={() => onStepChange(stepNum)}
+              className={`w-10 h-10 flex items-center justify-center transition-all cursor-pointer relative ${
+                isActive
+                  ? 'border-2 border-brand-black bg-brand-clay/10 text-brand-black font-black'
+                  : isCompleted
+                  ? 'border-2 border-brand-black bg-brand-black text-brand-offwhite font-bold'
+                  : 'border border-outline-variant text-brand-warm-grey/60 bg-brand-offwhite'
+              }`}
+              data-testid={`stepper-node-${stepNum}`}
+              aria-label={`Go to step ${stepNum}: ${label}`}
+            >
+              <span className="font-geist-mono text-xs">
+                {stepNum < 10 ? `0${stepNum}` : stepNum}
               </span>
-            </div>
-
-            {idx < steps.length - 1 && (
-              <div
-                className={`flex-1 h-[2px] mx-2 -translate-y-3 transition-colors duration-300 ${
-                  stepNum < currentStep ? 'bg-brand-black' : 'bg-outline-variant/30'
-                }`}
-                data-testid={`stepper-line-${stepNum}`}
-              />
-            )}
-          </React.Fragment>
+              {isActive && (
+                <div 
+                  className="absolute -bottom-1 -right-1 w-2 h-2 bg-brand-black" 
+                  data-testid={`stepper-notch-${stepNum}`}
+                />
+              )}
+            </button>
+            <span
+              className={`font-geist-mono text-[10px] uppercase tracking-wider font-bold transition-colors ${
+                isActive || isCompleted ? 'text-brand-black' : 'text-brand-warm-grey/60'
+              }`}
+              data-testid={`stepper-label-${stepNum}`}
+            >
+              {label}
+            </span>
+          </div>
         );
       })}
-    </div>
+    </nav>
   );
 };

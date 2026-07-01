@@ -30,22 +30,16 @@ export class StepperDriver {
   }
 
   isStepActive(stepNum: number): boolean {
-    const btn = this.elementToUse.querySelector(`[data-testid="stepper-node-${stepNum}"]`);
-    return btn ? btn.classList.contains('bg-brand-black') && btn.classList.contains('scale-110') : false;
+    return !!this.elementToUse.querySelector(`[data-testid="stepper-notch-${stepNum}"]`);
   }
 
   isStepCompleted(stepNum: number): boolean {
     const btn = this.elementToUse.querySelector(`[data-testid="stepper-node-${stepNum}"]`);
-    return btn ? btn.classList.contains('bg-brand-black') && !btn.classList.contains('scale-110') : false;
+    return btn ? btn.classList.contains('bg-brand-black') && !this.isStepActive(stepNum) : false;
   }
 
   getStepLabel(stepNum: number): string | null {
     const labelSpan = this.elementToUse.querySelector(`[data-testid="stepper-label-${stepNum}"]`);
     return labelSpan ? labelSpan.textContent : null;
-  }
-
-  isLineActive(stepNum: number): boolean {
-    const line = this.elementToUse.querySelector(`[data-testid="stepper-line-${stepNum}"]`);
-    return line ? line.classList.contains('bg-brand-black') : false;
   }
 }

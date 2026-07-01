@@ -29,10 +29,10 @@ export const GenerationVisualizer: React.FC<GenerationVisualizerProps> = ({ prom
   }, []);
 
   return (
-    <div className="flex flex-col gap-5 p-5 border border-outline-variant bg-brand-clay/10 min-h-[300px]" data-testid="generation-visualizer">
-      <div className="flex flex-col gap-3 p-4 bg-brand-offwhite border border-outline-variant rounded">
+    <div className="flex flex-col gap-5 w-full" data-testid="generation-visualizer">
+      <div className="flex flex-col gap-3 p-4 bg-brand-offwhite border border-outline-variant">
         <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase">Running Output Prediction</span>
-        <div className="p-3 bg-brand-clay/5 border border-outline-variant/40 rounded min-h-[50px] font-medium text-brand-black text-sm">
+        <div className="p-3 bg-brand-clay/5 border border-outline-variant/40 min-h-[50px] font-medium text-brand-black text-sm">
           <span>{prompt}</span>
           <motion.span
             initial={{ opacity: 0 }}

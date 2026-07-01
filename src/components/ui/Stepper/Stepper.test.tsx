@@ -21,9 +21,6 @@ describe('Stepper Component', () => {
     expect(driver.getStepLabel(2)).toBe('Two');
     expect(driver.getStepLabel(3)).toBe('Three');
 
-    expect(driver.isLineActive(1)).toBe(true);
-    expect(driver.isLineActive(2)).toBe(false);
-
     driver.clickStep(3);
     expect(handleStepChange).toHaveBeenCalledWith(3);
   });

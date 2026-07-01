@@ -88,7 +88,7 @@ export const PromptToOutputVisualizer: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center border border-outline-variant/60 bg-brand-clay/5 rounded overflow-hidden" data-testid="canvas-area">
+      <div className="flex flex-col justify-center border border-outline-variant p-6 bg-brand-offwhite min-h-[320px] relative overflow-hidden" data-testid="canvas-area">
         {step === 1 && <TokenVisualizer prompt={prompt} />}
         {step === 2 && <EmbeddingVisualizer prompt={prompt} />}
         {step === 3 && <AttentionVisualizer prompt={prompt} />}

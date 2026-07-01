@@ -17,6 +17,23 @@ import { Tables } from '@/types/database.types';
 
 export type Article = Tables<'articles'>;
 
+const formatRelativeTime = (dateString?: string): string => {
+  if (!dateString) return '1 hour ago';
+  const now = new Date();
+  const created = new Date(dateString);
+  const diffMs = now.getTime() - created.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return `${diffMins} minutes ago`;
+  if (diffHours === 1) return '1 hour ago';
+  if (diffHours < 24) return `${diffHours} hours ago`;
+  if (diffDays === 1) return '1 day ago';
+  return `${diffDays} days ago`;
+};
+
 export interface AppProps {
   initialArticles: Article[];
 }
@@ -91,7 +108,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                           title={article.simplified_title}
                           summary={article.short_summary}
                           sourceUrl={article.source_url}
-                          timestamp={article.created_at ? new Date(article.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }) : '12:00 UTC'}
+                          timestamp={formatRelativeTime(article.created_at)}
                         />
                       ))
                     )}

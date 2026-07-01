@@ -62,9 +62,7 @@ export const EmbeddingVisualizer: React.FC<EmbeddingVisualizerProps> = ({ prompt
   const allNodes = [...presetNodes, ...dynamicNodes];
 
   return (
-    <div className="flex flex-col gap-2 p-4 border border-outline-variant bg-brand-clay/10 min-h-[350px]" data-testid="embedding-visualizer">
-      <div className="relative w-full aspect-[4/3] bg-brand-offwhite border border-outline-variant overflow-hidden">
-        <svg className="w-full h-full" viewBox="0 0 400 350">
+    <svg className="w-full h-full aspect-[4/3] overflow-hidden" viewBox="0 0 400 350" data-testid="embedding-visualizer">
           <defs>
             <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0,0,0,0.03)" strokeWidth="1" />
@@ -122,7 +120,5 @@ export const EmbeddingVisualizer: React.FC<EmbeddingVisualizerProps> = ({ prompt
             );
           })}
         </svg>
-      </div>
-    </div>
   );
 };
