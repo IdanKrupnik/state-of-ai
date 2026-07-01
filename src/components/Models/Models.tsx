@@ -39,48 +39,54 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
         </p>
       </div>
 
-      <div className="flex flex-col gap-10" data-testid="models-container">
+      <div className="flex flex-col gap-12" data-testid="models-container">
         {providers.map((provider) => {
           const providerModels = initialModels.filter((m) => m.provider === provider);
           if (providerModels.length === 0) return null;
 
           return (
-            <div key={provider} className="flex flex-col gap-3" data-testid={`provider-group-${provider.toLowerCase()}`}>
+            <div key={provider} className="flex flex-col gap-5" data-testid={`provider-group-${provider.toLowerCase()}`}>
               <h3 className="font-geist-mono text-xs uppercase tracking-wider font-semibold text-brand-black border-b border-brand-black/15 pb-2">
                 {provider}
               </h3>
               
-              <div className="flex flex-col">
-                {providerModels.map((model) => (
-                  <div 
-                    key={model.id} 
-                    className="py-4 border-b border-brand-black/5 last:border-b-0 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-brand-clay/5 px-2 -mx-2 transition-colors rounded-sm"
-                    data-testid={`model-row-${model.id.replace('/', '-')}`}
-                  >
-                    <div className="flex flex-col gap-1 max-w-xl">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-brand-black text-sm">{model.name}</span>
-                        {newestIds.has(model.id) && (
-                          <span className="px-1.5 py-0.5 text-[9px] font-geist-mono uppercase tracking-wider font-semibold border border-brand-black/25 text-brand-black rounded-sm scale-90 origin-left">
-                            New
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-brand-warm-grey text-xs italic">
-                        {model.description || 'No description available.'}
-                      </p>
-                    </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {providerModels.map((model) => {
+                  const isNew = newestIds.has(model.id);
+                  return (
+                    <div 
+                      key={model.id} 
+                      className={`relative border rounded-lg p-5 flex flex-col justify-between gap-4 transition-all duration-300 ${
+                        isNew 
+                          ? 'border-brand-black bg-white shadow-md ring-1 ring-brand-black/5' 
+                          : 'border-brand-black/10 bg-white/40 hover:border-brand-black/25 hover:bg-white/60'
+                      }`}
+                      data-testid={`model-row-${model.id.replace('/', '-')}`}
+                    >
+                      {isNew && (
+                        <span className="absolute -top-2.5 left-4 px-2 py-0.5 text-[9px] font-geist-mono uppercase tracking-widest font-extrabold bg-brand-black text-white rounded-sm shadow-sm">
+                          New Model
+                        </span>
+                      )}
 
-                    <div className="flex items-center gap-3 text-xs font-geist-mono text-brand-black/80 shrink-0">
-                      <span className="px-2.5 py-1 bg-brand-clay/20 rounded-sm">
-                        {formatContextLength(model.context_length)} ctx
-                      </span>
-                      <span className="px-2.5 py-1 bg-brand-clay/20 rounded-sm">
-                        {formatPrice(model.prompt_token_price)} / {formatPrice(model.completion_token_price)}
-                      </span>
+                      <div className="flex flex-col gap-1.5">
+                        <span className="font-bold text-brand-black text-sm block leading-tight">{model.name}</span>
+                        <p className="text-brand-warm-grey text-xs italic leading-relaxed">
+                          {model.description || 'No description available.'}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-[10px] font-geist-mono text-brand-black/80 mt-auto">
+                        <span className="px-2 py-0.5 bg-brand-clay/20 rounded-sm">
+                          {formatContextLength(model.context_length)} ctx
+                        </span>
+                        <span className="px-2 py-0.5 bg-brand-clay/20 rounded-sm">
+                          {formatPrice(model.prompt_token_price)} / {formatPrice(model.completion_token_price)}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           );

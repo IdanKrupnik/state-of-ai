@@ -33,7 +33,7 @@ export class ModelsDriver {
   }
 
   getModelName(row: HTMLElement): string {
-    return row.querySelector('span.font-semibold')?.textContent?.trim() || '';
+    return row.querySelector('span.font-bold')?.textContent?.trim() || '';
   }
 
   getContextText(row: HTMLElement): string {
@@ -52,6 +52,6 @@ export class ModelsDriver {
 
   hasNewBadge(row: HTMLElement): boolean {
     const spans = Array.from(row.querySelectorAll('span'));
-    return spans.some((s) => s.textContent?.trim() === 'New');
+    return spans.some((s) => s.textContent?.trim() === 'New Model');
   }
 }
