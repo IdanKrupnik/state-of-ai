@@ -32,34 +32,67 @@ async function getArticles() {
 }
 
 async function getBubbleIndexData() {
-  try {
-    const { data, error } = await supabase
-      .from('articles')
-      .select('*')
-      .eq('company', 'BUBBLE_INDEX_CACHE')
-      .maybeSingle();
-
-    if (!error && data && data.simplified_title) {
-      return JSON.parse(data.simplified_title);
-    }
-  } catch (err) {
-    console.error('Failed to fetch bubble index from Supabase:', err);
+  const token = process.env.MARKETAUX_API_TOKEN;
+  if (!token) {
+    return {
+      bubblePercentage: 68,
+      structuralShiftPercentage: 32,
+      statusDirection: 'increasing',
+      lastSynced: new Date().toISOString()
+    };
   }
 
+  let articlesList: any[] = [];
   try {
-    const filePath = path.join(process.cwd(), 'public', 'bubble-index-cache.json');
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(fileContent);
+    const url = `https://api.marketaux.com/v1/news/all?search="AI bubble"|"AI hype"&language=en&api_token=${token}`;
+    const response = await fetch(url, { next: { revalidate: 21600 } });
+    if (response.ok) {
+      const payload = await response.json();
+      if (payload && Array.isArray(payload.data)) {
+        articlesList = payload.data.map((item: any) => ({
+          title: item.title,
+          description: item.description || item.snippet,
+          sentiment: item.sentiment_score
+        }));
+      }
     }
   } catch (err) {
-    console.error('Failed to read bubble index from local cache:', err);
+    console.error('Failed to fetch from Marketaux in server component:', err);
   }
+
+  if (articlesList.length === 0) {
+    articlesList = [
+      { title: 'Tech industry faces growing skepticism over massive AI capex spending', description: 'Analysts voice concerns about the revenue mismatch and lack of near-term enterprise ROI for LLM deployment.', sentiment: -0.4 },
+      { title: 'AI hype cycles start to cool down as capital expenditure increases', description: 'VC funding remains strong but enterprise buyers demand tangible efficiency gains over bubble promises.', sentiment: -0.2 },
+      { title: 'Is the AI bubble set to burst soon?', description: 'Structural shifts in software engineering suggest long term utility despite current market overvaluation.', sentiment: 0.1 }
+    ];
+  }
+
+  let totalWeight = 0;
+  let weightedBubbleScore = 0;
+
+  for (const article of articlesList) {
+    const text = `${article.title} ${article.description || ''}`.toLowerCase();
+    let weight = 1.0;
+    
+    if (text.includes('revenue mismatch') || text.includes('lack of enterprise roi') || text.includes('capital expenditure fatigue') || text.includes('unsustainable capital expenditure') || text.includes('capex')) {
+      weight = 2.5;
+    }
+
+    const sentimentRisk = ((1.0 - (article.sentiment ?? 0)) / 2.0) * 100;
+    
+    weightedBubbleScore += sentimentRisk * weight;
+    totalWeight += weight;
+  }
+
+  const bubblePercentage = Math.round(weightedBubbleScore / (totalWeight || 1));
+  const structuralShiftPercentage = Math.max(10, 100 - bubblePercentage);
+  const statusDirection = bubblePercentage > 60 ? 'increasing' : bubblePercentage < 40 ? 'decreasing' : 'stable';
 
   return {
-    bubblePercentage: 68,
-    structuralShiftPercentage: 32,
-    statusDirection: 'increasing',
+    bubblePercentage,
+    structuralShiftPercentage,
+    statusDirection,
     lastSynced: new Date().toISOString()
   };
 }
