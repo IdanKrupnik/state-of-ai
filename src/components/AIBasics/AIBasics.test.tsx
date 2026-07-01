@@ -28,6 +28,7 @@ describe('AIBasics Component', () => {
       '02 // Architecture',
       '03 // Capabilities',
       '04 // Deployment',
+      '05 // Visualizer',
     ]);
 
     expect(driver.hasMobileTOC()).toBe(true);
@@ -42,6 +43,7 @@ describe('AIBasics Component', () => {
       '02 // Architecture',
       '03 // Capabilities',
       '04 // Deployment',
+      '05 // Visualizer',
     ]);
 
     act(() => {
@@ -58,5 +60,22 @@ describe('AIBasics Component', () => {
       driver.clickMobileTOCBackdrop();
     });
     expect(driver.isMobileTOCDropdownVisible()).toBe(false);
+
+    expect(driver.hasCollapsibleFundamentals()).toBe(true);
+    const colDriver = driver.getCollapsibleFundamentalsDriver();
+    expect(colDriver.getSummaryText()).toContain('NEW TO AI?');
+    expect(colDriver.isOpen()).toBe(false);
+    act(() => {
+      colDriver.toggle();
+    });
+    expect(colDriver.isOpen()).toBe(true);
+
+    expect(driver.hasPromptToOutputVisualizer()).toBe(true);
+    const visDriver = driver.getPromptToOutputVisualizerDriver();
+    expect(visDriver.getActiveStepTitle()).toBe('Tokenization');
+    act(() => {
+      visDriver.clickTab(2);
+    });
+    expect(visDriver.getActiveStepTitle()).toBe('Vector Embedding');
   });
 });

@@ -1,4 +1,6 @@
 import { screen } from '@testing-library/react';
+import { CollapsibleFundamentalsDriver } from '../CollapsibleFundamentals/CollapsibleFundamentals.driver';
+import { PromptToOutputVisualizerDriver } from '../PromptToOutputVisualizer/PromptToOutputVisualizer.driver';
 
 export class AIBasicsDriver {
   private element: HTMLElement | null = null;
@@ -92,5 +94,21 @@ export class AIBasicsDriver {
     if (el) {
       el.click();
     }
+  }
+
+  hasCollapsibleFundamentals(): boolean {
+    return !!this.elementToUse.querySelector('summary');
+  }
+
+  getCollapsibleFundamentalsDriver(): CollapsibleFundamentalsDriver {
+    return new CollapsibleFundamentalsDriver(this.elementToUse);
+  }
+
+  hasPromptToOutputVisualizer(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="prompt-to-output-visualizer"]');
+  }
+
+  getPromptToOutputVisualizerDriver(): PromptToOutputVisualizerDriver {
+    return new PromptToOutputVisualizerDriver(this.elementToUse);
   }
 }

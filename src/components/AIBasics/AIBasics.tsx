@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { CollapsibleFundamentals } from '../CollapsibleFundamentals/CollapsibleFundamentals';
+import { PromptToOutputVisualizer } from '../PromptToOutputVisualizer/PromptToOutputVisualizer';
 
 interface SectionProps {
   id: string;
@@ -42,6 +44,7 @@ export const AIBasics: React.FC = () => {
     { id: 'architecture', label: '02 // Architecture' },
     { id: 'capabilities', label: '03 // Capabilities' },
     { id: 'deployment', label: '04 // Deployment' },
+    { id: 'visualizer', label: '05 // Visualizer' },
   ];
 
   return (
@@ -146,6 +149,7 @@ export const AIBasics: React.FC = () => {
                 Machine Learning (ML) acts as the engine, allowing algorithms to parse vast datasets, identify patterns, and make high-probability decisions without explicit instruction.
               </p>
             </div>
+            <CollapsibleFundamentals />
           </LearnSection>
 
           <LearnSection id="architecture" number="02 // ARCHITECTURE" title="Neural Networks">
@@ -194,6 +198,10 @@ export const AIBasics: React.FC = () => {
                 <span className="font-geist-mono text-2xl md:text-3xl font-black text-brand-black">1,024</span>
               </div>
             </div>
+          </LearnSection>
+
+          <LearnSection id="visualizer" number="05 // INTERACTIVE" title="How AI Generates Answers">
+            <PromptToOutputVisualizer />
           </LearnSection>
         </div>
       </div>
