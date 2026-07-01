@@ -32,7 +32,9 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             data-testid="feed-row-content"
             className={`${isOpen ? 'block' : 'hidden'} mt-4 font-body-md text-on-surface-variant leading-relaxed`}
           >
-            <p className="mb-2 text-brand-warm-grey">{company.toUpperCase()}</p>
+            <p className="mb-2 text-brand-warm-grey">
+              {company.toUpperCase() === 'AI' ? 'AI SUMMARY' : company.toUpperCase()}
+            </p>
             <p>{summary}</p>
             <a
               href={sourceUrl}
