@@ -26,8 +26,16 @@ export class PricingDriver {
     return this.elementToUse.querySelector('.text-4xl')?.textContent || '';
   }
 
-  hasSubscribeButton(): boolean {
+  hasFreePlanCard(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="free-button"]');
+  }
+
+  hasProPlanCard(): boolean {
     return !!this.elementToUse.querySelector('[data-testid="subscribe-button"]');
+  }
+
+  hasSubscribeButton(): boolean {
+    return this.hasProPlanCard();
   }
 
   isSubscribeButtonDisabled(): boolean {
