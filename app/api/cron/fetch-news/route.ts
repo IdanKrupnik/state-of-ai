@@ -115,7 +115,16 @@ async function handleNewsIngestion(req: Request) {
     const tcItems = tcXml ? parseRss(tcXml, 'TechCrunch') : [];
     const rundownItems = rundownXml ? parseRss(rundownXml, 'The Rundown AI') : [];
 
-    const items = [...tcItems, ...rundownItems];
+    const items: ParsedItem[] = [];
+    const maxLen = Math.max(tcItems.length, rundownItems.length);
+    for (let i = 0; i < maxLen; i++) {
+      if (i < tcItems.length) {
+        items.push(tcItems[i]);
+      }
+      if (i < rundownItems.length) {
+        items.push(rundownItems[i]);
+      }
+    }
 
     if (items.length === 0) {
       return NextResponse.json(
