@@ -69,7 +69,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-brand-offwhite text-brand-black flex flex-col font-inter antialiased">
+    <div className="min-h-screen bg-bg-base text-brand-black flex flex-col font-inter antialiased">
       <TopNavBar
         activeTab={activeTab}
         onTabChange={setActiveTab}
