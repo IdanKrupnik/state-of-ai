@@ -47,6 +47,33 @@ export type Database = {
         }
         Relationships: []
       }
+      bubble_state: {
+        Row: {
+          bubble_percentage: number
+          financial_highlights: Json
+          id: number
+          short_explanation: string
+          status_direction: string
+          updated_at: string
+        }
+        Insert: {
+          bubble_percentage: number
+          financial_highlights?: Json
+          id?: number
+          short_explanation: string
+          status_direction: string
+          updated_at?: string
+        }
+        Update: {
+          bubble_percentage?: number
+          financial_highlights?: Json
+          id?: number
+          short_explanation?: string
+          status_direction?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

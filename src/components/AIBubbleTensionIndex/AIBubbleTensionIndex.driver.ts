@@ -46,14 +46,13 @@ export class AIBubbleTensionIndexDriver {
     return this.elementToUse.querySelector('[data-testid="tracker-pin"]');
   }
 
-  clickMetricButton(index: number): void {
-    const btn = this.elementToUse.querySelector(`[data-testid="metric-btn-${index}"]`) as HTMLButtonElement | null;
-    if (btn) {
-      btn.click();
-    }
+  getExplanationText(): string | null {
+    const el = this.elementToUse.querySelector('[data-testid="explanation-text"]');
+    return el ? el.textContent : null;
   }
 
-  isMetricDetailsVisible(index: number): boolean {
-    return !!this.elementToUse.querySelector(`[data-testid="metric-details-${index}"]`);
+  getHighlightText(index: number): string | null {
+    const el = this.elementToUse.querySelector(`[data-testid="highlight-item-${index}"]`);
+    return el ? el.textContent : null;
   }
 }
