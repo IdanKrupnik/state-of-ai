@@ -18,15 +18,7 @@ const LearnSection: React.FC<SectionProps> = ({ id, number, title, children }) =
 );
 
 export const AIBasics: React.FC = () => {
-  const [latency, setLatency] = useState(12.4);
   const [isTocOpen, setIsTocOpen] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setLatency(12.0 + Math.random() * 0.8);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleTocClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,8 +35,7 @@ export const AIBasics: React.FC = () => {
     { id: 'definition', label: '01 // Definition' },
     { id: 'architecture', label: '02 // Architecture' },
     { id: 'capabilities', label: '03 // Capabilities' },
-    { id: 'deployment', label: '04 // Deployment' },
-    { id: 'visualizer', label: '05 // Visualizer' },
+    { id: 'visualizer', label: '04 // Visualizer' },
   ];
 
   return (
@@ -170,26 +161,7 @@ export const AIBasics: React.FC = () => {
               <span className="px-3 py-1 bg-brand-clay/10 border border-outline-variant/30">[ TOKEN_WINDOW: 128K ]</span>
             </div>
           </LearnSection>
-
-          <LearnSection id="deployment" number="04 // DEPLOYMENT" title="What is Inference?">
-            <p className="text-brand-warm-grey text-base md:text-lg leading-relaxed max-w-prose">
-              While "Training" is the process of building a model's knowledge, "Inference" is the execution of that knowledge. It is the real-time "thinking" process where a trained model applies its learned patterns to new, unseen data to generate an output.
-            </p>
-            <div className="grid grid-cols-2 gap-4 mt-2">
-              <div className="p-5 border border-outline-variant hover:border-brand-black transition-colors">
-                <span className="font-geist-mono text-xs text-brand-warm-grey block mb-1">MEAN LATENCY</span>
-                <span className="font-geist-mono text-2xl md:text-3xl font-black text-brand-black" data-testid="latency-value">
-                  {latency.toFixed(1)}ms
-                </span>
-              </div>
-              <div className="p-5 border border-outline-variant hover:border-brand-black transition-colors">
-                <span className="font-geist-mono text-xs text-brand-warm-grey block mb-1">ACTIVE NODES</span>
-                <span className="font-geist-mono text-2xl md:text-3xl font-black text-brand-black">1,024</span>
-              </div>
-            </div>
-          </LearnSection>
-
-          <LearnSection id="visualizer" number="05 // INTERACTIVE" title="How AI Generates Answers">
+          <LearnSection id="visualizer" number="04 // INTERACTIVE" title="How AI Generates Answers">
             <PromptToOutputVisualizer />
           </LearnSection>
         </div>

@@ -39,16 +39,6 @@ export class AIBasicsDriver {
     return headers[index] ? headers[index].textContent : null;
   }
 
-  getLatencyText(): string | null {
-    const latencyEl = this.elementToUse.querySelector('[data-testid="latency-value"]');
-    return latencyEl ? latencyEl.textContent : null;
-  }
-
-  getDatacenterTopologyImageAlt(): string | null {
-    const img = this.elementToUse.querySelector('img');
-    return img ? img.getAttribute('alt') : null;
-  }
-
   hasTOC(): boolean {
     return !!this.elementToUse.querySelector('[data-testid="learn-toc"]');
   }
