@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { TopNavBar } from '../TopNavBar/TopNavBar';
 import { TelemetryTicker } from '../TelemetryTicker/TelemetryTicker';
 
-import { SentimentPoll } from '../SentimentPoll/SentimentPoll';
 import { LatencyMap } from '../LatencyMap/LatencyMap';
 import { FeedHeader } from '../FeedHeader/FeedHeader';
 import { FeedRow } from '../FeedRow/FeedRow';
@@ -125,7 +124,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                   <FeedHeader
                     category="CURATION FEED_v4.2"
                     title="Latest AI News"
-                    description="High fidelity technical feed with matching metrics and real-time sub-layer reasoning telemetry."
+                    description="A simple, curated feed of the latest developments in artificial intelligence."
                   />
 
                   <div className="flex flex-col" data-testid="articles-list">
@@ -163,7 +162,6 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
 
                 <div className="border-t border-brand-black/15 my-6" />
 
-                <SentimentPoll />
                 <LatencyMap />
               </>
             )}

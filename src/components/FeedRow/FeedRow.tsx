@@ -35,7 +35,9 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             <p className="mb-2 text-brand-warm-grey">
               {company.toUpperCase() === 'AI' ? 'AI SUMMARY' : company.toUpperCase()}
             </p>
-            <p>{summary}</p>
+            <div className="border-l-2 border-brand-black pl-4 mt-3">
+              <p>{summary}</p>
+            </div>
             <a
               href={sourceUrl}
               target="_blank"

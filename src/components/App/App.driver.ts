@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import { TopNavBarDriver } from '../TopNavBar/TopNavBar.driver';
 import { TelemetryTickerDriver } from '../TelemetryTicker/TelemetryTicker.driver';
 
-import { SentimentPollDriver } from '../SentimentPoll/SentimentPoll.driver';
 import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
@@ -43,9 +42,6 @@ export class AppDriver {
 
 
 
-  getSentimentPollDriver(): SentimentPollDriver {
-    return new SentimentPollDriver(this.elementToUse);
-  }
 
   getLatencyMapDriver(): LatencyMapDriver {
     return new LatencyMapDriver(this.elementToUse);
