@@ -2,11 +2,9 @@ import React from 'react';
 
 export const Pricing: React.FC = () => {
   const features = [
-    'Real-time AI research and policy aggregation',
-    'Cron-fetched news from major industry sources',
-    'Gemini-powered summaries and simplified titles',
-    'Live models catalog with pricing per 1M tokens',
-    'Unlimited custom telemetry feed pagination'
+    'Get notified about new events',
+    'Read quick summaries of all events',
+    'Get alerts when new models are released'
   ];
 
   return (
