@@ -45,6 +45,7 @@ describe('Models Component', () => {
     const { container } = render(<Models initialModels={mockModels} />);
     const driver = new ModelsDriver(container);
 
+    expect(driver.hasStatusIndicator()).toBe(true);
     expect(driver.hasProviderGroup('openai')).toBe(true);
     expect(driver.hasProviderGroup('anthropic')).toBe(true);
     expect(driver.hasProviderGroup('google')).toBe(false);

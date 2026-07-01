@@ -22,6 +22,11 @@ export class ModelsDriver {
     return el;
   }
 
+  hasStatusIndicator(): boolean {
+    const parent = this.container || this.elementToUse;
+    return !!parent.querySelector('[data-testid="models-status-indicator"]');
+  }
+
   hasProviderGroup(provider: string): boolean {
     return !!this.elementToUse.querySelector(`[data-testid="provider-group-${provider.toLowerCase()}"]`);
   }

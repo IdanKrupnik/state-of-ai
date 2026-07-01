@@ -50,13 +50,25 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="border-t border-brand-black/15 pt-8 flex flex-col gap-2">
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-black uppercase font-geist-mono">
-          Model Directory
-        </h2>
-        <p className="text-brand-warm-grey text-sm max-w-xl">
-          A minimalist catalog of current LLM models, grouped by provider. Pricing is shown per million tokens.
-        </p>
+      <div className="border-t border-brand-black/15 pt-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-black uppercase font-geist-mono">
+            Model Directory
+          </h2>
+          <p className="text-brand-warm-grey text-sm max-w-xl">
+            A minimalist catalog of current LLM models, grouped by provider. Pricing is shown per million tokens.
+          </p>
+        </div>
+        
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-brand-clay/20 border border-brand-black/5 rounded-sm shrink-0 self-start md:self-end" data-testid="models-status-indicator">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-neon-green opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-neon-green"></span>
+          </span>
+          <span className="text-[10px] font-geist-mono uppercase tracking-wider font-semibold text-brand-black/85">
+            Monitoring Live Releases
+          </span>
+        </div>
       </div>
 
       <div className="flex flex-col gap-12" data-testid="models-container">
