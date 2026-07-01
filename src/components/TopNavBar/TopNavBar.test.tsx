@@ -5,19 +5,22 @@ import { TopNavBar } from './TopNavBar';
 import { TopNavBarDriver } from './TopNavBar.driver';
 
 describe('TopNavBar Component', () => {
-  it('should render brand and handle click', () => {
-    const handleTuneClick = vi.fn();
-    const { container } = render(<TopNavBar onTuneClick={handleTuneClick} />);
+  it('should render brand and support theme toggling', () => {
+    const { container } = render(<TopNavBar />);
     const driver = new TopNavBarDriver(container);
 
     expect(driver.getBrandText()).toBe('STATE OF AI');
-    driver.clickTuneFilter();
-    expect(handleTuneClick).toHaveBeenCalledTimes(1);
+    expect(driver.hasThemeSwitch()).toBe(true);
+
+    driver.clickThemeSwitch();
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+
+    driver.clickThemeSwitch();
+    expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 
-  it('should toggle mobile menu and trigger filter click', () => {
-    const handleTuneClick = vi.fn();
-    const { container } = render(<TopNavBar onTuneClick={handleTuneClick} />);
+  it('should toggle mobile menu', () => {
+    const { container } = render(<TopNavBar />);
     const driver = new TopNavBarDriver(container);
 
     expect(driver.isMobileMenuOpen()).toBe(false);
@@ -25,15 +28,14 @@ describe('TopNavBar Component', () => {
     driver.toggleMobileMenu();
     expect(driver.isMobileMenuOpen()).toBe(true);
 
-    driver.clickMobileTuneFilter();
-    expect(handleTuneClick).toHaveBeenCalledTimes(1);
+    driver.toggleMobileMenu();
     expect(driver.isMobileMenuOpen()).toBe(false);
   });
 
   it('should highlight active tab and trigger tab change on click', () => {
     const handleTabChange = vi.fn();
     const { container, rerender } = render(
-      <TopNavBar onTuneClick={vi.fn()} activeTab="feed" onTabChange={handleTabChange} />
+      <TopNavBar activeTab="feed" onTabChange={handleTabChange} />
     );
     const driver = new TopNavBarDriver(container);
 
@@ -47,7 +49,7 @@ describe('TopNavBar Component', () => {
     expect(handleTabChange).toHaveBeenCalledWith('benchmarks');
 
     rerender(
-      <TopNavBar onTuneClick={vi.fn()} activeTab="benchmarks" onTabChange={handleTabChange} />
+      <TopNavBar activeTab="benchmarks" onTabChange={handleTabChange} />
     );
 
     expect(driver.isTabActive('feed')).toBe(false);
@@ -57,7 +59,7 @@ describe('TopNavBar Component', () => {
   it('should toggle tabs in mobile menu', () => {
     const handleTabChange = vi.fn();
     const { container } = render(
-      <TopNavBar onTuneClick={vi.fn()} activeTab="feed" onTabChange={handleTabChange} />
+      <TopNavBar activeTab="feed" onTabChange={handleTabChange} />
     );
     const driver = new TopNavBarDriver(container);
 

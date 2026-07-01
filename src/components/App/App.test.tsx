@@ -49,30 +49,6 @@ describe('App Component', () => {
     expect(rows[2].getTitleText()).toBe('Gemini 2.0 now live');
   });
 
-  it('should allow opening and closing side drawer and subscribing to newsletter', () => {
-    const { container } = render(<App initialArticles={mockArticles} />);
-    const driver = new AppDriver(container);
-
-    const nav = driver.getTopNavBarDriver();
-    const drawer = driver.getTuningDrawerDriver();
-
-    expect(drawer.isOpen()).toBe(false);
-
-    nav.clickTuneFilter();
-    expect(drawer.isOpen()).toBe(true);
-
-    const newsletter = drawer.getNewsletterDriver();
-    const input = newsletter.getEmailInputDriver();
-    const submit = newsletter.getSubmitButtonDriver();
-
-    input.setValue('test@example.com');
-    submit.click();
-    expect(newsletter.getSuccessMessage()).toBe('✓ Subscribed successfully!');
-
-    drawer.clickClose();
-    expect(drawer.isOpen()).toBe(false);
-  });
-
   it('should switch tabs and render appropriate active sections', () => {
     const { container } = render(<App initialArticles={mockArticles} />);
     const driver = new AppDriver(container);

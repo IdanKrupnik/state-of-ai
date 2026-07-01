@@ -9,7 +9,6 @@ import { LatencyMap } from '../LatencyMap/LatencyMap';
 import { FeedHeader } from '../FeedHeader/FeedHeader';
 import { FeedRow } from '../FeedRow/FeedRow';
 import { Footer } from '../Footer/Footer';
-import { TuningDrawer } from '../TuningDrawer/TuningDrawer';
 import { AIBasics } from '../AIBasics/AIBasics';
 import { Events } from '../Events/Events';
 
@@ -39,7 +38,6 @@ export interface AppProps {
 }
 
 export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('feed');
   const [isMounted, setIsMounted] = useState(false);
 
@@ -73,7 +71,6 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   return (
     <div className="min-h-screen bg-brand-offwhite text-brand-black flex flex-col font-inter antialiased">
       <TopNavBar
-        onTuneClick={() => setIsDrawerOpen(true)}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
@@ -141,7 +138,6 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
       </main>
 
       <Footer />
-      <TuningDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </div>
   );
 };

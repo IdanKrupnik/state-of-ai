@@ -1,25 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '../ui/Button/Button';
+import React, { useState, useEffect } from 'react';
+import { Sun, Moon } from 'lucide-react';
 
 export interface TopNavBarProps {
-  onTuneClick: () => void;
   activeTab?: string;
   onTabChange?: (tabId: string) => void;
 }
 
+export const ThemeSwitch: React.FC = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const activeTheme = localStorage.getItem('theme') || 'light';
+      setIsDark(activeTheme === 'dark');
+      document.documentElement.classList.toggle('dark', activeTheme === 'dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextDark = !isDark;
+    setIsDark(nextDark);
+    document.documentElement.classList.toggle('dark', nextDark);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+    }
+  };
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="relative flex items-center bg-brand-clay/40 border border-outline-variant p-0.5 w-14 h-7 cursor-pointer select-none transition-colors"
+      aria-label="Toggle theme"
+      data-testid="theme-switch"
+    >
+      <div
+        className={`absolute top-0.5 bottom-0.5 w-[24px] bg-brand-black transition-transform duration-200 ease-in-out ${
+          isDark ? 'translate-x-[26px]' : 'translate-x-0.5'
+        }`}
+      />
+      <div className="absolute inset-0 flex justify-between px-1.5 items-center z-10 pointer-events-none">
+        <Sun className="w-3.5 h-3.5 text-brand-warm-grey dark:text-brand-offwhite transition-colors" />
+        <Moon className="w-3.5 h-3.5 text-brand-offwhite dark:text-brand-warm-grey transition-colors" />
+      </div>
+    </button>
+  );
+};
+
 export const TopNavBar: React.FC<TopNavBarProps> = ({
-  onTuneClick,
   activeTab = 'feed',
   onTabChange,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleTuneClick = () => {
-    setIsMobileMenuOpen(false);
-    onTuneClick();
-  };
 
   const handleTabClick = (tabId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -87,14 +120,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
         </nav>
 
         <div className="hidden md:block">
-          <Button
-            variant="primary"
-            onClick={onTuneClick}
-            className="flex items-center gap-2 text-xs py-1.5 px-3 uppercase tracking-wider"
-          >
-            <span>Tune Filter</span>
-            <span className="material-symbols-outlined text-[16px]">tune</span>
-          </Button>
+          <ThemeSwitch />
         </div>
 
         <button
@@ -136,14 +162,9 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               </a>
             );
           })}
-          <Button
-            variant="primary"
-            onClick={handleTuneClick}
-            className="w-full flex items-center justify-center gap-2 py-3 mt-2 uppercase tracking-widest text-[11px] font-bold"
-          >
-            <span>Tune Filter</span>
-            <span className="material-symbols-outlined text-[16px]">tune</span>
-          </Button>
+          <div className="flex justify-center mt-2">
+            <ThemeSwitch />
+          </div>
         </div>
       )}
     </header>

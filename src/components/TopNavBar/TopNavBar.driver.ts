@@ -1,5 +1,4 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { ButtonDriver } from '../ui/Button/Button.driver';
 
 export class TopNavBarDriver {
   private element: HTMLElement | null = null;
@@ -28,15 +27,6 @@ export class TopNavBarDriver {
     return brand ? brand.textContent : null;
   }
 
-  getButtonDriver(): ButtonDriver {
-    return new ButtonDriver(this.elementToUse);
-  }
-
-  clickTuneFilter(): this {
-    this.getButtonDriver().click();
-    return this;
-  }
-
   toggleMobileMenu(): this {
     const btn = this.elementToUse.querySelector('[data-testid="hamburger-button"]');
     if (!btn) throw new Error('Hamburger button not found');
@@ -46,15 +36,6 @@ export class TopNavBarDriver {
 
   isMobileMenuOpen(): boolean {
     return !!this.elementToUse.querySelector('[data-testid="mobile-dropdown"]');
-  }
-
-  clickMobileTuneFilter(): this {
-    const dropdown = this.elementToUse.querySelector('[data-testid="mobile-dropdown"]');
-    if (!dropdown) throw new Error('Mobile dropdown not open');
-    const btn = dropdown.querySelector('button');
-    if (!btn) throw new Error('Tune Filter button inside mobile dropdown not found');
-    fireEvent.click(btn);
-    return this;
   }
 
   clickTab(tabId: string): this {
@@ -88,5 +69,16 @@ export class TopNavBarDriver {
     const tab = this.elementToUse.querySelector(`[data-testid="mobile-nav-tab-${tabId}"]`);
     if (!tab) return false;
     return tab.className.includes('text-brand-black') && tab.className.includes('font-bold');
+  }
+
+  hasThemeSwitch(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="theme-switch"]');
+  }
+
+  clickThemeSwitch(): this {
+    const btn = this.elementToUse.querySelector('[data-testid="theme-switch"]') as HTMLButtonElement | null;
+    if (!btn) throw new Error('Theme switch not found');
+    fireEvent.click(btn);
+    return this;
   }
 }

@@ -7,7 +7,6 @@ import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
-import { TuningDrawerDriver } from '../TuningDrawer/TuningDrawer.driver';
 import { AIBasicsDriver } from '../AIBasics/AIBasics.driver';
 import { EventsDriver } from '../Events/Events.driver';
 
@@ -68,9 +67,6 @@ export class AppDriver {
     return new FooterDriver(this.elementToUse);
   }
 
-  getTuningDrawerDriver(): TuningDrawerDriver {
-    return new TuningDrawerDriver(this.elementToUse);
-  }
 
   getAIBasicsDriver(): AIBasicsDriver {
     return new AIBasicsDriver(this.elementToUse);

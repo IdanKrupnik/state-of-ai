@@ -3,18 +3,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #fdf8f8;
-  --color-text-primary: #1c1b1b;
-  --color-text-muted: #747878;
+  --color-bg-base: var(--bg-base);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
   
-  --color-brand-black: #111111;
-  --color-brand-offwhite: #fdf8f8;
-  --color-brand-clay: #ecece8;
-  --color-brand-warm-grey: #787870;
+  --color-brand-black: var(--brand-black);
+  --color-brand-offwhite: var(--brand-offwhite);
+  --color-brand-clay: var(--brand-clay);
+  --color-brand-warm-grey: var(--brand-warm-grey);
   --color-brand-neon-green: #10b981;
   --color-secondary: #10b981;
-  --color-outline: #747878;
-  --color-outline-variant: #c4c7c7;
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
   
   --font-inter: 'Inter', sans-serif;
   --font-geist-mono: 'Geist Mono', monospace;
@@ -23,6 +23,32 @@
   --spacing-stack-md: 1.5rem;
   --spacing-stack-lg: 3rem;
   --spacing-section-gap: 4rem;
+}
+
+:root {
+  --bg-base: #fdf8f8;
+  --text-primary: #1c1b1b;
+  --text-muted: #747878;
+  
+  --brand-black: #111111;
+  --brand-offwhite: #fdf8f8;
+  --brand-clay: #ecece8;
+  --brand-warm-grey: #787870;
+  --outline: #747878;
+  --outline-variant: #c4c7c7;
+}
+
+.dark {
+  --bg-base: #111111;
+  --text-primary: #fdf8f8;
+  --text-muted: #888888;
+  
+  --brand-black: #fdf8f8;
+  --brand-offwhite: #111111;
+  --brand-clay: #222222;
+  --brand-warm-grey: #a0a096;
+  --outline: #888888;
+  --outline-variant: #444444;
 }
 
 body {
