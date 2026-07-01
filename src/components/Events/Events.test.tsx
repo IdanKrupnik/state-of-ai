@@ -18,7 +18,7 @@ describe('Events Component', () => {
     expect(initialCards[2].getTitle()).toBe('OpenAI DevDay');
     expect(initialCards[3].getTitle()).toBe('Apple WWDC24');
 
-    expect(initialCards[0].getAlertButtonText()).toBeNull();
+    expect(initialCards[0].getAlertButtonText()).toBe('[ NOTIFY ME ]');
 
     expect(initialCards[1].getAlertButtonText()).toBe('[ NOTIFY ME ]');
     act(() => {
