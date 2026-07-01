@@ -33,10 +33,14 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
     setExpanded((prev) => ({ ...prev, [provider]: !prev[provider] }));
   };
 
-  const sortedByDate = [...initialModels].sort((a, b) => 
-    new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+  const newestIds = new Set(
+    providers.flatMap((p) => {
+      const pModels = initialModels.filter((m) => m.provider === p);
+      if (pModels.length === 0) return [];
+      const maxDate = Math.max(...pModels.map((m) => new Date(m.updated_at).getTime()));
+      return pModels.filter((m) => new Date(m.updated_at).getTime() === maxDate).map((m) => m.id);
+    })
   );
-  const newestIds = new Set(sortedByDate.slice(0, 3).map((m) => m.id));
 
   return (
     <div className="flex flex-col gap-10">
