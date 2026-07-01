@@ -28,4 +28,41 @@ describe('Terminology Component', () => {
     expect(driver.hasEmptyState()).toBe(true);
     expect(driver.getEmptyStateText()).toBe('NO MATCHING TERMS FOUND.');
   });
+
+  it('should filter terms by clicked letter tab and disable empty letter tabs', () => {
+    const { container } = render(<Terminology />);
+    const driver = new TerminologyDriver(container);
+
+    expect(driver.getSelectedLetter()).toBe('ALL');
+    expect(driver.isLetterDisabled('B')).toBe(true);
+    expect(driver.isLetterDisabled('A')).toBe(false);
+
+    driver.selectLetter('A');
+    expect(driver.getSelectedLetter()).toBe('A');
+    expect(driver.getTermsCount()).toBe(1);
+    expect(driver.getTermTitles()[0]).toBe('Agent');
+
+    driver.selectLetter('T');
+    expect(driver.getSelectedLetter()).toBe('T');
+    expect(driver.getTermsCount()).toBe(2);
+    expect(driver.getTermTitles()).toEqual(['Token', 'Transformer']);
+  });
+
+  it('should search globally across all letters even when a specific letter tab is selected', () => {
+    const { container } = render(<Terminology />);
+    const driver = new TerminologyDriver(container);
+
+    driver.selectLetter('A');
+    expect(driver.getTermsCount()).toBe(1);
+    expect(driver.getTermTitles()[0]).toBe('Agent');
+
+    driver.setSearchQuery('rag');
+    expect(driver.getTermsCount()).toBe(1);
+    expect(driver.getTermTitles()[0]).toBe('RAG');
+
+    driver.setSearchQuery('');
+    expect(driver.getTermsCount()).toBe(1);
+    expect(driver.getTermTitles()[0]).toBe('Agent');
+  });
 });
+

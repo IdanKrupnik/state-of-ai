@@ -10,27 +10,90 @@ export interface Term {
 
 export const Terminology: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedLetter, setSelectedLetter] = useState('ALL');
+
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+  const lettersWithTerms = new Set(
+    terms.map((t) => t.word.charAt(0).toUpperCase())
+  );
 
   const sortedTerms = [...terms].sort((a, b) => a.word.localeCompare(b.word));
 
-  const filteredTerms = sortedTerms.filter((term) =>
-    term.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    term.definition.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTerms = sortedTerms.filter((term) => {
+    const matchesSearch =
+      term.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      term.definition.toLowerCase().includes(searchQuery.toLowerCase());
+
+    if (!matchesSearch) return false;
+
+    if (searchQuery) return true;
+
+    if (selectedLetter === 'ALL') return true;
+    return term.word.toUpperCase().startsWith(selectedLetter);
+  });
 
   return (
     <div className="flex flex-col gap-8 w-full" data-testid="terminology-section">
-      <div className="max-w-md w-full">
-        <InputField
-          id="terminology-search"
-          variant="full"
-          label="Search Terminology"
-          placeholder="SEARCH TERMINOLOGY..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          data-testid="terminology-search-input"
-        />
+      <div className="flex flex-col gap-6">
+        <div className="max-w-md w-full">
+          <InputField
+            id="terminology-search"
+            variant="full"
+            label="Search Terminology"
+            placeholder="SEARCH TERMINOLOGY..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            data-testid="terminology-search-input"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="font-geist-mono text-xs text-brand-warm-grey uppercase tracking-wider">
+            Filter by Letter
+          </span>
+          <div className="flex flex-wrap gap-1 md:gap-1.5 items-center" data-testid="terminology-alphabet-nav">
+            <button
+              onClick={() => setSelectedLetter('ALL')}
+              className={`px-3 h-8 text-xs font-geist-mono uppercase tracking-wider border transition-all duration-200 cursor-pointer ${
+                selectedLetter === 'ALL'
+                  ? 'bg-brand-black text-brand-offwhite border-brand-black font-bold'
+                  : 'text-brand-warm-grey border-outline-variant hover:text-brand-black hover:border-brand-nav-text/45 bg-transparent'
+              }`}
+              data-testid="letter-tab-all"
+            >
+              ALL
+            </button>
+            {alphabet.map((letter) => {
+              const hasTerms = lettersWithTerms.has(letter);
+              const isSelected = selectedLetter === letter;
+              return (
+                <button
+                  key={letter}
+                  disabled={!hasTerms}
+                  onClick={() => setSelectedLetter(letter)}
+                  className={`w-8 h-8 flex items-center justify-center text-xs font-geist-mono uppercase border transition-all duration-200 ${
+                    !hasTerms
+                      ? 'text-brand-warm-grey/30 border-outline-variant/30 cursor-not-allowed bg-transparent'
+                      : isSelected
+                      ? 'bg-brand-black text-brand-offwhite border-brand-black font-bold cursor-pointer'
+                      : 'text-brand-warm-grey border-outline-variant hover:text-brand-black hover:border-brand-nav-text/45 cursor-pointer bg-transparent'
+                  }`}
+                  data-testid={`letter-tab-${letter.toLowerCase()}`}
+                >
+                  {letter}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
+
+      {searchQuery && (
+        <div className="text-xs font-geist-mono text-brand-warm-grey uppercase tracking-wide italic">
+          Showing search results matching "{searchQuery}" across all letters.
+        </div>
+      )}
 
       {filteredTerms.length === 0 ? (
         <div className="border border-outline-variant p-8 text-center text-brand-warm-grey italic text-sm" data-testid="terminology-empty-state">
@@ -116,3 +179,4 @@ const terms: Term[] = [
     definition: 'The maximum limit of tokens (text chunks) a model can read and process in a single conversational round-trip.',
   },
 ];
+

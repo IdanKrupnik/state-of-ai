@@ -54,4 +54,33 @@ export class TerminologyDriver {
     const el = this.elementToUse.querySelector('[data-testid="terminology-empty-state"]');
     return el ? el.textContent?.trim() || null : null;
   }
+
+  selectLetter(letter: string): this {
+    const tabName = letter.toLowerCase();
+    const selector = `[data-testid="letter-tab-${tabName}"]`;
+    const btn = this.elementToUse.querySelector(selector);
+    if (!btn) {
+      throw new Error(`Letter tab ${letter} not found`);
+    }
+    fireEvent.click(btn);
+    return this;
+  }
+
+  getSelectedLetter(): string | null {
+    const tabs = Array.from(this.elementToUse.querySelectorAll('[data-testid^="letter-tab-"]'));
+    const activeTab = tabs.find(tab => tab.classList.contains('bg-brand-black'));
+    if (!activeTab) return null;
+    return activeTab.textContent?.trim() || null;
+  }
+
+  isLetterDisabled(letter: string): boolean {
+    const tabName = letter.toLowerCase();
+    const selector = `[data-testid="letter-tab-${tabName}"]`;
+    const btn = this.elementToUse.querySelector(selector) as HTMLButtonElement | null;
+    if (!btn) {
+      throw new Error(`Letter tab ${letter} not found`);
+    }
+    return btn.disabled;
+  }
 }
+
