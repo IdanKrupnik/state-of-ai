@@ -87,8 +87,8 @@ describe('App Component', () => {
 
     expect(driver.getArticleRowDrivers()).toHaveLength(3);
 
-    nav.clickTab('benchmarks');
-    expect(driver.getPlaceholderTitle('benchmarks')).toBe('benchmarks');
+    nav.clickTab('models');
+    expect(container.querySelector('[data-testid="models-container"]')).toBeTruthy();
 
     nav.clickTab('events');
     const eventsDriver = driver.getEventsDriver();

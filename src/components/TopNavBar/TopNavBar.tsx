@@ -70,7 +70,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
   const tabs = [
     { id: 'feed', label: 'Feed' },
-    { id: 'benchmarks', label: 'Benchmarks' },
+    { id: 'models', label: 'Models' },
     { id: 'events', label: 'Events' },
     { id: 'about', label: 'About' },
     { id: 'learn', label: 'Learn' },

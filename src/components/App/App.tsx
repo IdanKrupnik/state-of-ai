@@ -33,13 +33,15 @@ const formatRelativeTime = (dateString?: string): string => {
 };
 
 import { supabaseClient } from '../../lib/supabaseClient';
+import { Models, ModelRow } from '../Models/Models';
 
 export interface AppProps {
   initialArticles: Article[];
   initialTotalCount?: number;
+  initialModels?: ModelRow[];
 }
 
-export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0 }) => {
+export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0, initialModels = [] }) => {
   const [activeTab, setActiveTab] = useState('feed');
   const [isMounted, setIsMounted] = useState(false);
   const [articles, setArticles] = useState<Article[]>(initialArticles);
@@ -84,7 +86,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
       const hash = window.location.hash.replace('#', '');
       const parts = hash.split('/');
       const primaryTab = parts[0];
-      const validTabs = ['feed', 'benchmarks', 'events', 'about', 'learn'];
+      const validTabs = ['feed', 'models', 'events', 'about', 'learn'];
       if (validTabs.includes(primaryTab)) {
         setActiveTab(primaryTab);
         
@@ -174,16 +176,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
 
             {activeTab === 'about' && <About />}
 
-            {activeTab === 'benchmarks' && (
-              <div className="border-t border-brand-black/15 pt-8 flex flex-col gap-4" data-testid={`placeholder-section-${activeTab}`}>
-                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-black uppercase">
-                  {activeTab}
-                </h2>
-                <p className="text-brand-warm-grey text-sm">
-                  This section is currently under active development. High-fidelity telemetry coming soon.
-                </p>
-              </div>
-            )}
+            {activeTab === 'models' && <Models initialModels={initialModels} />}
           </>
         )}
       </main>

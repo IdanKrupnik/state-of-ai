@@ -40,20 +40,20 @@ describe('TopNavBar Component', () => {
     const driver = new TopNavBarDriver(container);
 
     expect(driver.isTabActive('feed')).toBe(true);
-    expect(driver.isTabActive('benchmarks')).toBe(false);
+    expect(driver.isTabActive('models')).toBe(false);
     expect(driver.isTabActive('events')).toBe(false);
     expect(driver.isTabActive('about')).toBe(false);
     expect(driver.isTabActive('learn')).toBe(false);
 
-    driver.clickTab('benchmarks');
-    expect(handleTabChange).toHaveBeenCalledWith('benchmarks');
+    driver.clickTab('models');
+    expect(handleTabChange).toHaveBeenCalledWith('models');
 
     rerender(
-      <TopNavBar activeTab="benchmarks" onTabChange={handleTabChange} />
+      <TopNavBar activeTab="models" onTabChange={handleTabChange} />
     );
 
     expect(driver.isTabActive('feed')).toBe(false);
-    expect(driver.isTabActive('benchmarks')).toBe(true);
+    expect(driver.isTabActive('models')).toBe(true);
   });
 
   it('should toggle tabs in mobile menu', () => {

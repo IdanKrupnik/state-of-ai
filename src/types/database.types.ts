@@ -50,6 +50,39 @@ export type Database = {
         }
         Relationships: []
       }
+      models: {
+        Row: {
+          id: string
+          name: string
+          provider: string
+          context_length: number | null
+          prompt_token_price: number | null
+          completion_token_price: number | null
+          description: string | null
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          name: string
+          provider: string
+          context_length?: number | null
+          prompt_token_price?: number | null
+          completion_token_price?: number | null
+          description?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          provider?: string
+          context_length?: number | null
+          prompt_token_price?: number | null
+          completion_token_price?: number | null
+          description?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

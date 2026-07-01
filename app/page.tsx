@@ -28,13 +28,29 @@ async function getArticles() {
   return { articles: data || [], totalCount: count || 0 };
 }
 
+async function getModels() {
+  const { data, error } = await supabase
+    .from('models')
+    .select('*')
+    .order('provider', { ascending: true })
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Database fetch error for models:', error);
+    return [];
+  }
+  return data || [];
+}
+
 export default async function HomePage() {
   const { articles, totalCount } = await getArticles();
+  const models = await getModels();
 
   return (
     <App 
       initialArticles={articles} 
       initialTotalCount={totalCount} 
+      initialModels={models}
     />
   );
 }
