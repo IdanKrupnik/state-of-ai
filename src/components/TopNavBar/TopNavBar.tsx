@@ -36,11 +36,11 @@ export const ThemeSwitch: React.FC = () => {
       data-testid="theme-switch"
     >
       <div
-        className={`absolute top-1 bottom-1 w-6 bg-brand-black transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-          isDark ? 'translate-x-7' : 'translate-x-0'
+        className={`absolute top-1 bottom-1 left-1 w-6 bg-brand-black transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+          isDark ? 'translate-x-8' : 'translate-x-0'
         }`}
       />
-      <div className="absolute inset-0 flex justify-between px-2 items-center z-10 pointer-events-none">
+      <div className="absolute top-1 bottom-1 left-1 right-1 flex justify-between z-10 pointer-events-none">
         <div className="w-6 h-6 flex items-center justify-center">
           <Sun 
             className={`w-3.5 h-3.5 transition-all duration-300 ${
