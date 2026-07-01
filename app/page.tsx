@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const supabase = createClient<Database>(supabaseUrl || '', supabaseServiceKey || '');
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabase = createClient<Database>(supabaseUrl || '', supabaseAnonKey || '');
 
 async function getArticles() {
   const { data, count, error } = await supabase
@@ -28,42 +28,13 @@ async function getArticles() {
   return { articles: data || [], totalCount: count || 0 };
 }
 
-async function getBubbleIndexData() {
-  const { data, error } = await supabase
-    .from('bubble_state')
-    .select('*')
-    .eq('id', 1);
-
-  if (error || !data || data.length === 0) {
-    return {
-      bubble_percentage: 68,
-      status_direction: 'increasing' as const,
-      short_explanation: 'AI spending is very high but short-term returns are not yet clear.',
-      financial_highlights: []
-    };
-  }
-
-  const state = data[0];
-  return {
-    bubble_percentage: state.bubble_percentage,
-    status_direction: state.status_direction as 'increasing' | 'stable' | 'decreasing',
-    short_explanation: state.short_explanation,
-    financial_highlights: Array.isArray(state.financial_highlights)
-      ? (state.financial_highlights as unknown as { label: string; simple_text: string }[])
-      : [],
-    updated_at: state.updated_at
-  };
-}
-
 export default async function HomePage() {
   const { articles, totalCount } = await getArticles();
-  const bubbleIndexData = await getBubbleIndexData();
 
   return (
     <App 
       initialArticles={articles} 
       initialTotalCount={totalCount} 
-      bubbleIndexData={bubbleIndexData} 
     />
   );
 }

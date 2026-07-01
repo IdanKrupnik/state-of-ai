@@ -33,15 +33,13 @@ const formatRelativeTime = (dateString?: string): string => {
 };
 
 import { supabaseClient } from '../../lib/supabaseClient';
-import { AIBubbleTensionIndex, BubbleIndexData } from '../AIBubbleTensionIndex/AIBubbleTensionIndex';
 
 export interface AppProps {
   initialArticles: Article[];
   initialTotalCount?: number;
-  bubbleIndexData?: BubbleIndexData;
 }
 
-export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0, bubbleIndexData }) => {
+export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0 }) => {
   const [activeTab, setActiveTab] = useState('feed');
   const [isMounted, setIsMounted] = useState(false);
   const [articles, setArticles] = useState<Article[]>(initialArticles);
@@ -160,10 +158,6 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                       </button>
                     </div>
                   )}
-
-                  <div className="mt-10">
-                    <AIBubbleTensionIndex data={bubbleIndexData} />
-                  </div>
                 </section>
 
 
