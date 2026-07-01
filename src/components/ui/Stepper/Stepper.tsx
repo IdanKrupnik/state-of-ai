@@ -9,7 +9,7 @@ export interface StepperProps {
 export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, onStepChange }) => {
   return (
     <nav aria-label="Progress" className="flex justify-between items-center relative w-full mb-12" data-testid="stepper">
-      <div className="absolute top-5 left-5 right-5 h-[1px] bg-outline-variant -z-10" />
+      <div className="absolute top-5 left-5 right-5 h-[2px] bg-outline-variant -z-10" />
 
       {steps.map((label, idx) => {
         const stepNum = idx + 1;
