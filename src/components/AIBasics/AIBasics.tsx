@@ -209,4 +209,32 @@ const glossaryTerms = [
     word: 'Hallucination',
     definition: 'A phenomenon where an AI model generates factually incorrect, false, or nonsensical information with high confidence.',
   },
+  {
+    word: 'RAG',
+    definition: 'Retrieval-Augmented Generation. A framework that retrieves facts from an external database to provide as context to the LLM, reducing factual errors.',
+  },
+  {
+    word: 'Agent',
+    definition: 'An autonomous AI system equipped with planning, memory, and access to tools to execute multi-step workflows independently.',
+  },
+  {
+    word: 'RLHF',
+    definition: 'Reinforcement Learning from Human Feedback. A method that aligns AI models with human values by tuning them using human ratings.',
+  },
+  {
+    word: 'Embeddings',
+    definition: 'Mathematical vectors that represent words or concepts in high-dimensional space, measuring their semantic similarity.',
+  },
+  {
+    word: 'Parameters',
+    definition: 'The internal variables (weights and biases) that a model optimizes during training to learn specific patterns.',
+  },
+  {
+    word: 'Quantization',
+    definition: 'A model compression method that reduces the numerical precision of parameters to speed up generation and save memory.',
+  },
+  {
+    word: 'Context Window',
+    definition: 'The maximum limit of tokens (text chunks) a model can read and process in a single conversational round-trip.',
+  },
 ];
