@@ -39,14 +39,14 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
     setExpanded((prev) => ({ ...prev, [provider]: !prev[provider] }));
   };
 
-  const newestIds = new Set(
-    providers.flatMap((p) => {
-      const pModels = initialModels.filter((m) => m.provider === p);
-      if (pModels.length === 0) return [];
-      const maxDate = Math.max(...pModels.map((m) => m.created ? new Date(m.created).getTime() : 0));
-      return pModels.filter((m) => (m.created ? new Date(m.created).getTime() : 0) === maxDate).map((m) => m.id);
-    })
-  );
+  const isNewModel = (createdStr: string | null): boolean => {
+    if (!createdStr) return false;
+    const createdDate = new Date(createdStr);
+    const now = new Date();
+    const diffMs = now.getTime() - createdDate.getTime();
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+    return diffDays >= 0 && diffDays <= 30;
+  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -96,7 +96,7 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
               {isExpanded && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" data-testid={`provider-grid-${provider.toLowerCase()}`}>
                   {providerModels.map((model) => {
-                    const isNew = newestIds.has(model.id);
+                    const isNew = isNewModel(model.created);
                     return (
                       <div 
                         key={model.id} 
