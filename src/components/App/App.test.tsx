@@ -93,7 +93,9 @@ describe('App Component', () => {
     expect(eventsDriver.hasEventsSection()).toBe(true);
 
     nav.clickTab('about');
-    expect(driver.getPlaceholderTitle('about')).toBe('about');
+    const aboutDriver = driver.getAboutDriver();
+    expect(aboutDriver.hasSection()).toBe(true);
+    expect(aboutDriver.getTitleText()).toBe('About State of AI');
 
     nav.clickTab('learn');
     const basicsDriver = driver.getAIBasicsDriver();

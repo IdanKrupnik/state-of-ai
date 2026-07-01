@@ -11,6 +11,7 @@ import { FeedRow } from '../FeedRow/FeedRow';
 import { Footer } from '../Footer/Footer';
 import { AIBasics } from '../AIBasics/AIBasics';
 import { Events } from '../Events/Events';
+import { About } from '../About/About';
 
 import { Tables } from '@/types/database.types';
 
@@ -171,7 +172,9 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
 
             {activeTab === 'events' && <Events />}
 
-            {(activeTab === 'benchmarks' || activeTab === 'about') && (
+            {activeTab === 'about' && <About />}
+
+            {activeTab === 'benchmarks' && (
               <div className="border-t border-brand-black/15 pt-8 flex flex-col gap-4" data-testid={`placeholder-section-${activeTab}`}>
                 <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-black uppercase">
                   {activeTab}

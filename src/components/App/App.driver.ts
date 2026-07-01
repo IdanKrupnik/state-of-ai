@@ -9,6 +9,7 @@ import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
 import { AIBasicsDriver } from '../AIBasics/AIBasics.driver';
 import { EventsDriver } from '../Events/Events.driver';
+import { AboutDriver } from '../About/About.driver';
 
 export class AppDriver {
   private element: HTMLElement | null = null;
@@ -74,6 +75,10 @@ export class AppDriver {
 
   getEventsDriver(): EventsDriver {
     return new EventsDriver(this.elementToUse);
+  }
+
+  getAboutDriver(): AboutDriver {
+    return new AboutDriver(this.elementToUse);
   }
 
   getPlaceholderSection(tabId: string): HTMLElement | null {
