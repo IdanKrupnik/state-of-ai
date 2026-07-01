@@ -18,6 +18,7 @@ describe('AIBasics Component', () => {
     expect(driver.getSectionTitle(1)).toBe('Neural Networks');
     expect(driver.getSectionTitle(2)).toBe('Large Language Models (LLMs)');
     expect(driver.getSectionTitle(3)).toBe('How AI Generates Answers');
+    expect(driver.getSectionTitle(4)).toBe('AI Terminology');
 
     expect(driver.hasTOC()).toBe(true);
     expect(driver.getTOCLinks()).toEqual([
@@ -25,6 +26,7 @@ describe('AIBasics Component', () => {
       '02 // Architecture',
       '03 // Capabilities',
       '04 // Visualizer',
+      '05 // Glossary',
     ]);
 
     expect(driver.hasMobileTOC()).toBe(true);
@@ -39,6 +41,7 @@ describe('AIBasics Component', () => {
       '02 // Architecture',
       '03 // Capabilities',
       '04 // Visualizer',
+      '05 // Glossary',
     ]);
 
     act(() => {

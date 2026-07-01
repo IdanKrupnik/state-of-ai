@@ -35,6 +35,7 @@ export const AIBasics: React.FC = () => {
     { id: 'architecture', label: '02 // Architecture' },
     { id: 'capabilities', label: '03 // Capabilities' },
     { id: 'visualizer', label: '04 // Visualizer' },
+    { id: 'glossary', label: '05 // Glossary' },
   ];
 
   return (
@@ -158,8 +159,54 @@ export const AIBasics: React.FC = () => {
           <LearnSection id="visualizer" number="04 // INTERACTIVE" title="How AI Generates Answers">
             <PromptToOutputVisualizer />
           </LearnSection>
+
+          <LearnSection id="glossary" number="05 // GLOSSARY" title="AI Terminology">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              {glossaryTerms.map((term) => (
+                <div key={term.word} className="border border-outline-variant p-5 bg-brand-offwhite">
+                  <h3 className="font-geist-mono font-bold text-sm text-brand-black mb-2 uppercase tracking-wide">
+                    {term.word}
+                  </h3>
+                  <p className="text-brand-warm-grey text-xs leading-relaxed">
+                    {term.definition}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </LearnSection>
         </div>
       </div>
     </div>
   );
 };
+
+const glossaryTerms = [
+  {
+    word: 'LLM',
+    definition: 'Large Language Model. An AI model trained on massive text datasets that understands and generates human-like text.',
+  },
+  {
+    word: 'Transformer',
+    definition: 'The underlying neural network architecture that powers modern generative AI models using self-attention mechanisms.',
+  },
+  {
+    word: 'Token',
+    definition: 'A small piece of text (like a word or a syllable) that an AI model processes as a single basic unit of data.',
+  },
+  {
+    word: 'Fine-Tuning',
+    definition: 'The process of taking a pre-trained model and training it further on a smaller, specific dataset for a specialized task.',
+  },
+  {
+    word: 'Prompt',
+    definition: 'The input instructions, text, or questions provided by a user to direct the AI model on what output to generate.',
+  },
+  {
+    word: 'Weights',
+    definition: 'Numerical values within the neural network layers that determine how information is processed and transformed.',
+  },
+  {
+    word: 'Hallucination',
+    definition: 'A phenomenon where an AI model generates factually incorrect, false, or nonsensical information with high confidence.',
+  },
+];
