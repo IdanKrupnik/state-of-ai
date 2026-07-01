@@ -39,22 +39,26 @@
 }
 
 .dark {
-  --bg-base: #111111;
+  --bg-base: #0a0a0a;
   --text-primary: #fdf8f8;
   --text-muted: #888888;
   
   --brand-black: #fdf8f8;
-  --brand-offwhite: #111111;
-  --brand-clay: #222222;
-  --brand-warm-grey: #a0a096;
-  --outline: #888888;
-  --outline-variant: #444444;
+  --brand-offwhite: #161616;
+  --brand-clay: #262624;
+  --brand-warm-grey: #9a9a90;
+  --outline: #555555;
+  --outline-variant: #333333;
 }
 
 body {
   background-color: var(--color-bg-base);
   color: var(--color-text-primary);
   font-family: var(--font-inter);
+}
+
+body, header, footer, main, section, div, button, span, a, p, h1, h2, h3, input, label, svg, circle, line {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), fill 0.4s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button,

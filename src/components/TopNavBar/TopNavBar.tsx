@@ -31,18 +31,34 @@ export const ThemeSwitch: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative flex items-center bg-brand-clay/40 border border-outline-variant p-0.5 w-14 h-7 cursor-pointer select-none transition-colors"
+      className="relative flex items-center bg-brand-clay/40 border border-outline-variant p-1 w-16 h-8 cursor-pointer select-none transition-colors duration-300 focus:outline-none"
       aria-label="Toggle theme"
       data-testid="theme-switch"
     >
       <div
-        className={`absolute top-0.5 bottom-0.5 w-[24px] bg-brand-black transition-transform duration-200 ease-in-out ${
-          isDark ? 'translate-x-[26px]' : 'translate-x-0.5'
+        className={`absolute top-1 bottom-1 w-6 bg-brand-black transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+          isDark ? 'translate-x-7' : 'translate-x-0'
         }`}
       />
-      <div className="absolute inset-0 flex justify-between px-1.5 items-center z-10 pointer-events-none">
-        <Sun className="w-3.5 h-3.5 text-brand-warm-grey dark:text-brand-offwhite transition-colors" />
-        <Moon className="w-3.5 h-3.5 text-brand-offwhite dark:text-brand-warm-grey transition-colors" />
+      <div className="absolute inset-0 flex justify-between px-2 items-center z-10 pointer-events-none">
+        <div className="w-6 h-6 flex items-center justify-center">
+          <Sun 
+            className={`w-3.5 h-3.5 transition-all duration-300 ${
+              isDark 
+                ? 'text-brand-black opacity-45 rotate-45 scale-90' 
+                : 'text-brand-offwhite opacity-100 rotate-0 scale-105'
+            }`} 
+          />
+        </div>
+        <div className="w-6 h-6 flex items-center justify-center">
+          <Moon 
+            className={`w-3.5 h-3.5 transition-all duration-300 ${
+              isDark 
+                ? 'text-brand-offwhite opacity-100 rotate-0 scale-105' 
+                : 'text-brand-black opacity-45 -rotate-45 scale-90'
+            }`} 
+          />
+        </div>
       </div>
     </button>
   );
