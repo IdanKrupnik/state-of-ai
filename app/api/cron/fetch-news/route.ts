@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Database } from '@/types/database.types';
+import { fetchAndCombineFeeds, detectCompany } from '@/lib/newsFetcher';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -9,62 +10,6 @@ const geminiApiKey = process.env.GEMINI_API_KEY;
 
 const supabase = createClient<Database>(supabaseUrl || '', supabaseServiceKey || '');
 const genAI = new GoogleGenerativeAI(geminiApiKey || '');
-
-interface ParsedItem {
-  title: string;
-  link: string;
-  description: string;
-  source: string;
-}
-
-function parseRss(xml: string, sourceName: string): ParsedItem[] {
-  const items: ParsedItem[] = [];
-  const itemMatches = xml.match(/<item[\s\S]*?>([\s\S]*?)<\/item>/g);
-  if (!itemMatches) return items;
-
-  for (const itemXml of itemMatches) {
-    const titleMatch = itemXml.match(/<title[\s\S]*?>([\s\S]*?)<\/title>/);
-    let title = titleMatch ? titleMatch[1] : '';
-
-    const linkMatch = itemXml.match(/<link[\s\S]*?>([\s\S]*?)<\/link>/);
-    let link = linkMatch ? linkMatch[1] : '';
-
-    const descMatch = itemXml.match(/<description[\s\S]*?>([\s\S]*?)<\/description>/);
-    let description = descMatch ? descMatch[1] : '';
-
-    const cleanCdata = (str: string) => {
-      if (str.startsWith('<![CDATA[')) {
-        return str.substring(9, str.length - 3);
-      }
-      return str.trim();
-    };
-
-    title = cleanCdata(title);
-    link = cleanCdata(link);
-    description = cleanCdata(description);
-
-    description = description.replace(/<[^>]*>?/gm, '').trim();
-
-    if (title && link) {
-      items.push({ title, link, description, source: sourceName });
-    }
-  }
-
-  return items.slice(0, 15);
-}
-
-function detectCompany(title: string): string {
-  const t = title.toLowerCase();
-  if (t.includes('openai') || t.includes('chatgpt')) return 'OpenAI';
-  if (t.includes('google') || t.includes('deepmind') || t.includes('gemini')) return 'Google';
-  if (t.includes('microsoft')) return 'Microsoft';
-  if (t.includes('meta') || t.includes('llama')) return 'Meta';
-  if (t.includes('anthropic') || t.includes('claude')) return 'Anthropic';
-  if (t.includes('nvidia')) return 'Nvidia';
-  if (t.includes('mistral')) return 'Mistral';
-  if (t.includes('apple')) return 'Apple';
-  return 'AI';
-}
 
 async function handleNewsIngestion(req: Request) {
   try {
@@ -82,91 +27,11 @@ async function handleNewsIngestion(req: Request) {
       );
     }
 
-    let tcXml = '';
-    try {
-      const tcRes = await fetch('https://techcrunch.com/category/artificial-intelligence/feed/', {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-        next: { revalidate: 0 }
-      });
-      if (tcRes.ok) {
-        tcXml = await tcRes.text();
-      }
-    } catch (err) {
-      console.error('TechCrunch fetch failed:', err);
-    }
-
-    let openaiXml = '';
-    try {
-      const openaiRes = await fetch('https://openai.com/news/rss.xml', {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-        next: { revalidate: 0 }
-      });
-      if (openaiRes.ok) {
-        openaiXml = await openaiRes.text();
-      }
-    } catch (err) {
-      console.error('OpenAI fetch failed:', err);
-    }
-
-    let hfXml = '';
-    try {
-      const hfRes = await fetch('https://huggingface.co/blog/feed.xml', {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-        next: { revalidate: 0 }
-      });
-      if (hfRes.ok) {
-        hfXml = await hfRes.text();
-      }
-    } catch (err) {
-      console.error('Hugging Face fetch failed:', err);
-    }
-
-    let rundownXml = '';
-    try {
-      const rundownRes = await fetch('https://www.rundown.ai/feed', {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-        next: { revalidate: 0 }
-      });
-      if (rundownRes.ok) {
-        rundownXml = await rundownRes.text();
-      }
-    } catch (err) {
-      console.error('The Rundown AI fetch failed:', err);
-    }
-
-    const tcItems = tcXml ? parseRss(tcXml, 'TechCrunch') : [];
-    const openaiItems = openaiXml ? parseRss(openaiXml, 'OpenAI') : [];
-    const hfItems = hfXml ? parseRss(hfXml, 'Hugging Face') : [];
-    const rundownItems = rundownXml ? parseRss(rundownXml, 'The Rundown AI') : [];
-
-    const items: ParsedItem[] = [];
-    const maxLen = Math.max(tcItems.length, openaiItems.length, hfItems.length, rundownItems.length);
-    for (let i = 0; i < maxLen; i++) {
-      if (i < tcItems.length) {
-        items.push(tcItems[i]);
-      }
-      if (i < openaiItems.length) {
-        items.push(openaiItems[i]);
-      }
-      if (i < hfItems.length) {
-        items.push(hfItems[i]);
-      }
-      if (i < rundownItems.length) {
-        items.push(rundownItems[i]);
-      }
-    }
+    const items = await fetchAndCombineFeeds();
 
     if (items.length === 0) {
       return NextResponse.json(
-        { error: 'Failed to fetch any articles from TechCrunch or The Rundown AI' },
+        { error: 'Failed to fetch any articles from sources' },
         { status: 500 }
       );
     }
