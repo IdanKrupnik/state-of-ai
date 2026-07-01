@@ -86,4 +86,31 @@ export class AppDriver {
     const title = section.querySelector('h2');
     return title ? title.textContent : null;
   }
+
+  hasLoadMoreButton(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="load-more-btn"]');
+  }
+
+  getLoadMoreButtonText(): string | null {
+    const btn = this.elementToUse.querySelector('[data-testid="load-more-btn"]');
+    return btn ? btn.textContent?.trim() || null : null;
+  }
+
+  clickLoadMoreButton(): this {
+    const btn = this.elementToUse.querySelector('[data-testid="load-more-btn"]') as HTMLButtonElement | null;
+    if (!btn) {
+      throw new Error('Load More button not found');
+    }
+    btn.click();
+    return this;
+  }
+
+  isLoadMoreButtonDisabled(): boolean {
+    const btn = this.elementToUse.querySelector('[data-testid="load-more-btn"]') as HTMLButtonElement | null;
+    if (!btn) {
+      throw new Error('Load More button not found');
+    }
+    return btn.disabled;
+  }
 }
+

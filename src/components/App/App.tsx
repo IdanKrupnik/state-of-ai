@@ -33,13 +33,48 @@ const formatRelativeTime = (dateString?: string): string => {
   return `${diffDays} days ago`;
 };
 
+import { supabaseClient } from '../../lib/supabaseClient';
+
 export interface AppProps {
   initialArticles: Article[];
+  initialTotalCount?: number;
 }
 
-export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
+export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0 }) => {
   const [activeTab, setActiveTab] = useState('feed');
   const [isMounted, setIsMounted] = useState(false);
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(
+    initialTotalCount ? initialArticles.length < initialTotalCount : initialArticles.length >= 5
+  );
+
+  const ITEMS_PER_PAGE = 5;
+
+  const loadMore = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const from = articles.length;
+    const to = from + ITEMS_PER_PAGE - 1;
+
+    const { data, count, error } = await supabaseClient
+      .from('articles')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (!error && data) {
+      const updatedArticles = [...articles, ...data];
+      setArticles(updatedArticles);
+      if (count !== null) {
+        setHasMore(updatedArticles.length < count);
+      } else {
+        setHasMore(data.length === ITEMS_PER_PAGE);
+      }
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -93,12 +128,12 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                   />
 
                   <div className="flex flex-col" data-testid="articles-list">
-                    {initialArticles.length === 0 ? (
+                    {articles.length === 0 ? (
                       <div className="border-t border-brand-black/15 pt-8 text-center text-brand-warm-grey italic text-sm">
                         No simplified articles found. Try another search or filter.
                       </div>
                     ) : (
-                      initialArticles.map((article) => (
+                      articles.map((article) => (
                         <FeedRow
                           key={article.id}
                           company={article.company}
@@ -110,6 +145,19 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                       ))
                     )}
                   </div>
+
+                  {hasMore && (
+                    <div className="flex justify-center mt-6">
+                      <button
+                        onClick={loadMore}
+                        disabled={isLoading}
+                        data-testid="load-more-btn"
+                        className="px-6 py-2.5 font-geist-mono text-xs uppercase tracking-wider border border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
+                      >
+                        {isLoading ? 'Loading...' : 'Load More'}
+                      </button>
+                    </div>
+                  )}
                 </section>
 
                 <div className="border-t border-brand-black/15 my-6" />
