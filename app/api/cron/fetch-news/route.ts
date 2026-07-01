@@ -50,7 +50,7 @@ function parseRss(xml: string, sourceName: string): ParsedItem[] {
     }
   }
 
-  return items;
+  return items.slice(0, 15);
 }
 
 function detectCompany(title: string): string {
