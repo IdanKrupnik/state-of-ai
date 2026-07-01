@@ -67,23 +67,22 @@ export const AIBubbleTensionIndex: React.FC<AIBubbleTensionIndexProps> = ({ data
         <span>STRUCTURAL BUBBLE</span>
       </div>
 
-      <p className="text-xs text-brand-warm-grey leading-relaxed">
-        Calculated using macro financial indicators: capital expenditure vs enterprise ROI, media sentiment analysis of "AI bubble" / "AI capex" mentions, and VIX volatility metrics.
-      </p>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-outline-variant/30 pt-4 text-center">
-        <div>
-          <span className="block text-[10px] font-geist-mono text-brand-warm-grey uppercase">Market Capex Trend</span>
-          <span className="text-sm font-bold text-brand-black">Up 22% QoQ</span>
-        </div>
-        <div>
-          <span className="block text-[10px] font-geist-mono text-brand-warm-grey uppercase">Media Sentiment</span>
-          <span className="text-sm font-bold text-brand-black">+18% "AI Hype" Mentions</span>
-        </div>
-        <div>
-          <span className="block text-[10px] font-geist-mono text-brand-warm-grey uppercase">Macro Volatility</span>
-          <span className="text-sm font-bold text-brand-black">VIX Index: 24.5</span>
-        </div>
+      <div className="border-t border-outline-variant/30 pt-4 flex flex-col gap-4">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-brand-black">Underlying Financial & Sentiment Metrics:</h4>
+        <ul className="text-xs text-brand-warm-grey flex flex-col gap-3">
+          <li className="flex flex-col sm:flex-row sm:justify-between gap-1 border-b border-outline-variant/10 pb-2">
+            <span><strong>1. Tech Giants Capex:</strong> Massive spending on data centers & AI chips vs actual cash revenues (Up 22% QoQ).</span>
+            <span className="font-geist-mono text-brand-black shrink-0 font-bold">High Bubble Risk</span>
+          </li>
+          <li className="flex flex-col sm:flex-row sm:justify-between gap-1 border-b border-outline-variant/10 pb-2">
+            <span><strong>2. Media & Social Sentiment:</strong> Volume of public news articles focusing on ROI mismatches & AI hype (+18% bubble mentions).</span>
+            <span className="font-geist-mono text-brand-black shrink-0 font-bold">Moderate Hype</span>
+          </li>
+          <li className="flex flex-col sm:flex-row sm:justify-between gap-1">
+            <span><strong>3. Market Volatility (VIX):</strong> Overall stock market fear Index representing technology stocks volatility (VIX Index: 24.5).</span>
+            <span className="font-geist-mono text-brand-black shrink-0 font-bold">Moderately Fearful</span>
+          </li>
+        </ul>
       </div>
 
       <footer className="border-t border-outline-variant/30 pt-3 text-[10px] font-geist-mono text-brand-warm-grey flex justify-between items-center">
