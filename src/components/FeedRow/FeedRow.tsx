@@ -32,8 +32,8 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             data-testid="feed-row-content"
             className={`${isOpen ? 'block' : 'hidden'} mt-4 font-body-md text-on-surface-variant leading-relaxed`}
           >
-            <p className="mb-2 text-brand-warm-grey">
-              {company.toUpperCase() === 'AI' ? 'AI SUMMARY' : company.toUpperCase()}
+            <p className="mb-2 text-brand-warm-grey font-bold">
+              AI SUMMARY
             </p>
             <div className="border-l-2 border-brand-black pl-4 mt-3">
               <p>{summary}</p>

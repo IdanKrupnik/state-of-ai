@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import { TopNavBarDriver } from '../TopNavBar/TopNavBar.driver';
 import { TelemetryTickerDriver } from '../TelemetryTicker/TelemetryTicker.driver';
 
-import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
@@ -43,9 +42,6 @@ export class AppDriver {
 
 
 
-  getLatencyMapDriver(): LatencyMapDriver {
-    return new LatencyMapDriver(this.elementToUse);
-  }
 
   getFeedHeaderDriver(): FeedHeaderDriver {
     return new FeedHeaderDriver(this.elementToUse);

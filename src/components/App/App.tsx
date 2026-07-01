@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { TopNavBar } from '../TopNavBar/TopNavBar';
 import { TelemetryTicker } from '../TelemetryTicker/TelemetryTicker';
 
-import { LatencyMap } from '../LatencyMap/LatencyMap';
 import { FeedHeader } from '../FeedHeader/FeedHeader';
 import { FeedRow } from '../FeedRow/FeedRow';
 import { Footer } from '../Footer/Footer';
@@ -160,9 +159,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                   )}
                 </section>
 
-                <div className="border-t border-brand-black/15 my-6" />
 
-                <LatencyMap />
               </>
             )}
 
