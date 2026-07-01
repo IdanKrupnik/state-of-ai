@@ -70,7 +70,8 @@ async function summarizeArticle(article: ParsedItem): Promise<ArticleInsert | nu
     hype_score: Number(aiData.hype_score) || 50,
     source_url: article.link,
     company: detectCompany(article.title),
-    source: article.source
+    source: article.source,
+    created_at: article.pubDate ? new Date(article.pubDate).toISOString() : new Date().toISOString()
   };
 }
 

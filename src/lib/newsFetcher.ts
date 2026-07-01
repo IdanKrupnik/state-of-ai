@@ -3,6 +3,7 @@ export interface ParsedItem {
   link: string;
   description: string;
   source: string;
+  pubDate?: string;
 }
 
 export function parseRss(xml: string, sourceName: string): ParsedItem[] {
@@ -15,14 +16,18 @@ export function parseRss(xml: string, sourceName: string): ParsedItem[] {
       const titleMatch = itemXml.match(/<title[\s\S]*?>([\s\S]*?)<\/title>/);
       const linkMatch = itemXml.match(/<link[\s\S]*?>([\s\S]*?)<\/link>/);
       const descMatch = itemXml.match(/<description[\s\S]*?>([\s\S]*?)<\/description>/);
+      const pubDateMatch = itemXml.match(/<pubDate[\s\S]*?>([\s\S]*?)<\/pubDate>/) ||
+                           itemXml.match(/<dc:date[\s\S]*?>([\s\S]*?)<\/dc:date>/) ||
+                           itemXml.match(/<published[\s\S]*?>([\s\S]*?)<\/published>/);
 
       const title = cleanCdata(titleMatch ? titleMatch[1] : '');
       const link = cleanCdata(linkMatch ? linkMatch[1] : '');
       const description = cleanCdata(descMatch ? descMatch[1] : '')
         .replace(/<[^>]*>?/gm, '')
         .trim();
+      const pubDate = pubDateMatch ? cleanCdata(pubDateMatch[1]) : undefined;
 
-      return { title, link, description, source: sourceName };
+      return { title, link, description, source: sourceName, pubDate };
     })
     .filter((item) => item.title && item.link)
     .slice(0, 15);
