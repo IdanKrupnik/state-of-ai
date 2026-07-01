@@ -8,7 +8,7 @@ export interface StepperProps {
 
 export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, onStepChange }) => {
   return (
-    <nav aria-label="Progress" className="flex justify-between items-center relative w-full" data-testid="stepper">
+    <nav aria-label="Progress" className="flex justify-between items-center relative w-full mb-10" data-testid="stepper">
       <div className="absolute top-5 left-0 w-full h-[1px] bg-outline-variant -z-10" />
 
       {steps.map((label, idx) => {
@@ -17,7 +17,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, onStepChan
         const isActive = stepNum === currentStep;
 
         return (
-          <div key={label} className="flex flex-col items-center gap-3 bg-brand-offwhite px-3 relative">
+          <div key={label} className="bg-brand-offwhite px-3 relative flex items-center justify-center">
             <button
               onClick={() => onStepChange(stepNum)}
               className={`w-10 h-10 flex items-center justify-center transition-all cursor-pointer relative ${
@@ -41,7 +41,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, onStepChan
               )}
             </button>
             <span
-              className={`font-geist-mono text-[10px] uppercase tracking-wider font-bold transition-colors ${
+              className={`absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap font-geist-mono text-[10px] uppercase tracking-wider font-bold transition-colors ${
                 isActive || isCompleted ? 'text-brand-black' : 'text-brand-warm-grey/60'
               }`}
               data-testid={`stepper-label-${stepNum}`}

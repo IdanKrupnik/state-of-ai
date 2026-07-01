@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react';
-import { CollapsibleFundamentalsDriver } from '../CollapsibleFundamentals/CollapsibleFundamentals.driver';
 import { PromptToOutputVisualizerDriver } from '../PromptToOutputVisualizer/PromptToOutputVisualizer.driver';
 
 export class AIBasicsDriver {
@@ -86,13 +85,6 @@ export class AIBasicsDriver {
     }
   }
 
-  hasCollapsibleFundamentals(): boolean {
-    return !!this.elementToUse.querySelector('summary');
-  }
-
-  getCollapsibleFundamentalsDriver(): CollapsibleFundamentalsDriver {
-    return new CollapsibleFundamentalsDriver(this.elementToUse);
-  }
 
   hasPromptToOutputVisualizer(): boolean {
     return !!this.elementToUse.querySelector('[data-testid="prompt-to-output-visualizer"]');

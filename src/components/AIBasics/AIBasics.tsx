@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { CollapsibleFundamentals } from '../CollapsibleFundamentals/CollapsibleFundamentals';
 import { PromptToOutputVisualizer } from '../PromptToOutputVisualizer/PromptToOutputVisualizer';
 
 interface SectionProps {
@@ -140,7 +139,6 @@ export const AIBasics: React.FC = () => {
                 Machine Learning (ML) acts as the engine, allowing algorithms to parse vast datasets, identify patterns, and make high-probability decisions without explicit instruction.
               </p>
             </div>
-            <CollapsibleFundamentals />
           </LearnSection>
 
           <LearnSection id="architecture" number="02 // ARCHITECTURE" title="Neural Networks">
@@ -156,10 +154,6 @@ export const AIBasics: React.FC = () => {
             <p className="text-brand-warm-grey text-base md:text-lg leading-relaxed max-w-prose">
               LLMs represent the current frontier of natural language processing. By predicting the next token in a sequence, these models exhibit emergent properties such as logical reasoning, creative synthesis, and multi-step problem solving.
             </p>
-            <div className="flex gap-2 font-geist-mono text-xs text-brand-warm-grey">
-              <span className="px-3 py-1 bg-brand-clay/10 border border-outline-variant/30">[ PARAMETER_COUNT: 1.8T+ ]</span>
-              <span className="px-3 py-1 bg-brand-clay/10 border border-outline-variant/30">[ TOKEN_WINDOW: 128K ]</span>
-            </div>
           </LearnSection>
           <LearnSection id="visualizer" number="04 // INTERACTIVE" title="How AI Generates Answers">
             <PromptToOutputVisualizer />

@@ -56,15 +56,6 @@ describe('AIBasics Component', () => {
     });
     expect(driver.isMobileTOCDropdownVisible()).toBe(false);
 
-    expect(driver.hasCollapsibleFundamentals()).toBe(true);
-    const colDriver = driver.getCollapsibleFundamentalsDriver();
-    expect(colDriver.getSummaryText()).toContain('NEW TO AI?');
-    expect(colDriver.isOpen()).toBe(false);
-    act(() => {
-      colDriver.toggle();
-    });
-    expect(colDriver.isOpen()).toBe(true);
-
     expect(driver.hasPromptToOutputVisualizer()).toBe(true);
     const visDriver = driver.getPromptToOutputVisualizerDriver();
     expect(visDriver.getActiveStepTitle()).toBe('Tokenization');
