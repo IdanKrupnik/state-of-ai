@@ -5,7 +5,7 @@ import { Stepper } from './Stepper';
 import { StepperDriver } from './Stepper.driver';
 
 describe('Stepper Component', () => {
-  it('should render nodes and handle click events', () => {
+  it('should render nodes, labels, and handle click events', () => {
     const handleStepChange = vi.fn();
     const steps = ['One', 'Two', 'Three'];
     const { container } = render(
@@ -16,6 +16,13 @@ describe('Stepper Component', () => {
     expect(driver.isStepCompleted(1)).toBe(true);
     expect(driver.isStepActive(2)).toBe(true);
     expect(driver.isStepActive(3)).toBe(false);
+
+    expect(driver.getStepLabel(1)).toBe('One');
+    expect(driver.getStepLabel(2)).toBe('Two');
+    expect(driver.getStepLabel(3)).toBe('Three');
+
+    expect(driver.isLineActive(1)).toBe(true);
+    expect(driver.isLineActive(2)).toBe(false);
 
     driver.clickStep(3);
     expect(handleStepChange).toHaveBeenCalledWith(3);

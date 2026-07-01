@@ -25,8 +25,11 @@ describe('PromptToOutputVisualizer Component', () => {
 
     driver.setPromptInput('Custom input test');
     expect(input?.value).toBe('Custom input test');
+    expect(driver.isPresetActive('Modern models scale')).toBe(false);
 
     driver.clickPreset('Modern models scale');
     expect(input?.value).toBe('Modern models scale');
+    expect(driver.isPresetActive('Modern models scale')).toBe(true);
+    expect(driver.isPresetActive('The cat sat on the mat')).toBe(false);
   });
 });

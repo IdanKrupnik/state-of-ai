@@ -54,4 +54,10 @@ export class PromptToOutputVisualizerDriver {
     fireEvent.click(btn);
     return this;
   }
+
+  isPresetActive(text: string): boolean {
+    const normalized = text.replace(/\s+/g, '-').toLowerCase();
+    const btn = this.elementToUse.querySelector(`[data-testid="preset-btn-${normalized}"]`);
+    return btn ? btn.classList.contains('bg-brand-black') && btn.classList.contains('text-brand-offwhite') : false;
+  }
 }

@@ -53,16 +53,23 @@ export const PromptToOutputVisualizer: React.FC = () => {
             data-testid="prompt-input"
           />
           <div className="flex gap-2">
-            {presets.map((p) => (
-              <button
-                key={p}
-                onClick={() => setPrompt(p)}
-                className="font-geist-mono text-[9px] px-2.5 py-1.5 border border-outline-variant bg-brand-clay/10 text-brand-warm-grey hover:bg-brand-black hover:text-brand-offwhite transition-colors cursor-pointer"
-                data-testid={`preset-btn-${p.replace(/\s+/g, '-').toLowerCase()}`}
-              >
-                {p}
-              </button>
-            ))}
+            {presets.map((p) => {
+              const isActive = prompt === p;
+              return (
+                <button
+                  key={p}
+                  onClick={() => setPrompt(p)}
+                  className={`font-geist-mono text-[9px] px-2.5 py-1.5 border transition-colors cursor-pointer ${
+                    isActive
+                      ? 'bg-brand-black border-brand-black text-brand-offwhite'
+                      : 'bg-brand-clay/10 border-outline-variant text-brand-warm-grey hover:bg-brand-black hover:text-brand-offwhite'
+                  }`}
+                  data-testid={`preset-btn-${p.replace(/\s+/g, '-').toLowerCase()}`}
+                >
+                  {p}
+                </button>
+              );
+            })}
           </div>
         </div>
 
