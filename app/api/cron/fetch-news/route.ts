@@ -147,7 +147,7 @@ async function handleNewsIngestion(req: Request) {
       generationConfig: {
         responseMimeType: 'application/json',
       },
-      systemInstruction: 'אתה עוזר בינה מלאכותית מומחה שמנתח מאמרי טכנולוגיה ומציג אותם כמו איש שיווק כריזמטי שמסביר פשוט ובגובה העיניים לכולם. עליך לכתוב את כותרת המאמר המפושטת (simplified_title) באנגלית בלבד ואת הסיכום הקצר (short_summary) בעברית ברורה, מושכת ומלהיבה.',
+      systemInstruction: 'You are an expert AI assistant who analyzes technology articles and explains them like a charismatic tech marketer who makes things simple, engaging, and accessible to everyone (like a charismatic marketer explaining simply and at eye-level to everyone). You must generate both the simplified title and the short summary in English only.',
     });
 
     const processedArticles = [];
@@ -163,7 +163,7 @@ async function handleNewsIngestion(req: Request) {
           Return a valid JSON object matching this exact schema:
           {
             "simplified_title": "Highly catchy, simplified, LinkedIn-influencer-style marketing headline in English only.",
-            "short_summary": "A 2-sentence explanation in Hebrew of what the news is and why it matters, using clear, exciting words that anyone can understand immediately.",
+            "short_summary": "A 2-sentence explanation in English of what the news is and why it matters, using clear, exciting, eye-level marketer words that anyone can understand immediately.",
             "hype_score": a calculated impact score between 1 and 100
           }
         `;
