@@ -103,13 +103,13 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
                         key={model.id} 
                         className={`relative border rounded-lg p-5 flex flex-col justify-between gap-4 transition-all duration-300 ${
                           isNew 
-                            ? 'border-brand-black bg-white shadow-md ring-1 ring-brand-black/5' 
-                            : 'border-brand-black/10 bg-white/40 hover:border-brand-black/25 hover:bg-white/60'
+                            ? 'border-brand-black bg-brand-offwhite shadow-md ring-1 ring-brand-black/5' 
+                            : 'border-brand-black/10 bg-brand-clay/10 hover:border-brand-black/25 hover:bg-brand-clay/20'
                         }`}
                         data-testid={`model-row-${model.id.replace('/', '-')}`}
                       >
                         {isNew && (
-                          <span className="absolute -top-2.5 left-4 px-2 py-0.5 text-[9px] font-geist-mono uppercase tracking-widest font-extrabold bg-brand-black text-white rounded-sm shadow-sm">
+                          <span className="absolute -top-2.5 left-4 px-2 py-0.5 text-[9px] font-geist-mono uppercase tracking-widest font-extrabold bg-brand-black text-brand-offwhite rounded-sm shadow-sm">
                             New Model
                           </span>
                         )}
