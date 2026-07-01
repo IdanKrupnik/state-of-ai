@@ -97,6 +97,36 @@ async function handleNewsIngestion(req: Request) {
       console.error('TechCrunch fetch failed:', err);
     }
 
+    let openaiXml = '';
+    try {
+      const openaiRes = await fetch('https://openai.com/news/rss.xml', {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+        next: { revalidate: 0 }
+      });
+      if (openaiRes.ok) {
+        openaiXml = await openaiRes.text();
+      }
+    } catch (err) {
+      console.error('OpenAI fetch failed:', err);
+    }
+
+    let hfXml = '';
+    try {
+      const hfRes = await fetch('https://huggingface.co/blog/feed.xml', {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+        next: { revalidate: 0 }
+      });
+      if (hfRes.ok) {
+        hfXml = await hfRes.text();
+      }
+    } catch (err) {
+      console.error('Hugging Face fetch failed:', err);
+    }
+
     let rundownXml = '';
     try {
       const rundownRes = await fetch('https://www.rundown.ai/feed', {
@@ -113,13 +143,21 @@ async function handleNewsIngestion(req: Request) {
     }
 
     const tcItems = tcXml ? parseRss(tcXml, 'TechCrunch') : [];
+    const openaiItems = openaiXml ? parseRss(openaiXml, 'OpenAI') : [];
+    const hfItems = hfXml ? parseRss(hfXml, 'Hugging Face') : [];
     const rundownItems = rundownXml ? parseRss(rundownXml, 'The Rundown AI') : [];
 
     const items: ParsedItem[] = [];
-    const maxLen = Math.max(tcItems.length, rundownItems.length);
+    const maxLen = Math.max(tcItems.length, openaiItems.length, hfItems.length, rundownItems.length);
     for (let i = 0; i < maxLen; i++) {
       if (i < tcItems.length) {
         items.push(tcItems[i]);
+      }
+      if (i < openaiItems.length) {
+        items.push(openaiItems[i]);
+      }
+      if (i < hfItems.length) {
+        items.push(hfItems[i]);
       }
       if (i < rundownItems.length) {
         items.push(rundownItems[i]);
