@@ -45,4 +45,15 @@ export class AIBubbleTensionIndexDriver {
   getTrackerPin(): HTMLElement | null {
     return this.elementToUse.querySelector('[data-testid="tracker-pin"]');
   }
+
+  clickMetricButton(index: number): void {
+    const btn = this.elementToUse.querySelector(`[data-testid="metric-btn-${index}"]`) as HTMLButtonElement | null;
+    if (btn) {
+      btn.click();
+    }
+  }
+
+  isMetricDetailsVisible(index: number): boolean {
+    return !!this.elementToUse.querySelector(`[data-testid="metric-details-${index}"]`);
+  }
 }
