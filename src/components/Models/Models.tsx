@@ -7,6 +7,24 @@ export interface ModelsProps {
   initialModels: ModelRow[];
 }
 
+const OpenAIIcon: React.FC = () => (
+  <svg className="w-4 h-4 text-brand-black shrink-0" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21.7,11.3a5.5,5.5,0,0,0-.8-2.9,5.5,5.5,0,0,0-3.3-2.6,5.3,5.3,0,0,0-5,1.1,5.3,5.3,0,0,0-2-4.1A5.4,5.4,0,0,0,7.3,1.9,5.5,5.5,0,0,0,4.1,5.1,5.4,5.4,0,0,0,4.7,9.6,5.5,5.5,0,0,0,2.3,12a5.4,5.4,0,0,0,3.3,5,5.3,5.3,0,0,0,5-1.1,5.3,5.3,0,0,0,2,4.1,5.4,5.4,0,0,0,3.3.9,5.5,5.5,0,0,0,3.2-3.2,5.4,5.4,0,0,0-.6-4.5A5.5,5.5,0,0,0,21.7,11.3ZM12.9,4a3.5,3.5,0,0,1,1.8.5L12,6.1,10.2,5.1A3.5,3.5,0,0,1,12,4.1ZM6,6.3a3.5,3.5,0,0,1,1.2,1.4v2.1L5.4,8.7A3.5,3.5,0,0,1,6,6.3ZM4.1,12a3.5,3.5,0,0,1,.6-1.8L6.5,11.4v2.1l-1.8-1A3.5,3.5,0,0,1,4.1,12Zm2.9,4.4a3.5,3.5,0,0,1-1-2.4L7.8,13v2.1ZM11.1,20a3.5,3.5,0,0,1-1.8-.5L12,17.9l1.8,1A3.5,3.5,0,0,1,11.1,20Zm4.9-2.3a3.5,3.5,0,0,1-1.2-1.4V14.2l1.8,1A3.5,3.5,0,0,1,16,17.7Zm2-5.7a3.5,3.5,0,0,1-.6,1.8L15.6,12.8V10.7l1.8,1A3.5,3.5,0,0,1,18,12ZM15.2,8.6a3.5,3.5,0,0,1,1,2.4L14.4,11V8.9Z" />
+  </svg>
+);
+
+const AnthropicIcon: React.FC = () => (
+  <svg className="w-4 h-4 text-brand-black shrink-0" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M16.924 2.836h-2.923l-3.32 15.34h2.925l.608-3.045h3.045l.608 3.045h2.926l-3.87-15.34zm-2.146 9.387l1.042-5.184 1.041 5.184h-2.083z" />
+  </svg>
+);
+
+const GoogleIcon: React.FC = () => (
+  <svg className="w-4 h-4 text-brand-black shrink-0" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.24 10.285V13.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.529-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l2.427-2.334C17.955 2.192 15.34 1 12.24 1 5.865 1 .697 6.145.697 12.5s5.168 11.5 11.543 11.5c6.657 0 11.082-4.664 11.082-11.25 0-.756-.081-1.332-.18-1.765H12.24z" />
+  </svg>
+);
+
 const formatContextLength = (val: number | null): string => {
   if (val === null) return '-';
   if (val >= 1000000) return `${(val / 1000000).toFixed(0)}M`;
@@ -24,6 +42,13 @@ const formatDate = (dateStr: string | null): string => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+};
+
+const getProviderIcon = (provider: string) => {
+  if (provider === 'OpenAI') return <OpenAIIcon />;
+  if (provider === 'Anthropic') return <AnthropicIcon />;
+  if (provider === 'Google') return <GoogleIcon />;
+  return null;
 };
 
 export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
@@ -79,7 +104,10 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
                 className="w-full flex items-center justify-between font-geist-mono text-xs uppercase tracking-wider font-semibold text-brand-black border-b border-brand-black/15 pb-2 hover:text-brand-warm-grey transition-colors select-none focus:outline-none cursor-pointer"
                 data-testid={`provider-toggle-${provider.toLowerCase()}`}
               >
-                <span>{provider}</span>
+                <div className="flex items-center gap-2">
+                  {getProviderIcon(provider)}
+                  <span>{provider}</span>
+                </div>
                 <svg 
                   className={`w-3 h-3 text-brand-black transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`} 
                   viewBox="0 0 24 24" 
