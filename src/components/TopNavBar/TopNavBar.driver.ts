@@ -53,7 +53,7 @@ export class TopNavBarDriver {
   }
 
   getActiveTabId(): string | null {
-    const activeLink = this.elementToUse.querySelector('nav a.text-brand-offwhite');
+    const activeLink = this.elementToUse.querySelector('nav a.text-brand-nav-text');
     if (!activeLink) return null;
     const testId = activeLink.getAttribute('data-testid');
     return testId ? testId.replace('nav-tab-', '') : null;
@@ -62,13 +62,13 @@ export class TopNavBarDriver {
   isTabActive(tabId: string): boolean {
     const tab = this.elementToUse.querySelector(`[data-testid="nav-tab-${tabId}"]`);
     if (!tab) return false;
-    return tab.className.includes('text-brand-offwhite') && tab.className.includes('font-semibold');
+    return tab.className.includes('text-brand-nav-text') && tab.className.includes('font-semibold');
   }
 
   isMobileTabActive(tabId: string): boolean {
     const tab = this.elementToUse.querySelector(`[data-testid="mobile-nav-tab-${tabId}"]`);
     if (!tab) return false;
-    return tab.className.includes('text-brand-offwhite') && tab.className.includes('font-bold');
+    return tab.className.includes('text-brand-nav-text') && tab.className.includes('font-bold');
   }
 
   hasThemeSwitch(): boolean {

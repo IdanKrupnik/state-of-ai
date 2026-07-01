@@ -15,6 +15,8 @@
   --color-secondary: #10b981;
   --color-outline: var(--outline);
   --color-outline-variant: var(--outline-variant);
+  --color-brand-nav-bg: var(--brand-nav-bg);
+  --color-brand-nav-text: var(--brand-nav-text);
   
   --font-inter: 'Inter', sans-serif;
   --font-geist-mono: 'Geist Mono', monospace;
@@ -36,6 +38,8 @@
   --brand-warm-grey: #787870;
   --outline: #747878;
   --outline-variant: #c4c7c7;
+  --brand-nav-bg: #111111;
+  --brand-nav-text: #fdf8f8;
 }
 
 .dark {
@@ -49,6 +53,8 @@
   --brand-warm-grey: #9a9a90;
   --outline: #555555;
   --outline-variant: #333333;
+  --brand-nav-bg: #222222;
+  --brand-nav-text: #fdf8f8;
 }
 
 body {

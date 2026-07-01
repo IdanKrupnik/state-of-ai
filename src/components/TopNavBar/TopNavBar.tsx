@@ -88,11 +88,11 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   ];
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-brand-black border-b border-outline-variant">
+    <header className="fixed top-0 w-full z-50 bg-brand-nav-bg border-b border-outline-variant">
       <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="flex items-center gap-3">
           <svg
-            className="w-8 h-8 text-brand-offwhite transition-transform duration-700 ease-in-out hover:rotate-[360deg] cursor-pointer shrink-0"
+            className="w-8 h-8 text-brand-nav-text transition-transform duration-700 ease-in-out hover:rotate-[360deg] cursor-pointer shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -109,7 +109,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
             <line x1="17" y1="12" x2="21" y2="12" />
             <circle cx="12" cy="12" r="2.2" fill="currentColor" />
           </svg>
-          <div className="text-xl md:text-2xl font-bold tracking-tighter text-brand-offwhite">
+          <div className="text-xl md:text-2xl font-bold tracking-tighter text-brand-nav-text">
             STATE OF AI
           </div>
         </div>
@@ -123,8 +123,8 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 onClick={(e) => handleTabClick(tab.id, e)}
                 className={`transition-colors cursor-pointer ${
                   isActive
-                    ? 'font-semibold text-brand-offwhite border-b-2 border-brand-offwhite pb-1'
-                    : 'text-brand-warm-grey hover:text-brand-offwhite'
+                    ? 'font-semibold text-brand-nav-text border-b-2 border-brand-nav-text pb-1'
+                    : 'text-brand-warm-grey hover:text-brand-nav-text'
                 }`}
                 href={`#${tab.id}`}
                 data-testid={`nav-tab-${tab.id}`}
@@ -141,7 +141,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="block md:hidden p-2 text-brand-offwhite hover:bg-brand-clay/40 transition-colors cursor-pointer"
+          className="block md:hidden p-2 text-brand-nav-text hover:bg-brand-clay/40 transition-colors cursor-pointer"
           aria-label="Toggle menu"
           data-testid="hamburger-button"
         >
@@ -159,7 +159,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
       {isMobileMenuOpen && (
         <div
-          className="md:hidden w-full bg-brand-black border-b border-outline-variant flex flex-col p-6 gap-6 font-geist-mono text-xs uppercase tracking-wider"
+          className="md:hidden w-full bg-brand-nav-bg border-b border-outline-variant flex flex-col p-6 gap-6 font-geist-mono text-xs uppercase tracking-wider"
           data-testid="mobile-dropdown"
         >
           {tabs.map((tab) => {
@@ -169,7 +169,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 key={tab.id}
                 onClick={(e) => handleTabClick(tab.id, e)}
                 className={`py-2 border-b border-outline-variant/30 ${
-                  isActive ? 'font-bold text-brand-offwhite' : 'text-brand-warm-grey hover:text-brand-offwhite'
+                  isActive ? 'font-bold text-brand-nav-text' : 'text-brand-warm-grey hover:text-brand-nav-text'
                 }`}
                 href={`#${tab.id}`}
                 data-testid={`mobile-nav-tab-${tab.id}`}
