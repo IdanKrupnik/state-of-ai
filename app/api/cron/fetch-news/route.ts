@@ -147,7 +147,7 @@ async function handleNewsIngestion(req: Request) {
       generationConfig: {
         responseMimeType: 'application/json',
       },
-      systemInstruction: 'You are an expert AI assistant who analyzes technology articles and explains them like a charismatic tech marketer who makes things simple, engaging, and accessible to everyone (like a charismatic marketer explaining simply and at eye-level to everyone). You must generate both the simplified title and the short summary in English only.',
+      systemInstruction: 'You are an expert AI assistant who explains technology news like a charismatic, simple salesman. Keep both the title and the summary in English, extremely minimalist, extra simple, and very short so that anyone can understand immediately.',
     });
 
     const processedArticles = [];
@@ -162,8 +162,8 @@ async function handleNewsIngestion(req: Request) {
           
           Return a valid JSON object matching this exact schema:
           {
-            "simplified_title": "Highly catchy, simplified, LinkedIn-influencer-style marketing headline in English only.",
-            "short_summary": "A 2-sentence explanation in English of what the news is and why it matters, using clear, exciting, eye-level marketer words that anyone can understand immediately.",
+            "simplified_title": "A highly catchy, ultra-minimalist, simple salesman-style title in English. Under 6 words.",
+            "short_summary": "An extra simple, ultra-short 1-sentence salesman pitch in English explaining what the news is and why it matters. Keep it very short.",
             "hype_score": a calculated impact score between 1 and 100
           }
         `;
