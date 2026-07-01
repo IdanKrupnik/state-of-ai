@@ -14,10 +14,6 @@ export const Terminology: React.FC = () => {
 
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  const lettersWithTerms = new Set(
-    terms.map((t) => t.word.charAt(0).toUpperCase())
-  );
-
   const sortedTerms = [...terms].sort((a, b) => a.word.localeCompare(b.word));
 
   const filteredTerms = sortedTerms.filter((term) => {
@@ -53,17 +49,13 @@ export const Terminology: React.FC = () => {
           </span>
           <div className="flex flex-wrap gap-1 md:gap-1.5 items-center" data-testid="terminology-alphabet-nav">
             {alphabet.map((letter) => {
-              const hasTerms = lettersWithTerms.has(letter);
               const isSelected = selectedLetter === letter;
               return (
                 <button
                   key={letter}
-                  disabled={!hasTerms}
                   onClick={() => setSelectedLetter(letter)}
                   className={`w-8 h-8 flex items-center justify-center text-xs font-geist-mono uppercase border border-outline-variant transition-all duration-200 ${
-                    !hasTerms
-                      ? 'text-brand-warm-grey/30 cursor-not-allowed bg-transparent'
-                      : isSelected
+                    isSelected
                       ? 'bg-brand-black text-brand-offwhite font-bold cursor-pointer'
                       : 'text-brand-warm-grey hover:text-brand-black hover:border-brand-black cursor-pointer bg-transparent'
                   }`}

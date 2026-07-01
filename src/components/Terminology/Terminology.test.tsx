@@ -27,12 +27,12 @@ describe('Terminology Component', () => {
     expect(driver.getEmptyStateText()).toBe('NO MATCHING TERMS FOUND.');
   });
 
-  it('should filter terms by clicked letter tab and disable empty letter tabs', () => {
+  it('should filter terms by clicked letter tab and verify all letters are enabled', () => {
     const { container } = render(<Terminology />);
     const driver = new TerminologyDriver(container);
 
     expect(driver.getSelectedLetter()).toBe('A');
-    expect(driver.isLetterDisabled('B')).toBe(true);
+    expect(driver.isLetterDisabled('B')).toBe(false);
     expect(driver.isLetterDisabled('A')).toBe(false);
 
     driver.selectLetter('T');
