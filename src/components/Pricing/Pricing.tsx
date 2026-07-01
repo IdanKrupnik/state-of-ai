@@ -3,11 +3,11 @@ import React from 'react';
 export const Pricing: React.FC = () => {
   const freeFeatures = [
     'View latest AI articles in real-time',
-    'Filter news by specific company',
     'Access AI basics and learning guides'
   ];
 
   const proFeatures = [
+    'Filter news by specific company',
     'Get notified about new events',
     'Read quick summaries of all events',
     'Get alerts when new models are released',
