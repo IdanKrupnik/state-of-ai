@@ -161,17 +161,6 @@ export const AIBasics: React.FC = () => {
             </div>
           </LearnSection>
 
-          <section className="w-full aspect-[21/9] bg-brand-clay/10 border border-outline-variant relative overflow-hidden group">
-            <img
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              alt="Conceptual datacenter topology"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidcdwOGwwl6kuCqioATRKPTpUuTw3r8GhWiiY7O6gWyXFISugMvHy1ncZ6iykqFJOGOTOTT2jSFDSvjVX49Cf80wyqkKlRCXkNquTwbU3vyFBSMC1egTfiP3c4b6MvoFXFqi6b28FAALj4Pzs6ZvHQCzomGN4HSTdHkqnYSzZTjkb-mbhpk8bhSliCI4_XFJM1pctkLhSr53wGRw6mJCu6XLhCU9N2rJ_oUNxNZEWolHYe_9krodQMuJ7RDhRDrFwlQj94zR9VawT"
-            />
-            <div className="absolute bottom-3 left-3 bg-brand-black text-brand-offwhite text-xs font-geist-mono px-3 py-1">
-              FIG_01: CONCEPTUAL DATACENTER TOPOLOGY
-            </div>
-          </section>
-
           <LearnSection id="capabilities" number="03 // CAPABILITIES" title="Large Language Models (LLMs)">
             <p className="text-brand-warm-grey text-base md:text-lg leading-relaxed max-w-prose">
               LLMs represent the current frontier of natural language processing. By predicting the next token in a sequence, these models exhibit emergent properties such as logical reasoning, creative synthesis, and multi-step problem solving.

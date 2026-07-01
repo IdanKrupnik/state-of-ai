@@ -34,8 +34,8 @@ export class PromptToOutputVisualizerDriver {
   }
 
   clickTab(stepNum: number): this {
-    const tab = this.elementToUse.querySelector(`[data-testid="step-tab-${stepNum}"]`) as HTMLButtonElement | null;
-    if (!tab) throw new Error(`Tab for step ${stepNum} not found`);
+    const tab = this.elementToUse.querySelector(`[data-testid="stepper-node-${stepNum}"]`) as HTMLButtonElement | null;
+    if (!tab) throw new Error(`Stepper node ${stepNum} not found`);
     fireEvent.click(tab);
     return this;
   }

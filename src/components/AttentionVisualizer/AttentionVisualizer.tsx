@@ -17,9 +17,9 @@ export const AttentionVisualizer: React.FC<AttentionVisualizerProps> = ({ prompt
   const tokens = prompt.split(/\s+/).filter(Boolean).slice(0, 3);
   if (tokens.length === 0) tokens.push('Prompt');
 
-  const layer1Y = tokens.map((_, i) => 60 + i * 80);
-  const layer2Y = [40, 100, 160, 220];
-  const layer3Y = [80, 180];
+  const layer1Y = tokens.map((_, i) => 80 + i * 80);
+  const layer2Y = [60, 120, 180, 240];
+  const layer3Y = [100, 200];
 
   const synapses: Synapse[] = [];
 
@@ -50,7 +50,12 @@ export const AttentionVisualizer: React.FC<AttentionVisualizerProps> = ({ prompt
   return (
     <div className="flex flex-col gap-2 p-4 border border-outline-variant bg-brand-clay/10 min-h-[350px]" data-testid="attention-visualizer">
       <div className="relative w-full aspect-[4/3] bg-brand-offwhite border border-outline-variant overflow-hidden">
-        <svg className="w-full h-full" viewBox="0 0 400 300">
+        <svg className="w-full h-full" viewBox="0 0 400 320">
+          <g className="font-geist-mono text-[9px] fill-brand-warm-grey uppercase tracking-wider font-bold">
+            <text x={60} y={35} textAnchor="middle">Input Words</text>
+            <text x={200} y={35} textAnchor="middle">Hidden Neurons</text>
+            <text x={340} y={35} textAnchor="middle">Output layer</text>
+          </g>
           <g>
             {synapses.map((syn, idx) => (
               <g key={`syn-${idx}`}>

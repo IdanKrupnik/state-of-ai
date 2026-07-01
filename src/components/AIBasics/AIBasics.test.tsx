@@ -20,7 +20,6 @@ describe('AIBasics Component', () => {
     expect(driver.getSectionTitle(3)).toBe('What is Inference?');
 
     expect(driver.getLatencyText()).toContain('ms');
-    expect(driver.getDatacenterTopologyImageAlt()).toBe('Conceptual datacenter topology');
 
     expect(driver.hasTOC()).toBe(true);
     expect(driver.getTOCLinks()).toEqual([

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Stepper } from '../ui/Stepper/Stepper';
 import { TokenVisualizer } from '../TokenVisualizer/TokenVisualizer';
 import { EmbeddingVisualizer } from '../EmbeddingVisualizer/EmbeddingVisualizer';
 import { AttentionVisualizer } from '../AttentionVisualizer/AttentionVisualizer';
@@ -18,22 +19,22 @@ export const PromptToOutputVisualizer: React.FC = () => {
     {
       num: 1,
       title: 'Tokenization',
-      desc: "AI cannot read whole words like humans do. Instead, it acts like a pair of scissors, chopping your sentence into tiny puzzle pieces called 'tokens'—sometimes splitting a single word into chunks—and assigns a unique number to each piece so it can keep track of them.",
+      desc: "AI cannot read whole words. It acts like scissors, chopping your sentence into tiny puzzle pieces called 'tokens' (which can be parts of words) and numbers them to keep track.",
     },
     {
       num: 2,
       title: 'Vector Embedding',
-      desc: "Next, the AI takes those numbered puzzle pieces and places them on a massive, invisible map of meanings. Words that are similar (like 'cat' and 'dog') are placed right next to each other in the same neighborhood, while unrelated words (like 'airplane') are sent far away.",
+      desc: "Next, the AI places these numbered pieces on an invisible map of meanings. Similar words (like 'cat' and 'dog') sit close together, while different words (like 'airplane') sit far away.",
     },
     {
       num: 3,
       title: 'The Attention Mechanism',
-      desc: "Words change their meaning depending on the sentence. To figure out the right context, the AI shoots glowing laser lines between all the words at the same time. This allows it to look at the big picture and understand exactly how the words relate to one another.",
+      desc: "To understand the context of the sentence, the AI draws connections (lasers) between all the words. This helps it see the big picture and understand how they relate.",
     },
     {
       num: 4,
       title: 'Next-Token Generation',
-      desc: "Finally, the AI plays a highly advanced game of autocomplete. It looks at its map of connected words and calculates a list of percentage guesses for what the absolute best next word should be. It picks the winner with the highest score, types it out, and repeats the whole loop.",
+      desc: "Finally, the AI plays autocomplete. It guesses which word should come next, lists candidates with percentage scores, and selects the winner with the highest score.",
     },
   ];
 
@@ -65,22 +66,13 @@ export const PromptToOutputVisualizer: React.FC = () => {
           </div>
         </div>
 
-        <nav className="flex border-b border-outline-variant" data-testid="visualizer-tabs">
-          {steps.map((s) => (
-            <button
-              key={s.num}
-              onClick={() => setStep(s.num)}
-              className={`flex-1 pb-3 text-xs font-geist-mono uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${
-                step === s.num
-                  ? 'border-brand-black text-brand-black font-bold'
-                  : 'border-transparent text-brand-warm-grey hover:text-brand-black'
-              }`}
-              data-testid={`step-tab-${s.num}`}
-            >
-              Step {s.num}
-            </button>
-          ))}
-        </nav>
+        <div className="py-2">
+          <Stepper
+            steps={steps.map(s => s.title)}
+            currentStep={step}
+            onStepChange={setStep}
+          />
+        </div>
 
         <div className="flex flex-col gap-2.5 min-h-[140px]" data-testid="step-content">
           <span className="font-geist-mono text-xs text-brand-warm-grey font-bold">STEP 0{steps[step - 1].num} // {steps[step - 1].title.toUpperCase()}</span>
