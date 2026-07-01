@@ -77,6 +77,12 @@ Guidelines:
 
 ---
 
+# UNUSED IMPORTS RULE
+
+- Whenever you update or create a file, you must ensure there are no unused import statements. Always check and clean up any unused imports from the modified files before committing.
+
+---
+
 # DECLARATIVE AND MODULAR FILE ARCHITECTURE RULE
 
 - All files and functions must be as small, modular, and declarative as possible.

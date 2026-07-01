@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { handleNewsSync } from '@/src/lib/newsService';
 
 export async function GET(req: Request) {

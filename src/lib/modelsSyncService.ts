@@ -78,6 +78,9 @@ export async function syncModels(req: Request): Promise<NextResponse> {
 
     const upsertRows = [];
 
+    let processedCount = 0;
+    const maxProcessPerRun = 5;
+
     for (const m of openRouterModels) {
       const existing = existingModelsMap.get(m.id);
       const rawPromptPrice = m.pricing?.prompt ? Number(m.pricing.prompt) : 0;
@@ -95,10 +98,15 @@ export async function syncModels(req: Request): Promise<NextResponse> {
       let description = existing?.description || null;
 
       if (isChanged) {
-        try {
-          description = await generateModelDescription(m);
-        } catch (err) {
-          console.error(`Gemini failed for ${m.id}:`, err);
+        if (processedCount < maxProcessPerRun) {
+          try {
+            description = await generateModelDescription(m);
+            processedCount++;
+          } catch (err) {
+            console.error(`Gemini failed for ${m.id}:`, err);
+          }
+        } else {
+          continue;
         }
       }
 
