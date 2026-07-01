@@ -9,22 +9,24 @@ vi.mock('../../lib/supabaseClient', () => {
     supabaseClient: {
       from: () => ({
         select: () => ({
-          order: () => ({
-            range: vi.fn().mockResolvedValue({
-              data: [
-                {
-                  id: '4',
-                  company: 'Microsoft',
-                  hype_score: 80,
-                  simplified_title: 'Windows Copilot Released',
-                  short_summary: 'Microsoft released Windows Copilot integration.',
-                  source_url: 'https://microsoft.com',
-                  original_title: 'Windows Copilot Released original',
-                  created_at: '2026-06-30T14:00:00Z',
-                }
-              ],
-              count: 4,
-              error: null
+          neq: () => ({
+            order: () => ({
+              range: vi.fn().mockResolvedValue({
+                data: [
+                  {
+                    id: '4',
+                    company: 'Microsoft',
+                    hype_score: 80,
+                    simplified_title: 'Windows Copilot Released',
+                    short_summary: 'Microsoft released Windows Copilot integration.',
+                    source_url: 'https://microsoft.com',
+                    original_title: 'Windows Copilot Released original',
+                    created_at: '2026-06-30T14:00:00Z',
+                  }
+                ],
+                count: 4,
+                error: null
+              })
             })
           })
         })
