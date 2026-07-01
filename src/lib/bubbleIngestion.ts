@@ -79,7 +79,7 @@ export async function runBubbleIngestion() {
     ${JSON.stringify(articlesList)}
 
     Update the bubble percentage (0-100) and status direction ('increasing' | 'stable' | 'decreasing') based on the combined information.
-    Write a short summary (short_explanation) in very simple, jargon-free words that any normal user can easily understand instantly.
+    Write a detailed, clear, and easy-to-read explanation (short_explanation) in very simple, jargon-free words. This explanation must directly reference details from the new articles (such as corporate capital expenditure, infrastructure buildout, or revenue mismatch) and clearly explain the reasoning for the updated bubble percentage and whether it indicates we are closer to a speculative bubble or building stable long-term infrastructure.
     Extract exactly 3 key financial highlights (like corporate earnings, infrastructure spending, or software revenue) in very, very simple words.
 
     Return a valid JSON object matching this exact schema:
