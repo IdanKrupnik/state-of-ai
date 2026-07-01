@@ -24,11 +24,11 @@ describe('Models Component', () => {
       prompt_token_price: 3.0,
       completion_token_price: 15.0,
       description: 'Excellent programming capabilities and speed.',
-      updated_at: '2026-07-01T12:00:00Z',
+      updated_at: '2026-07-01T11:00:00Z',
     },
   ];
 
-  it('should render the list of models grouped by their providers', () => {
+  it('should render the list of models grouped by their providers and flag the newest ones', () => {
     const { container } = render(<Models initialModels={mockModels} />);
     const driver = new ModelsDriver(container);
 
@@ -39,15 +39,17 @@ describe('Models Component', () => {
     const openaiRows = driver.getModelRows('openai');
     expect(openaiRows).toHaveLength(1);
     expect(driver.getModelName(openaiRows[0])).toBe('GPT-4o');
-    expect(driver.getContextText(openaiRows[0])).toBe('128k');
+    expect(driver.getContextText(openaiRows[0])).toBe('128k ctx');
     expect(driver.getPriceText(openaiRows[0])).toBe('$5.00 / $15.00');
     expect(driver.getDescriptionText(openaiRows[0])).toBe('Standard OpenAI frontier multimodal model.');
+    expect(driver.hasNewBadge(openaiRows[0])).toBe(true);
 
     const anthropicRows = driver.getModelRows('anthropic');
     expect(anthropicRows).toHaveLength(1);
     expect(driver.getModelName(anthropicRows[0])).toBe('Claude 3.5 Sonnet');
-    expect(driver.getContextText(anthropicRows[0])).toBe('200k');
+    expect(driver.getContextText(anthropicRows[0])).toBe('200k ctx');
     expect(driver.getPriceText(anthropicRows[0])).toBe('$3.00 / $15.00');
     expect(driver.getDescriptionText(anthropicRows[0])).toBe('Excellent programming capabilities and speed.');
+    expect(driver.hasNewBadge(anthropicRows[0])).toBe(true);
   });
 });

@@ -29,22 +29,29 @@ export class ModelsDriver {
   getModelRows(provider: string): HTMLElement[] {
     const group = this.elementToUse.querySelector(`[data-testid="provider-group-${provider.toLowerCase()}"]`);
     if (!group) return [];
-    return Array.from(group.querySelectorAll('tbody tr')) as HTMLElement[];
+    return Array.from(group.querySelectorAll('[data-testid^="model-row-"]')) as HTMLElement[];
   }
 
   getModelName(row: HTMLElement): string {
-    return row.children[0]?.textContent?.trim() || '';
+    return row.querySelector('span.font-semibold')?.textContent?.trim() || '';
   }
 
   getContextText(row: HTMLElement): string {
-    return row.children[1]?.textContent?.trim() || '';
+    const spans = row.querySelectorAll('div.font-geist-mono span');
+    return spans[0]?.textContent?.trim() || '';
   }
 
   getPriceText(row: HTMLElement): string {
-    return row.children[2]?.textContent?.trim() || '';
+    const spans = row.querySelectorAll('div.font-geist-mono span');
+    return spans[1]?.textContent?.trim() || '';
   }
 
   getDescriptionText(row: HTMLElement): string {
-    return row.children[3]?.textContent?.trim() || '';
+    return row.querySelector('p.text-brand-warm-grey')?.textContent?.trim() || '';
+  }
+
+  hasNewBadge(row: HTMLElement): boolean {
+    const spans = Array.from(row.querySelectorAll('span'));
+    return spans.some((s) => s.textContent?.trim() === 'New');
   }
 }
