@@ -9,7 +9,7 @@ interface SectionProps {
 }
 
 const LearnSection: React.FC<SectionProps> = ({ id, number, title, children }) => (
-  <section id={id} className="flex flex-col gap-5 border-t border-outline-variant/30 pt-10" data-testid={`learn-section-${id}`}>
+  <section id={id} className="flex flex-col gap-5 border-t border-outline-variant pt-10" data-testid={`learn-section-${id}`}>
     <span className="font-geist-mono text-xs text-brand-warm-grey">{number}</span>
     <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-brand-black">{title}</h2>
     {children}
