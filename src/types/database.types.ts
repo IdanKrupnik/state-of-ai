@@ -24,6 +24,7 @@ export type Database = {
           short_summary: string
           simplified_title: string
           source_url: string
+          source: string
         }
         Insert: {
           company?: string
@@ -34,6 +35,7 @@ export type Database = {
           short_summary: string
           simplified_title: string
           source_url: string
+          source?: string
         }
         Update: {
           company?: string
@@ -44,6 +46,7 @@ export type Database = {
           short_summary?: string
           simplified_title?: string
           source_url?: string
+          source?: string
         }
         Relationships: []
       }

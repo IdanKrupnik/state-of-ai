@@ -14,9 +14,10 @@ interface ParsedItem {
   title: string;
   link: string;
   description: string;
+  source: string;
 }
 
-function parseRss(xml: string): ParsedItem[] {
+function parseRss(xml: string, sourceName: string): ParsedItem[] {
   const items: ParsedItem[] = [];
   const itemMatches = xml.match(/<item[\s\S]*?>([\s\S]*?)<\/item>/g);
   if (!itemMatches) return items;
@@ -45,7 +46,7 @@ function parseRss(xml: string): ParsedItem[] {
     description = description.replace(/<[^>]*>?/gm, '').trim();
 
     if (title && link) {
-      items.push({ title, link, description });
+      items.push({ title, link, description, source: sourceName });
     }
   }
 
@@ -81,7 +82,7 @@ async function handleNewsIngestion(req: Request) {
       );
     }
 
-    let xmlText = '';
+    let tcXml = '';
     try {
       const tcRes = await fetch('https://techcrunch.com/category/artificial-intelligence/feed/', {
         headers: {
@@ -90,38 +91,37 @@ async function handleNewsIngestion(req: Request) {
         next: { revalidate: 0 }
       });
       if (tcRes.ok) {
-        xmlText = await tcRes.text();
+        tcXml = await tcRes.text();
       }
     } catch (err) {
       console.error('TechCrunch fetch failed:', err);
     }
 
-    if (!xmlText) {
-      try {
-        const vbRes = await fetch('https://venturebeat.com/category/ai/feed/', {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          },
-          next: { revalidate: 0 }
-        });
-        if (vbRes.ok) {
-          xmlText = await vbRes.text();
-        }
-      } catch (err) {
-        console.error('VentureBeat fetch failed:', err);
+    let rundownXml = '';
+    try {
+      const rundownRes = await fetch('https://www.rundown.ai/feed', {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+        next: { revalidate: 0 }
+      });
+      if (rundownRes.ok) {
+        rundownXml = await rundownRes.text();
       }
+    } catch (err) {
+      console.error('The Rundown AI fetch failed:', err);
     }
 
-    if (!xmlText) {
+    const tcItems = tcXml ? parseRss(tcXml, 'TechCrunch') : [];
+    const rundownItems = rundownXml ? parseRss(rundownXml, 'The Rundown AI') : [];
+
+    const items = [...tcItems, ...rundownItems];
+
+    if (items.length === 0) {
       return NextResponse.json(
-        { error: 'Failed to fetch any AI RSS feed' },
+        { error: 'Failed to fetch any articles from TechCrunch or The Rundown AI' },
         { status: 500 }
       );
-    }
-
-    const items = parseRss(xmlText);
-    if (items.length === 0) {
-      return NextResponse.json({ success: true, message: 'No articles found in feed' });
     }
 
     const parsedLinks = items.map((item) => item.link);
@@ -180,7 +180,8 @@ async function handleNewsIngestion(req: Request) {
           short_summary: aiData.short_summary,
           hype_score: Number(aiData.hype_score) || 50,
           source_url: article.link,
-          company: detectCompany(article.title)
+          company: detectCompany(article.title),
+          source: article.source
         });
       } catch (err) {
         console.error(`Failed to process article "${article.title}":`, err);
