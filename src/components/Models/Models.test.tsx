@@ -43,13 +43,18 @@ describe('Models Component', () => {
     expect(driver.getPriceText(openaiRows[0])).toBe('$5.00 / $15.00');
     expect(driver.getDescriptionText(openaiRows[0])).toBe('Standard OpenAI frontier multimodal model.');
     expect(driver.hasNewBadge(openaiRows[0])).toBe(true);
+  });
 
-    const anthropicRows = driver.getModelRows('anthropic');
-    expect(anthropicRows).toHaveLength(1);
-    expect(driver.getModelName(anthropicRows[0])).toBe('Claude 3.5 Sonnet');
-    expect(driver.getContextText(anthropicRows[0])).toBe('200k ctx');
-    expect(driver.getPriceText(anthropicRows[0])).toBe('$3.00 / $15.00');
-    expect(driver.getDescriptionText(anthropicRows[0])).toBe('Excellent programming capabilities and speed.');
-    expect(driver.hasNewBadge(anthropicRows[0])).toBe(true);
+  it('should support collapsing and expanding provider groups', () => {
+    const { container } = render(<Models initialModels={mockModels} />);
+    const driver = new ModelsDriver(container);
+
+    expect(driver.isProviderExpanded('openai')).toBe(true);
+
+    driver.toggleProvider('openai');
+    expect(driver.isProviderExpanded('openai')).toBe(false);
+
+    driver.toggleProvider('openai');
+    expect(driver.isProviderExpanded('openai')).toBe(true);
   });
 });

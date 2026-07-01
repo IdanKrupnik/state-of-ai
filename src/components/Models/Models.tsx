@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tables } from '@/types/database.types';
 
 export type ModelRow = Tables<'models'>;
@@ -23,6 +23,16 @@ const formatPrice = (val: number | null): string => {
 export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
   const providers = ['OpenAI', 'Anthropic', 'Google'];
 
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({
+    OpenAI: true,
+    Anthropic: true,
+    Google: true
+  });
+
+  const toggleExpanded = (provider: string) => {
+    setExpanded((prev) => ({ ...prev, [provider]: !prev[provider] }));
+  };
+
   const sortedByDate = [...initialModels].sort((a, b) => 
     new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
   );
@@ -44,50 +54,69 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
           const providerModels = initialModels.filter((m) => m.provider === provider);
           if (providerModels.length === 0) return null;
 
+          const isExpanded = expanded[provider];
+
           return (
             <div key={provider} className="flex flex-col gap-5" data-testid={`provider-group-${provider.toLowerCase()}`}>
-              <h3 className="font-geist-mono text-xs uppercase tracking-wider font-semibold text-brand-black border-b border-brand-black/15 pb-2">
-                {provider}
-              </h3>
+              <button
+                onClick={() => toggleExpanded(provider)}
+                className="w-full flex items-center justify-between font-geist-mono text-xs uppercase tracking-wider font-semibold text-brand-black border-b border-brand-black/15 pb-2 hover:text-brand-warm-grey transition-colors select-none focus:outline-none cursor-pointer"
+                data-testid={`provider-toggle-${provider.toLowerCase()}`}
+              >
+                <span>{provider}</span>
+                <svg 
+                  className={`w-3 h-3 text-brand-black transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`} 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5"
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {providerModels.map((model) => {
-                  const isNew = newestIds.has(model.id);
-                  return (
-                    <div 
-                      key={model.id} 
-                      className={`relative border rounded-lg p-5 flex flex-col justify-between gap-4 transition-all duration-300 ${
-                        isNew 
-                          ? 'border-brand-black bg-white shadow-md ring-1 ring-brand-black/5' 
-                          : 'border-brand-black/10 bg-white/40 hover:border-brand-black/25 hover:bg-white/60'
-                      }`}
-                      data-testid={`model-row-${model.id.replace('/', '-')}`}
-                    >
-                      {isNew && (
-                        <span className="absolute -top-2.5 left-4 px-2 py-0.5 text-[9px] font-geist-mono uppercase tracking-widest font-extrabold bg-brand-black text-white rounded-sm shadow-sm">
-                          New Model
-                        </span>
-                      )}
+              {isExpanded && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" data-testid={`provider-grid-${provider.toLowerCase()}`}>
+                  {providerModels.map((model) => {
+                    const isNew = newestIds.has(model.id);
+                    return (
+                      <div 
+                        key={model.id} 
+                        className={`relative border rounded-lg p-5 flex flex-col justify-between gap-4 transition-all duration-300 ${
+                          isNew 
+                            ? 'border-brand-black bg-white shadow-md ring-1 ring-brand-black/5' 
+                            : 'border-brand-black/10 bg-white/40 hover:border-brand-black/25 hover:bg-white/60'
+                        }`}
+                        data-testid={`model-row-${model.id.replace('/', '-')}`}
+                      >
+                        {isNew && (
+                          <span className="absolute -top-2.5 left-4 px-2 py-0.5 text-[9px] font-geist-mono uppercase tracking-widest font-extrabold bg-brand-black text-white rounded-sm shadow-sm">
+                            New Model
+                          </span>
+                        )}
 
-                      <div className="flex flex-col gap-1.5">
-                        <span className="font-bold text-brand-black text-sm block leading-tight">{model.name}</span>
-                        <p className="text-brand-warm-grey text-xs italic leading-relaxed">
-                          {model.description || 'No description available.'}
-                        </p>
-                      </div>
+                        <div className="flex flex-col gap-1.5">
+                          <span className="font-bold text-brand-black text-sm block leading-tight">{model.name}</span>
+                          <p className="text-brand-warm-grey text-xs italic leading-relaxed">
+                            {model.description || 'No description available.'}
+                          </p>
+                        </div>
 
-                      <div className="flex items-center gap-2 text-[10px] font-geist-mono text-brand-black/80 mt-auto">
-                        <span className="px-2 py-0.5 bg-brand-clay/20 rounded-sm">
-                          {formatContextLength(model.context_length)} ctx
-                        </span>
-                        <span className="px-2 py-0.5 bg-brand-clay/20 rounded-sm">
-                          {formatPrice(model.prompt_token_price)} / {formatPrice(model.completion_token_price)}
-                        </span>
+                        <div className="flex items-center gap-2 text-[10px] font-geist-mono text-brand-black/80 mt-auto">
+                          <span className="px-2 py-0.5 bg-brand-clay/20 rounded-sm">
+                            {formatContextLength(model.context_length)} ctx
+                          </span>
+                          <span className="px-2 py-0.5 bg-brand-clay/20 rounded-sm">
+                            {formatPrice(model.prompt_token_price)} / {formatPrice(model.completion_token_price)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}

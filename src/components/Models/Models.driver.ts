@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 
 export class ModelsDriver {
   private element: HTMLElement | null = null;
@@ -24,6 +24,17 @@ export class ModelsDriver {
 
   hasProviderGroup(provider: string): boolean {
     return !!this.elementToUse.querySelector(`[data-testid="provider-group-${provider.toLowerCase()}"]`);
+  }
+
+  toggleProvider(provider: string): void {
+    const btn = this.elementToUse.querySelector(`[data-testid="provider-toggle-${provider.toLowerCase()}"]`);
+    if (btn) {
+      fireEvent.click(btn);
+    }
+  }
+
+  isProviderExpanded(provider: string): boolean {
+    return !!this.elementToUse.querySelector(`[data-testid="provider-grid-${provider.toLowerCase()}"]`);
   }
 
   getModelRows(provider: string): HTMLElement[] {
