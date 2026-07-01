@@ -100,7 +100,7 @@ export async function saveArticles(articles: ArticleInsert[]) {
   return data;
 }
 
-export async function handleNewsIngestion(req: Request): Promise<NextResponse> {
+export async function handleNewsSync(req: Request): Promise<NextResponse> {
   try {
     if (!isAuthorized(req)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -117,7 +117,7 @@ export async function handleNewsIngestion(req: Request): Promise<NextResponse> {
 
     const newArticles = await getNewArticles(items);
     if (newArticles.length === 0) {
-      return NextResponse.json({ success: true, message: 'All articles are already ingested' });
+      return NextResponse.json({ success: true, message: 'All articles are already synced' });
     }
 
     const articlesToProcess = newArticles.slice(0, 3);
@@ -135,7 +135,7 @@ export async function handleNewsIngestion(req: Request): Promise<NextResponse> {
       data: insertedData
     });
   } catch (error: any) {
-    console.error('Error in news ingestion workflow:', error);
+    console.error('Error in news sync workflow:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

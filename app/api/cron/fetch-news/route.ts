@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { handleNewsIngestion } from '@/src/lib/newsIngestionService';
+import { handleNewsSync } from '@/src/lib/newsService';
 
 export async function GET(req: Request) {
-  return handleNewsIngestion(req);
+  return handleNewsSync(req);
 }
 
 export async function POST(req: Request) {
-  return handleNewsIngestion(req);
+  return handleNewsSync(req);
 }
