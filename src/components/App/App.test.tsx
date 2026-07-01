@@ -103,6 +103,9 @@ describe('App Component', () => {
     const basicsDriver = driver.getAIBasicsDriver();
     expect(basicsDriver.getTitle()).toBe('AI Fundamentals');
 
+    nav.clickTab('pricing');
+    expect(container.querySelector('[data-testid="pricing-container"]')).toBeTruthy();
+
     nav.clickTab('feed');
     expect(driver.getArticleRowDrivers()).toHaveLength(3);
   });

@@ -10,6 +10,7 @@ import { Footer } from '../Footer/Footer';
 import { AIBasics } from '../AIBasics/AIBasics';
 import { Events } from '../Events/Events';
 import { About } from '../About/About';
+import { Pricing } from '../Pricing/Pricing';
 
 import { Tables } from '@/types/database.types';
 
@@ -86,7 +87,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
       const hash = window.location.hash.replace('#', '');
       const parts = hash.split('/');
       const primaryTab = parts[0];
-      const validTabs = ['feed', 'models', 'events', 'about', 'learn'];
+      const validTabs = ['feed', 'models', 'events', 'about', 'learn', 'pricing'];
       if (validTabs.includes(primaryTab)) {
         setActiveTab(primaryTab);
         
@@ -175,6 +176,8 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
             {activeTab === 'events' && <Events />}
 
             {activeTab === 'about' && <About />}
+
+            {activeTab === 'pricing' && <Pricing />}
 
             {activeTab === 'models' && <Models initialModels={initialModels} />}
           </>

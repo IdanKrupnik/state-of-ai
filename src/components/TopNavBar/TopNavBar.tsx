@@ -74,6 +74,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     { id: 'events', label: 'Events' },
     { id: 'about', label: 'About' },
     { id: 'learn', label: 'Learn' },
+    { id: 'pricing', label: 'Pricing' },
   ];
 
   return (

@@ -44,6 +44,7 @@ describe('TopNavBar Component', () => {
     expect(driver.isTabActive('events')).toBe(false);
     expect(driver.isTabActive('about')).toBe(false);
     expect(driver.isTabActive('learn')).toBe(false);
+    expect(driver.isTabActive('pricing')).toBe(false);
 
     driver.clickTab('models');
     expect(handleTabChange).toHaveBeenCalledWith('models');
