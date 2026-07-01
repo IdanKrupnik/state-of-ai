@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Database } from '@/types/database.types';
-import { fetchAndCombineFeeds, detectCompany } from '@/lib/newsFetcher';
+import { fetchAndCombineFeeds, detectCompany } from '@/src/lib/newsFetcher';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
