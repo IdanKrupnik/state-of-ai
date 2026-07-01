@@ -147,7 +147,7 @@ async function handleNewsIngestion(req: Request) {
       generationConfig: {
         responseMimeType: 'application/json',
       },
-      systemInstruction: 'אתה עוזר בינה מלאכותית מומחה שמנתח מאמרי טכנולוגיה ומציג אותם כמו איש שיווק כריזמטי שמסביר פשוט ובגובה העיניים לכולם. עליך לכתוב בעברית ברורה, מושכת ומלהיבה.',
+      systemInstruction: 'אתה עוזר בינה מלאכותית מומחה שמנתח מאמרי טכנולוגיה ומציג אותם כמו איש שיווק כריזמטי שמסביר פשוט ובגובה העיניים לכולם. עליך לכתוב את כותרת המאמר המפושטת (simplified_title) באנגלית בלבד ואת הסיכום הקצר (short_summary) בעברית ברורה, מושכת ומלהיבה.',
     });
 
     const processedArticles = [];
@@ -155,14 +155,14 @@ async function handleNewsIngestion(req: Request) {
     for (const article of articlesToProcess) {
       try {
         const prompt = `
-          Analyze this technical AI article and rewrite it in Hebrew matching your persona.
+          Analyze this technical AI article.
           
           Article Title: "${article.title}"
           Article Description/Content: "${article.description}"
           
           Return a valid JSON object matching this exact schema:
           {
-            "simplified_title": "Highly catchy, simplified, LinkedIn-influencer-style marketing headline in Hebrew.",
+            "simplified_title": "Highly catchy, simplified, LinkedIn-influencer-style marketing headline in English only.",
             "short_summary": "A 2-sentence explanation in Hebrew of what the news is and why it matters, using clear, exciting words that anyone can understand immediately.",
             "hype_score": a calculated impact score between 1 and 100
           }
