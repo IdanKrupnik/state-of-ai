@@ -6,6 +6,7 @@ export interface FeedRowProps {
   summary: string;
   sourceUrl: string;
   timestamp?: string;
+  source?: string;
 }
 
 export const FeedRow: React.FC<FeedRowProps> = ({
@@ -14,8 +15,20 @@ export const FeedRow: React.FC<FeedRowProps> = ({
   summary,
   sourceUrl,
   timestamp = '12:00 UTC',
+  source,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const getSourceDisplay = () => {
+    if (source) return source;
+    try {
+      return new URL(sourceUrl).hostname.replace('www.', '');
+    } catch {
+      return '';
+    }
+  };
+
+  const sourceDisplay = getSourceDisplay();
 
   return (
     <div
@@ -45,7 +58,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
               className="inline-flex items-center gap-1 mt-4 text-primary font-bold hover:gap-2 transition-all"
               onClick={(e) => e.stopPropagation()}
             >
-              Source material
+              Source material {sourceDisplay ? `(${sourceDisplay})` : ''}
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </a>
           </div>

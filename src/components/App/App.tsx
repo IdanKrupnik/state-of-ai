@@ -141,6 +141,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                           summary={article.short_summary}
                           sourceUrl={article.source_url}
                           timestamp={formatRelativeTime(article.created_at)}
+                          source={article.source}
                         />
                       ))
                     )}
