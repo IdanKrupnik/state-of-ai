@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient<Database>(supabaseUrl || '', supabaseAnonKey || '');
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabase = createClient<Database>(supabaseUrl || '', supabaseServiceKey || '');
 
 async function getArticles() {
   const { data, count, error } = await supabase
