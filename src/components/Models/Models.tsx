@@ -51,7 +51,9 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
 
       <div className="flex flex-col gap-12" data-testid="models-container">
         {providers.map((provider) => {
-          const providerModels = initialModels.filter((m) => m.provider === provider);
+          const providerModels = initialModels
+            .filter((m) => m.provider === provider)
+            .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
           if (providerModels.length === 0) return null;
 
           const isExpanded = expanded[provider];
