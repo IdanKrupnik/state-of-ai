@@ -68,7 +68,7 @@ export async function runBubbleIngestion() {
     generationConfig: {
       responseMimeType: 'application/json',
     },
-    systemInstruction: 'You are a clear, straightforward financial analyst who explains market trends in plain, jargon-free English for normal users.',
+    systemInstruction: 'You are a balanced, objective, and clear financial analyst who weighs both speculative hype and real business utility when explaining market trends in plain, jargon-free English.',
   });
 
   const prompt = `
@@ -79,6 +79,12 @@ export async function runBubbleIngestion() {
     ${JSON.stringify(articlesList)}
 
     Update the bubble percentage (0-100) and status direction ('increasing' | 'stable' | 'decreasing') based on the combined information.
+    You must balance the fetched news (which tends to focus heavily on clickbait speculative hype and media skepticism) with these established structural realities of AI monetization:
+    - Corporate Revenue: Major cloud providers (Microsoft Azure, Google Cloud, AWS) report substantial, direct revenue growth driven by enterprise AI adoption and model APIs.
+    - Real Productivity Gains: Software development teams and enterprises report 20-30% measured productivity improvements using tools like GitHub Copilot.
+    - Real Infrastructure Spending: Purchases of high-end hardware (like NVIDIA GPUs) are backed by cash-rich technology giants utilizing their own massive cash reserves rather than debt.
+    
+    Considering these structural utility factors, the bubble percentage should be balanced and remain in a moderate, realistic range (typically 40% to 65% depending on news gravity) rather than hitting extreme levels, reflecting a transitional build rather than an imminent speculative collapse.
     Write a detailed, clear, and easy-to-read explanation (short_explanation) in very simple, jargon-free words. This explanation must directly reference details from the new articles (such as corporate capital expenditure, infrastructure buildout, or revenue mismatch) and clearly explain the reasoning for the updated bubble percentage and whether it indicates we are closer to a speculative bubble or building stable long-term infrastructure.
     Extract exactly 3 key financial highlights (like corporate earnings, infrastructure spending, or software revenue) in very, very simple words.
 
