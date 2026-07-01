@@ -10,10 +10,8 @@ describe('Terminology Component', () => {
     const driver = new TerminologyDriver(container);
 
     const titles = driver.getTermTitles();
-    expect(titles).toHaveLength(14);
+    expect(titles).toHaveLength(1);
     expect(titles[0]).toBe('Agent');
-    expect(titles[1]).toBe('Context Window');
-    expect(titles[titles.length - 1]).toBe('Weights');
 
     driver.setSearchQuery('rag');
     expect(driver.getTermsCount()).toBe(1);
@@ -33,14 +31,9 @@ describe('Terminology Component', () => {
     const { container } = render(<Terminology />);
     const driver = new TerminologyDriver(container);
 
-    expect(driver.getSelectedLetter()).toBe('ALL');
+    expect(driver.getSelectedLetter()).toBe('A');
     expect(driver.isLetterDisabled('B')).toBe(true);
     expect(driver.isLetterDisabled('A')).toBe(false);
-
-    driver.selectLetter('A');
-    expect(driver.getSelectedLetter()).toBe('A');
-    expect(driver.getTermsCount()).toBe(1);
-    expect(driver.getTermTitles()[0]).toBe('Agent');
 
     driver.selectLetter('T');
     expect(driver.getSelectedLetter()).toBe('T');
@@ -65,4 +58,5 @@ describe('Terminology Component', () => {
     expect(driver.getTermTitles()[0]).toBe('Agent');
   });
 });
+
 

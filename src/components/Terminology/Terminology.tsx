@@ -10,7 +10,7 @@ export interface Term {
 
 export const Terminology: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedLetter, setSelectedLetter] = useState('ALL');
+  const [selectedLetter, setSelectedLetter] = useState('A');
 
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -29,7 +29,6 @@ export const Terminology: React.FC = () => {
 
     if (searchQuery) return true;
 
-    if (selectedLetter === 'ALL') return true;
     return term.word.toUpperCase().startsWith(selectedLetter);
   });
 
@@ -53,17 +52,6 @@ export const Terminology: React.FC = () => {
             Filter by Letter
           </span>
           <div className="flex flex-wrap gap-1 md:gap-1.5 items-center" data-testid="terminology-alphabet-nav">
-            <button
-              onClick={() => setSelectedLetter('ALL')}
-              className={`px-3 h-8 text-xs font-geist-mono uppercase tracking-wider border transition-all duration-200 cursor-pointer ${
-                selectedLetter === 'ALL'
-                  ? 'bg-brand-black text-brand-offwhite border-brand-black font-bold'
-                  : 'text-brand-warm-grey border-outline-variant hover:text-brand-black hover:border-brand-nav-text/45 bg-transparent'
-              }`}
-              data-testid="letter-tab-all"
-            >
-              ALL
-            </button>
             {alphabet.map((letter) => {
               const hasTerms = lettersWithTerms.has(letter);
               const isSelected = selectedLetter === letter;
@@ -72,12 +60,12 @@ export const Terminology: React.FC = () => {
                   key={letter}
                   disabled={!hasTerms}
                   onClick={() => setSelectedLetter(letter)}
-                  className={`w-8 h-8 flex items-center justify-center text-xs font-geist-mono uppercase border transition-all duration-200 ${
+                  className={`w-8 h-8 flex items-center justify-center text-xs font-geist-mono uppercase border border-outline-variant transition-all duration-200 ${
                     !hasTerms
-                      ? 'text-brand-warm-grey/30 border-outline-variant/30 cursor-not-allowed bg-transparent'
+                      ? 'text-brand-warm-grey/30 cursor-not-allowed bg-transparent'
                       : isSelected
-                      ? 'bg-brand-black text-brand-offwhite border-brand-black font-bold cursor-pointer'
-                      : 'text-brand-warm-grey border-outline-variant hover:text-brand-black hover:border-brand-nav-text/45 cursor-pointer bg-transparent'
+                      ? 'bg-brand-black text-brand-offwhite font-bold cursor-pointer'
+                      : 'text-brand-warm-grey hover:text-brand-black hover:border-brand-black cursor-pointer bg-transparent'
                   }`}
                   data-testid={`letter-tab-${letter.toLowerCase()}`}
                 >
@@ -104,7 +92,7 @@ export const Terminology: React.FC = () => {
           {filteredTerms.map((term) => (
             <div
               key={term.word}
-              className="border border-outline-variant p-5 bg-brand-offwhite flex flex-col gap-2 transition-all duration-300 hover:border-brand-nav-text/45"
+              className="border border-outline-variant p-5 bg-brand-offwhite flex flex-col gap-2 transition-all duration-300 hover:border-brand-black"
               data-testid={`term-card-${term.word.toLowerCase()}`}
             >
               <h3 className="font-geist-mono font-bold text-sm text-brand-black uppercase tracking-wide">
