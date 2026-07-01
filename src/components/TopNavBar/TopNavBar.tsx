@@ -31,35 +31,24 @@ export const ThemeSwitch: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative flex items-center bg-brand-clay/40 border border-outline-variant p-1 w-16 h-8 cursor-pointer select-none transition-colors duration-300 focus:outline-none"
+      className="relative w-8 h-8 flex items-center justify-center border border-outline-variant/30 hover:border-brand-nav-text/40 text-brand-nav-text bg-transparent transition-all duration-300 cursor-pointer select-none focus:outline-none"
       aria-label="Toggle theme"
       data-testid="theme-switch"
     >
-      <div
-        className={`absolute top-1 bottom-1 left-1 w-6 bg-brand-black transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-          isDark ? 'translate-x-8' : 'translate-x-0'
-        }`}
+      <Sun 
+        className={`absolute w-[18px] h-[18px] transition-all duration-500 ease-out ${
+          isDark 
+            ? 'rotate-90 scale-0 opacity-0' 
+            : 'rotate-0 scale-100 opacity-100'
+        }`} 
       />
-      <div className="absolute top-1 bottom-1 left-1 right-1 flex justify-between z-10 pointer-events-none">
-        <div className="w-6 h-6 flex items-center justify-center">
-          <Sun 
-            className={`w-3.5 h-3.5 transition-all duration-300 ${
-              isDark 
-                ? 'text-brand-black opacity-45 rotate-45 scale-90' 
-                : 'text-brand-offwhite opacity-100 rotate-0 scale-105'
-            }`} 
-          />
-        </div>
-        <div className="w-6 h-6 flex items-center justify-center">
-          <Moon 
-            className={`w-3.5 h-3.5 transition-all duration-300 ${
-              isDark 
-                ? 'text-brand-offwhite opacity-100 rotate-0 scale-105' 
-                : 'text-brand-black opacity-45 -rotate-45 scale-90'
-            }`} 
-          />
-        </div>
-      </div>
+      <Moon 
+        className={`absolute w-[17px] h-[17px] transition-all duration-500 ease-out ${
+          isDark 
+            ? 'rotate-0 scale-100 opacity-100' 
+            : '-rotate-90 scale-0 opacity-0'
+        }`} 
+      />
     </button>
   );
 };
