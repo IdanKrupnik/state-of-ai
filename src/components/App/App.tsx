@@ -65,10 +65,13 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
       .range(from, to);
 
     if (!error && data) {
-      const updatedArticles = [...articles, ...data];
-      setArticles(updatedArticles);
+      const combined = [...articles, ...data];
+      const uniqueArticles = Array.from(
+        new Map(combined.map((art) => [art.id, art])).values()
+      );
+      setArticles(uniqueArticles);
       if (count !== null) {
-        setHasMore(updatedArticles.length < count);
+        setHasMore(uniqueArticles.length < count);
       } else {
         setHasMore(data.length === ITEMS_PER_PAGE);
       }
