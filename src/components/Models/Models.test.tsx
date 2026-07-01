@@ -15,6 +15,7 @@ describe('Models Component', () => {
       completion_token_price: 15.0,
       description: 'Standard OpenAI frontier multimodal model.',
       updated_at: '2026-07-01T12:00:00Z',
+      created: '2026-07-01T12:00:00Z',
     },
     {
       id: 'anthropic/claude-3-5-sonnet',
@@ -25,6 +26,7 @@ describe('Models Component', () => {
       completion_token_price: 15.0,
       description: 'Excellent programming capabilities and speed.',
       updated_at: '2026-07-01T11:00:00Z',
+      created: '2026-07-01T11:00:00Z',
     },
     {
       id: 'openai/gpt-4-turbo',
@@ -34,7 +36,8 @@ describe('Models Component', () => {
       prompt_token_price: 10.0,
       completion_token_price: 30.0,
       description: 'Previous gen OpenAI smart model.',
-      updated_at: '2026-06-30T12:00:00Z',
+      updated_at: '2026-07-01T12:00:00Z',
+      created: '2026-06-30T12:00:00Z',
     },
   ];
 
@@ -55,7 +58,7 @@ describe('Models Component', () => {
     expect(driver.hasNewBadge(openaiRows[0])).toBe(true);
   });
 
-  it('should sort models by updated_at date descending inside provider groups', () => {
+  it('should sort models by created date descending inside provider groups', () => {
     const { container } = render(<Models initialModels={mockModels} />);
     const driver = new ModelsDriver(container);
 

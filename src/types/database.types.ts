@@ -60,6 +60,7 @@ export type Database = {
           completion_token_price: number | null
           description: string | null
           updated_at: string
+          created: string | null
         }
         Insert: {
           id: string
@@ -70,6 +71,7 @@ export type Database = {
           completion_token_price?: number | null
           description?: string | null
           updated_at?: string
+          created?: string | null
         }
         Update: {
           id?: string
@@ -80,6 +82,7 @@ export type Database = {
           completion_token_price?: number | null
           description?: string | null
           updated_at?: string
+          created?: string | null
         }
         Relationships: []
       }

@@ -20,6 +20,12 @@ const formatPrice = (val: number | null): string => {
   return `$${val.toFixed(2)}`;
 };
 
+const formatDate = (dateStr: string | null): string => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+};
+
 export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
   const providers = ['OpenAI', 'Anthropic', 'Google'];
 
@@ -37,8 +43,8 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
     providers.flatMap((p) => {
       const pModels = initialModels.filter((m) => m.provider === p);
       if (pModels.length === 0) return [];
-      const maxDate = Math.max(...pModels.map((m) => new Date(m.updated_at).getTime()));
-      return pModels.filter((m) => new Date(m.updated_at).getTime() === maxDate).map((m) => m.id);
+      const maxDate = Math.max(...pModels.map((m) => m.created ? new Date(m.created).getTime() : 0));
+      return pModels.filter((m) => (m.created ? new Date(m.created).getTime() : 0) === maxDate).map((m) => m.id);
     })
   );
 
@@ -57,7 +63,11 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
         {providers.map((provider) => {
           const providerModels = initialModels
             .filter((m) => m.provider === provider)
-            .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+            .sort((a, b) => {
+              const aTime = a.created ? new Date(a.created).getTime() : 0;
+              const bTime = b.created ? new Date(b.created).getTime() : 0;
+              return bTime - aTime;
+            });
           if (providerModels.length === 0) return null;
 
           const isExpanded = expanded[provider];
@@ -105,6 +115,11 @@ export const Models: React.FC<ModelsProps> = ({ initialModels = [] }) => {
 
                         <div className="flex flex-col gap-1.5">
                           <span className="font-bold text-brand-black text-sm block leading-tight">{model.name}</span>
+                          {model.created && (
+                            <span className="text-[10px] text-brand-warm-grey font-medium">
+                              Released: {formatDate(model.created)}
+                            </span>
+                          )}
                           <p className="text-brand-warm-grey text-xs italic leading-relaxed">
                             {model.description || 'No description available.'}
                           </p>

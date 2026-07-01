@@ -14,6 +14,7 @@ export interface OpenRouterModel {
   id: string;
   name: string;
   context_length: number;
+  created: number;
   pricing: {
     prompt: string;
     completion: string;
@@ -118,7 +119,8 @@ export async function syncModels(req: Request): Promise<NextResponse> {
         prompt_token_price: promptMPrice,
         completion_token_price: completionMPrice,
         description,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
+        created: m.created ? new Date(m.created * 1000).toISOString() : null
       });
     }
 
