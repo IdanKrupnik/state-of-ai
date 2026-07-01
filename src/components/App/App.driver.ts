@@ -2,14 +2,12 @@ import { screen } from '@testing-library/react';
 import { TopNavBarDriver } from '../TopNavBar/TopNavBar.driver';
 import { TelemetryTickerDriver } from '../TelemetryTicker/TelemetryTicker.driver';
 
-import { SentimentPollDriver } from '../SentimentPoll/SentimentPoll.driver';
-import { LatencyMapDriver } from '../LatencyMap/LatencyMap.driver';
 import { FeedHeaderDriver } from '../FeedHeader/FeedHeader.driver';
 import { FeedRowDriver } from '../FeedRow/FeedRow.driver';
 import { FooterDriver } from '../Footer/Footer.driver';
-import { TuningDrawerDriver } from '../TuningDrawer/TuningDrawer.driver';
 import { AIBasicsDriver } from '../AIBasics/AIBasics.driver';
 import { EventsDriver } from '../Events/Events.driver';
+import { AboutDriver } from '../About/About.driver';
 
 export class AppDriver {
   private element: HTMLElement | null = null;
@@ -43,13 +41,7 @@ export class AppDriver {
 
 
 
-  getSentimentPollDriver(): SentimentPollDriver {
-    return new SentimentPollDriver(this.elementToUse);
-  }
 
-  getLatencyMapDriver(): LatencyMapDriver {
-    return new LatencyMapDriver(this.elementToUse);
-  }
 
   getFeedHeaderDriver(): FeedHeaderDriver {
     return new FeedHeaderDriver(this.elementToUse);
@@ -68,9 +60,6 @@ export class AppDriver {
     return new FooterDriver(this.elementToUse);
   }
 
-  getTuningDrawerDriver(): TuningDrawerDriver {
-    return new TuningDrawerDriver(this.elementToUse);
-  }
 
   getAIBasicsDriver(): AIBasicsDriver {
     return new AIBasicsDriver(this.elementToUse);
@@ -78,6 +67,10 @@ export class AppDriver {
 
   getEventsDriver(): EventsDriver {
     return new EventsDriver(this.elementToUse);
+  }
+
+  getAboutDriver(): AboutDriver {
+    return new AboutDriver(this.elementToUse);
   }
 
   getPlaceholderSection(tabId: string): HTMLElement | null {
@@ -90,4 +83,31 @@ export class AppDriver {
     const title = section.querySelector('h2');
     return title ? title.textContent : null;
   }
+
+  hasLoadMoreButton(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="load-more-btn"]');
+  }
+
+  getLoadMoreButtonText(): string | null {
+    const btn = this.elementToUse.querySelector('[data-testid="load-more-btn"]');
+    return btn ? btn.textContent?.trim() || null : null;
+  }
+
+  clickLoadMoreButton(): this {
+    const btn = this.elementToUse.querySelector('[data-testid="load-more-btn"]') as HTMLButtonElement | null;
+    if (!btn) {
+      throw new Error('Load More button not found');
+    }
+    btn.click();
+    return this;
+  }
+
+  isLoadMoreButtonDisabled(): boolean {
+    const btn = this.elementToUse.querySelector('[data-testid="load-more-btn"]') as HTMLButtonElement | null;
+    if (!btn) {
+      throw new Error('Load More button not found');
+    }
+    return btn.disabled;
+  }
 }
+

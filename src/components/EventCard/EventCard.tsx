@@ -5,7 +5,6 @@ export interface EventProps {
   id: string;
   date: string;
   location: string;
-  isLive?: boolean;
   title: string;
   description: string;
   type: string;
@@ -17,7 +16,6 @@ export const EventCard: React.FC<EventProps> = ({
   id,
   date,
   location,
-  isLive,
   title,
   description,
   type,
@@ -31,54 +29,32 @@ export const EventCard: React.FC<EventProps> = ({
         <div className="flex justify-between items-baseline flex-wrap gap-2">
           <div className="flex items-center gap-3">
             <span className="font-geist-mono text-xs text-brand-warm-grey">{date}</span>
-            {isLive && (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/25 px-2 py-0.5 text-red-600 dark:text-red-500 font-geist-mono text-[10px] font-bold tracking-wider" data-testid="live-indicator">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                  </span>
-                  <span>LIVE</span>
-                </div>
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-geist-mono text-xs text-red-600 hover:underline flex items-center gap-0.5"
-                  data-testid="live-stream-link"
-                >
-                  ↗ WATCH STREAM
-                </a>
-              </div>
-            )}
           </div>
           <div className="flex items-center gap-3">
             <span className="font-geist-mono text-xs px-2 py-0.5 bg-brand-clay/10 text-brand-warm-grey">
               {location}
             </span>
-            {!isLive && (
-              <button
-                onClick={() => onToggleAlert(id)}
-                className={`font-geist-mono text-[10px] border px-3 py-1 transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer ${
-                  isAlertSet
-                    ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
-                    : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
-                }`}
-                data-testid={`alert-btn-${id}`}
-              >
-                {isAlertSet ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
-                    <span>[ ALERT ACTIVE ]</span>
-                  </>
-                ) : (
-                  <>
-                    <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
-                    <span>[ NOTIFY ME ]</span>
-                  </>
-                )}
-              </button>
-            )}
+            <button
+              onClick={() => onToggleAlert(id)}
+              className={`font-geist-mono text-[10px] border px-3 py-1 transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer ${
+                isAlertSet
+                  ? 'bg-secondary text-brand-offwhite border-secondary hover:bg-secondary/90'
+                  : 'border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite'
+              }`}
+              data-testid={`alert-btn-${id}`}
+            >
+              {isAlertSet ? (
+                <>
+                  <Check className="w-3.5 h-3.5" data-testid="alert-icon-active" />
+                  <span>[ ALERT ACTIVE ]</span>
+                </>
+              ) : (
+                <>
+                  <Bell className="w-3.5 h-3.5" data-testid="alert-icon-inactive" />
+                  <span>[ NOTIFY ME ]</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
         <h2 className="text-xl md:text-2xl font-bold text-brand-black group-hover:text-secondary transition-colors">

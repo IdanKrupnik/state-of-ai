@@ -17,17 +17,16 @@ describe('AIBasics Component', () => {
     expect(driver.getSectionTitle(0)).toBe('What is Artificial Intelligence?');
     expect(driver.getSectionTitle(1)).toBe('Neural Networks');
     expect(driver.getSectionTitle(2)).toBe('Large Language Models (LLMs)');
-    expect(driver.getSectionTitle(3)).toBe('What is Inference?');
-
-    expect(driver.getLatencyText()).toContain('ms');
-    expect(driver.getDatacenterTopologyImageAlt()).toBe('Conceptual datacenter topology');
+    expect(driver.getSectionTitle(3)).toBe('How AI Generates Answers');
+    expect(driver.getSectionTitle(4)).toBe('AI Terminology');
 
     expect(driver.hasTOC()).toBe(true);
     expect(driver.getTOCLinks()).toEqual([
       '01 // Definition',
       '02 // Architecture',
       '03 // Capabilities',
-      '04 // Deployment',
+      '04 // Visualizer',
+      '05 // Glossary',
     ]);
 
     expect(driver.hasMobileTOC()).toBe(true);
@@ -41,7 +40,8 @@ describe('AIBasics Component', () => {
       '01 // Definition',
       '02 // Architecture',
       '03 // Capabilities',
-      '04 // Deployment',
+      '04 // Visualizer',
+      '05 // Glossary',
     ]);
 
     act(() => {
@@ -58,5 +58,13 @@ describe('AIBasics Component', () => {
       driver.clickMobileTOCBackdrop();
     });
     expect(driver.isMobileTOCDropdownVisible()).toBe(false);
+
+    expect(driver.hasPromptToOutputVisualizer()).toBe(true);
+    const visDriver = driver.getPromptToOutputVisualizerDriver();
+    expect(visDriver.getActiveStepTitle()).toBe('Tokenization');
+    act(() => {
+      visDriver.clickTab(2);
+    });
+    expect(visDriver.getActiveStepTitle()).toBe('Vector Embedding');
   });
 });

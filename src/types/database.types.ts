@@ -24,6 +24,7 @@ export type Database = {
           short_summary: string
           simplified_title: string
           source_url: string
+          source: string
         }
         Insert: {
           company?: string
@@ -34,6 +35,7 @@ export type Database = {
           short_summary: string
           simplified_title: string
           source_url: string
+          source?: string
         }
         Update: {
           company?: string
@@ -44,6 +46,43 @@ export type Database = {
           short_summary?: string
           simplified_title?: string
           source_url?: string
+          source?: string
+        }
+        Relationships: []
+      }
+      models: {
+        Row: {
+          id: string
+          name: string
+          provider: string
+          context_length: number | null
+          prompt_token_price: number | null
+          completion_token_price: number | null
+          description: string | null
+          updated_at: string
+          created: string | null
+        }
+        Insert: {
+          id: string
+          name: string
+          provider: string
+          context_length?: number | null
+          prompt_token_price?: number | null
+          completion_token_price?: number | null
+          description?: string | null
+          updated_at?: string
+          created?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          provider?: string
+          context_length?: number | null
+          prompt_token_price?: number | null
+          completion_token_price?: number | null
+          description?: string | null
+          updated_at?: string
+          created?: string | null
         }
         Relationships: []
       }

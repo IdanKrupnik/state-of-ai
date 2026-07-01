@@ -5,7 +5,6 @@ interface MockEvent {
   id: string;
   date: string;
   location: string;
-  isLive?: boolean;
   title: string;
   description: string;
   type: string;
@@ -17,7 +16,6 @@ const MOCK_EVENTS: MockEvent[] = [
     id: 'nvidia-gtc-2024',
     date: 'MAR 18-21, 2024',
     location: 'SAN JOSE, CA',
-    isLive: true,
     title: 'NVIDIA GTC 2024',
     description: 'The "Woodstock of AI." Expected focus on Blackwell architecture and sovereign AI infrastructure.',
     type: 'Type: Hardware / Compute',
@@ -122,7 +120,6 @@ export const Events: React.FC = () => {
               id={evt.id}
               date={evt.date}
               location={evt.location}
-              isLive={evt.isLive}
               title={evt.title}
               description={evt.description}
               type={evt.type}

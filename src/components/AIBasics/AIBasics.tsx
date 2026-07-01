@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { PromptToOutputVisualizer } from '../PromptToOutputVisualizer/PromptToOutputVisualizer';
+import { Terminology } from '../Terminology/Terminology';
 
 interface SectionProps {
   id: string;
@@ -8,7 +10,7 @@ interface SectionProps {
 }
 
 const LearnSection: React.FC<SectionProps> = ({ id, number, title, children }) => (
-  <section id={id} className="flex flex-col gap-5 border-t border-outline-variant/30 pt-10" data-testid={`learn-section-${id}`}>
+  <section id={id} className="flex flex-col gap-5 border-t border-outline-variant pt-10" data-testid={`learn-section-${id}`}>
     <span className="font-geist-mono text-xs text-brand-warm-grey">{number}</span>
     <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-brand-black">{title}</h2>
     {children}
@@ -16,15 +18,7 @@ const LearnSection: React.FC<SectionProps> = ({ id, number, title, children }) =
 );
 
 export const AIBasics: React.FC = () => {
-  const [latency, setLatency] = useState(12.4);
   const [isTocOpen, setIsTocOpen] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setLatency(12.0 + Math.random() * 0.8);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleTocClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -41,7 +35,8 @@ export const AIBasics: React.FC = () => {
     { id: 'definition', label: '01 // Definition' },
     { id: 'architecture', label: '02 // Architecture' },
     { id: 'capabilities', label: '03 // Capabilities' },
-    { id: 'deployment', label: '04 // Deployment' },
+    { id: 'visualizer', label: '04 // Visualizer' },
+    { id: 'glossary', label: '05 // Glossary' },
   ];
 
   return (
@@ -157,43 +152,17 @@ export const AIBasics: React.FC = () => {
             </div>
           </LearnSection>
 
-          <section className="w-full aspect-[21/9] bg-brand-clay/10 border border-outline-variant relative overflow-hidden group">
-            <img
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              alt="Conceptual datacenter topology"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidcdwOGwwl6kuCqioATRKPTpUuTw3r8GhWiiY7O6gWyXFISugMvHy1ncZ6iykqFJOGOTOTT2jSFDSvjVX49Cf80wyqkKlRCXkNquTwbU3vyFBSMC1egTfiP3c4b6MvoFXFqi6b28FAALj4Pzs6ZvHQCzomGN4HSTdHkqnYSzZTjkb-mbhpk8bhSliCI4_XFJM1pctkLhSr53wGRw6mJCu6XLhCU9N2rJ_oUNxNZEWolHYe_9krodQMuJ7RDhRDrFwlQj94zR9VawT"
-            />
-            <div className="absolute bottom-3 left-3 bg-brand-black text-brand-offwhite text-xs font-geist-mono px-3 py-1">
-              FIG_01: CONCEPTUAL DATACENTER TOPOLOGY
-            </div>
-          </section>
-
           <LearnSection id="capabilities" number="03 // CAPABILITIES" title="Large Language Models (LLMs)">
             <p className="text-brand-warm-grey text-base md:text-lg leading-relaxed max-w-prose">
               LLMs represent the current frontier of natural language processing. By predicting the next token in a sequence, these models exhibit emergent properties such as logical reasoning, creative synthesis, and multi-step problem solving.
             </p>
-            <div className="flex gap-2 font-geist-mono text-xs text-brand-warm-grey">
-              <span className="px-3 py-1 bg-brand-clay/10 border border-outline-variant/30">[ PARAMETER_COUNT: 1.8T+ ]</span>
-              <span className="px-3 py-1 bg-brand-clay/10 border border-outline-variant/30">[ TOKEN_WINDOW: 128K ]</span>
-            </div>
+          </LearnSection>
+          <LearnSection id="visualizer" number="04 // INTERACTIVE" title="How AI Generates Answers">
+            <PromptToOutputVisualizer />
           </LearnSection>
 
-          <LearnSection id="deployment" number="04 // DEPLOYMENT" title="What is Inference?">
-            <p className="text-brand-warm-grey text-base md:text-lg leading-relaxed max-w-prose">
-              While "Training" is the process of building a model's knowledge, "Inference" is the execution of that knowledge. It is the real-time "thinking" process where a trained model applies its learned patterns to new, unseen data to generate an output.
-            </p>
-            <div className="grid grid-cols-2 gap-4 mt-2">
-              <div className="p-5 border border-outline-variant hover:border-brand-black transition-colors">
-                <span className="font-geist-mono text-xs text-brand-warm-grey block mb-1">MEAN LATENCY</span>
-                <span className="font-geist-mono text-2xl md:text-3xl font-black text-brand-black" data-testid="latency-value">
-                  {latency.toFixed(1)}ms
-                </span>
-              </div>
-              <div className="p-5 border border-outline-variant hover:border-brand-black transition-colors">
-                <span className="font-geist-mono text-xs text-brand-warm-grey block mb-1">ACTIVE NODES</span>
-                <span className="font-geist-mono text-2xl md:text-3xl font-black text-brand-black">1,024</span>
-              </div>
-            </div>
+          <LearnSection id="glossary" number="05 // GLOSSARY" title="AI Terminology">
+            <Terminology />
           </LearnSection>
         </div>
       </div>

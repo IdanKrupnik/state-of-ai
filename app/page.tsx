@@ -14,22 +14,43 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient<Database>(supabaseUrl || '', supabaseAnonKey || '');
 
 async function getArticles() {
-  const { data, error } = await supabase
+  const { data, count, error } = await supabase
     .from('articles')
-    .select('*')
-    .order('created_at', { ascending: false });
+    .select('*', { count: 'exact' })
+    .neq('company', 'BUBBLE_INDEX_CACHE')
+    .order('created_at', { ascending: false })
+    .range(0, 4);
 
   if (error) {
     console.error('Database fetch error:', error);
+    return { articles: [], totalCount: 0 };
+  }
+  return { articles: data || [], totalCount: count || 0 };
+}
+
+async function getModels() {
+  const { data, error } = await supabase
+    .from('models')
+    .select('*')
+    .order('provider', { ascending: true })
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Database fetch error for models:', error);
     return [];
   }
-  return data;
+  return data || [];
 }
 
 export default async function HomePage() {
-  const articles = await getArticles();
+  const { articles, totalCount } = await getArticles();
+  const models = await getModels();
 
   return (
-    <App initialArticles={articles} />
+    <App 
+      initialArticles={articles} 
+      initialTotalCount={totalCount} 
+      initialModels={models}
+    />
   );
 }

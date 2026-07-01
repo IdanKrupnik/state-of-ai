@@ -3,16 +3,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #fdf8f8;
-  --color-text-primary: #1c1b1b;
-  --color-text-muted: #747878;
+  --color-bg-base: var(--bg-base);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
   
-  --color-brand-black: #111111;
-  --color-brand-offwhite: #fdf8f8;
-  --color-brand-clay: #ecece8;
-  --color-brand-warm-grey: #787870;
+  --color-brand-black: var(--brand-black);
+  --color-brand-offwhite: var(--brand-offwhite);
+  --color-brand-clay: var(--brand-clay);
+  --color-brand-warm-grey: var(--brand-warm-grey);
   --color-brand-neon-green: #10b981;
   --color-secondary: #10b981;
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-brand-nav-bg: var(--brand-nav-bg);
+  --color-brand-nav-text: var(--brand-nav-text);
   
   --font-inter: 'Inter', sans-serif;
   --font-geist-mono: 'Geist Mono', monospace;
@@ -23,10 +27,44 @@
   --spacing-section-gap: 4rem;
 }
 
+:root {
+  --bg-base: #fdf8f8;
+  --text-primary: #1c1b1b;
+  --text-muted: #747878;
+  
+  --brand-black: #111111;
+  --brand-offwhite: #fdf8f8;
+  --brand-clay: #ecece8;
+  --brand-warm-grey: #787870;
+  --outline: #747878;
+  --outline-variant: #c4c7c7;
+  --brand-nav-bg: #111111;
+  --brand-nav-text: #fdf8f8;
+}
+
+.dark {
+  --bg-base: #0a0a0a;
+  --text-primary: #fdf8f8;
+  --text-muted: #888888;
+  
+  --brand-black: #fdf8f8;
+  --brand-offwhite: #161616;
+  --brand-clay: #262624;
+  --brand-warm-grey: #9a9a90;
+  --outline: #555555;
+  --outline-variant: #333333;
+  --brand-nav-bg: #222222;
+  --brand-nav-text: #fdf8f8;
+}
+
 body {
   background-color: var(--color-bg-base);
   color: var(--color-text-primary);
   font-family: var(--font-inter);
+}
+
+body, header, footer, main, section, div, button, span, a, p, h1, h2, h3, input, label {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button,

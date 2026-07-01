@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react';
+import { PromptToOutputVisualizerDriver } from '../PromptToOutputVisualizer/PromptToOutputVisualizer.driver';
 
 export class AIBasicsDriver {
   private element: HTMLElement | null = null;
@@ -35,16 +36,6 @@ export class AIBasicsDriver {
   getSectionTitle(index: number): string | null {
     const headers = Array.from(this.elementToUse.querySelectorAll('h2'));
     return headers[index] ? headers[index].textContent : null;
-  }
-
-  getLatencyText(): string | null {
-    const latencyEl = this.elementToUse.querySelector('[data-testid="latency-value"]');
-    return latencyEl ? latencyEl.textContent : null;
-  }
-
-  getDatacenterTopologyImageAlt(): string | null {
-    const img = this.elementToUse.querySelector('img');
-    return img ? img.getAttribute('alt') : null;
   }
 
   hasTOC(): boolean {
@@ -92,5 +83,14 @@ export class AIBasicsDriver {
     if (el) {
       el.click();
     }
+  }
+
+
+  hasPromptToOutputVisualizer(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="prompt-to-output-visualizer"]');
+  }
+
+  getPromptToOutputVisualizerDriver(): PromptToOutputVisualizerDriver {
+    return new PromptToOutputVisualizerDriver(this.elementToUse);
   }
 }

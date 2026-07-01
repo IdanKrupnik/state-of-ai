@@ -74,3 +74,18 @@ Guidelines:
 # CODE COMMENTING RULE
 
 - You should never add comments to code. All code must be self-documenting and clear. Do not include any code comments (including inline, block, JS/TS comments) in any newly created or modified files. Unrelated pre-existing comments should be preserved.
+
+---
+
+# UNUSED IMPORTS RULE
+
+- Whenever you update or create a file, you must ensure there are no unused import statements. Always check and clean up any unused imports from the modified files before committing.
+
+---
+
+# DECLARATIVE AND MODULAR FILE ARCHITECTURE RULE
+
+- All files and functions must be as small, modular, and declarative as possible.
+- A single codebase file or API route handler file should not exceed approximately 100 lines of code.
+- Individual functions must be small, focused, and typically remain under 50 lines of code.
+- Complex workflows must be decomposed into isolated service modules or utility helper functions utilizing clean, functional, and declarative paradigms.

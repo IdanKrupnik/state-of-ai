@@ -1,25 +1,63 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '../ui/Button/Button';
+import React, { useState, useEffect } from 'react';
+import { Sun, Moon } from 'lucide-react';
 
 export interface TopNavBarProps {
-  onTuneClick: () => void;
   activeTab?: string;
   onTabChange?: (tabId: string) => void;
 }
 
+export const ThemeSwitch: React.FC = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const activeTheme = localStorage.getItem('theme') || 'light';
+      setIsDark(activeTheme === 'dark');
+      document.documentElement.classList.toggle('dark', activeTheme === 'dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextDark = !isDark;
+    setIsDark(nextDark);
+    document.documentElement.classList.toggle('dark', nextDark);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+    }
+  };
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="relative w-8 h-8 flex items-center justify-center border border-outline-variant/30 hover:border-brand-nav-text/40 text-brand-nav-text bg-transparent transition-all duration-300 cursor-pointer select-none focus:outline-none"
+      aria-label="Toggle theme"
+      data-testid="theme-switch"
+    >
+      <Sun 
+        className={`absolute w-[18px] h-[18px] transition-all duration-500 ease-out ${
+          isDark 
+            ? 'rotate-90 scale-0 opacity-0' 
+            : 'rotate-0 scale-100 opacity-100'
+        }`} 
+      />
+      <Moon 
+        className={`absolute w-[17px] h-[17px] transition-all duration-500 ease-out ${
+          isDark 
+            ? 'rotate-0 scale-100 opacity-100' 
+            : '-rotate-90 scale-0 opacity-0'
+        }`} 
+      />
+    </button>
+  );
+};
+
 export const TopNavBar: React.FC<TopNavBarProps> = ({
-  onTuneClick,
   activeTab = 'feed',
   onTabChange,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleTuneClick = () => {
-    setIsMobileMenuOpen(false);
-    onTuneClick();
-  };
 
   const handleTabClick = (tabId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,18 +70,18 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
   const tabs = [
     { id: 'feed', label: 'Feed' },
-    { id: 'benchmarks', label: 'Benchmarks' },
+    { id: 'models', label: 'Models' },
     { id: 'events', label: 'Events' },
     { id: 'about', label: 'About' },
     { id: 'learn', label: 'Learn' },
   ];
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-brand-offwhite border-b border-outline-variant">
+    <header className="fixed top-0 w-full z-50 bg-brand-nav-bg border-b border-outline-variant">
       <div className="w-full flex justify-between items-center h-16 px-6 md:px-12">
         <div className="flex items-center gap-3">
           <svg
-            className="w-8 h-8 text-brand-black transition-transform duration-700 ease-in-out hover:rotate-[180deg] cursor-pointer shrink-0"
+            className="w-8 h-8 text-brand-nav-text transition-transform duration-700 ease-in-out hover:rotate-[360deg] cursor-pointer shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -60,7 +98,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
             <line x1="17" y1="12" x2="21" y2="12" />
             <circle cx="12" cy="12" r="2.2" fill="currentColor" />
           </svg>
-          <div className="text-xl md:text-2xl font-bold tracking-tighter text-brand-black">
+          <div className="text-xl md:text-2xl font-bold tracking-tighter text-brand-nav-text">
             STATE OF AI
           </div>
         </div>
@@ -74,8 +112,8 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 onClick={(e) => handleTabClick(tab.id, e)}
                 className={`transition-colors cursor-pointer ${
                   isActive
-                    ? 'font-semibold text-brand-black border-b-2 border-brand-black pb-1'
-                    : 'text-brand-warm-grey hover:text-brand-black'
+                    ? 'font-semibold text-brand-nav-text border-b-2 border-brand-nav-text pb-1'
+                    : 'text-brand-warm-grey hover:text-brand-nav-text'
                 }`}
                 href={`#${tab.id}`}
                 data-testid={`nav-tab-${tab.id}`}
@@ -87,19 +125,12 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
         </nav>
 
         <div className="hidden md:block">
-          <Button
-            variant="primary"
-            onClick={onTuneClick}
-            className="flex items-center gap-2 text-xs py-1.5 px-3 uppercase tracking-wider"
-          >
-            <span>Tune Filter</span>
-            <span className="material-symbols-outlined text-[16px]">tune</span>
-          </Button>
+          <ThemeSwitch />
         </div>
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="block md:hidden p-2 text-brand-black hover:bg-brand-clay/40 transition-colors cursor-pointer"
+          className="block md:hidden p-2 text-brand-nav-text hover:bg-brand-clay/40 transition-colors cursor-pointer"
           aria-label="Toggle menu"
           data-testid="hamburger-button"
         >
@@ -117,7 +148,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
       {isMobileMenuOpen && (
         <div
-          className="md:hidden w-full bg-brand-offwhite border-b border-outline-variant flex flex-col p-6 gap-6 font-geist-mono text-xs uppercase tracking-wider"
+          className="md:hidden w-full bg-brand-nav-bg border-b border-outline-variant flex flex-col p-6 gap-6 font-geist-mono text-xs uppercase tracking-wider"
           data-testid="mobile-dropdown"
         >
           {tabs.map((tab) => {
@@ -127,7 +158,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 key={tab.id}
                 onClick={(e) => handleTabClick(tab.id, e)}
                 className={`py-2 border-b border-outline-variant/30 ${
-                  isActive ? 'font-bold text-brand-black' : 'text-brand-warm-grey hover:text-brand-black'
+                  isActive ? 'font-bold text-brand-nav-text' : 'text-brand-warm-grey hover:text-brand-nav-text'
                 }`}
                 href={`#${tab.id}`}
                 data-testid={`mobile-nav-tab-${tab.id}`}
@@ -136,14 +167,9 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               </a>
             );
           })}
-          <Button
-            variant="primary"
-            onClick={handleTuneClick}
-            className="w-full flex items-center justify-center gap-2 py-3 mt-2 uppercase tracking-widest text-[11px] font-bold"
-          >
-            <span>Tune Filter</span>
-            <span className="material-symbols-outlined text-[16px]">tune</span>
-          </Button>
+          <div className="flex justify-center mt-2">
+            <ThemeSwitch />
+          </div>
         </div>
       )}
     </header>

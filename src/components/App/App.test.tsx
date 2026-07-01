@@ -1,8 +1,39 @@
 import React from 'react';
-import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { render, act } from '@testing-library/react';
 import { App, Article } from './App';
 import { AppDriver } from './App.driver';
+
+vi.mock('../../lib/supabaseClient', () => {
+  return {
+    supabaseClient: {
+      from: () => ({
+        select: () => ({
+          neq: () => ({
+            order: () => ({
+              range: vi.fn().mockResolvedValue({
+                data: [
+                  {
+                    id: '4',
+                    company: 'Microsoft',
+                    hype_score: 80,
+                    simplified_title: 'Windows Copilot Released',
+                    short_summary: 'Microsoft released Windows Copilot integration.',
+                    source_url: 'https://microsoft.com',
+                    original_title: 'Windows Copilot Released original',
+                    created_at: '2026-06-30T14:00:00Z',
+                  }
+                ],
+                count: 4,
+                error: null
+              })
+            })
+          })
+        })
+      })
+    }
+  };
+});
 
 describe('App Component', () => {
   const mockArticles: Article[] = [
@@ -49,30 +80,6 @@ describe('App Component', () => {
     expect(rows[2].getTitleText()).toBe('Gemini 2.0 now live');
   });
 
-  it('should allow opening and closing side drawer and subscribing to newsletter', () => {
-    const { container } = render(<App initialArticles={mockArticles} />);
-    const driver = new AppDriver(container);
-
-    const nav = driver.getTopNavBarDriver();
-    const drawer = driver.getTuningDrawerDriver();
-
-    expect(drawer.isOpen()).toBe(false);
-
-    nav.clickTuneFilter();
-    expect(drawer.isOpen()).toBe(true);
-
-    const newsletter = drawer.getNewsletterDriver();
-    const input = newsletter.getEmailInputDriver();
-    const submit = newsletter.getSubmitButtonDriver();
-
-    input.setValue('test@example.com');
-    submit.click();
-    expect(newsletter.getSuccessMessage()).toBe('✓ Subscribed successfully!');
-
-    drawer.clickClose();
-    expect(drawer.isOpen()).toBe(false);
-  });
-
   it('should switch tabs and render appropriate active sections', () => {
     const { container } = render(<App initialArticles={mockArticles} />);
     const driver = new AppDriver(container);
@@ -80,15 +87,17 @@ describe('App Component', () => {
 
     expect(driver.getArticleRowDrivers()).toHaveLength(3);
 
-    nav.clickTab('benchmarks');
-    expect(driver.getPlaceholderTitle('benchmarks')).toBe('benchmarks');
+    nav.clickTab('models');
+    expect(container.querySelector('[data-testid="models-container"]')).toBeTruthy();
 
     nav.clickTab('events');
     const eventsDriver = driver.getEventsDriver();
     expect(eventsDriver.hasEventsSection()).toBe(true);
 
     nav.clickTab('about');
-    expect(driver.getPlaceholderTitle('about')).toBe('about');
+    const aboutDriver = driver.getAboutDriver();
+    expect(aboutDriver.hasSection()).toBe(true);
+    expect(aboutDriver.getTitleText()).toBe('About State of AI');
 
     nav.clickTab('learn');
     const basicsDriver = driver.getAIBasicsDriver();
@@ -96,5 +105,24 @@ describe('App Component', () => {
 
     nav.clickTab('feed');
     expect(driver.getArticleRowDrivers()).toHaveLength(3);
+  });
+
+  it('should support pagination and load more items', async () => {
+    const { container } = render(<App initialArticles={mockArticles} initialTotalCount={4} />);
+    const driver = new AppDriver(container);
+
+    expect(driver.getArticleRowDrivers()).toHaveLength(3);
+    expect(driver.hasLoadMoreButton()).toBe(true);
+    expect(driver.getLoadMoreButtonText()).toBe('Load More');
+
+    await act(async () => {
+      driver.clickLoadMoreButton();
+    });
+
+    await vi.waitFor(() => {
+      expect(driver.getArticleRowDrivers()).toHaveLength(4);
+    });
+
+    expect(driver.hasLoadMoreButton()).toBe(false);
   });
 });

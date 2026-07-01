@@ -4,34 +4,89 @@ import React, { useState, useEffect } from 'react';
 import { TopNavBar } from '../TopNavBar/TopNavBar';
 import { TelemetryTicker } from '../TelemetryTicker/TelemetryTicker';
 
-import { SentimentPoll } from '../SentimentPoll/SentimentPoll';
-import { LatencyMap } from '../LatencyMap/LatencyMap';
 import { FeedHeader } from '../FeedHeader/FeedHeader';
 import { FeedRow } from '../FeedRow/FeedRow';
 import { Footer } from '../Footer/Footer';
-import { TuningDrawer } from '../TuningDrawer/TuningDrawer';
 import { AIBasics } from '../AIBasics/AIBasics';
 import { Events } from '../Events/Events';
+import { About } from '../About/About';
 
 import { Tables } from '@/types/database.types';
 
 export type Article = Tables<'articles'>;
 
+const formatRelativeTime = (dateString?: string): string => {
+  if (!dateString) return '1 hour ago';
+  const now = new Date();
+  const created = new Date(dateString);
+  const diffMs = now.getTime() - created.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return `${diffMins} minutes ago`;
+  if (diffHours === 1) return '1 hour ago';
+  if (diffHours < 24) return `${diffHours} hours ago`;
+  if (diffDays === 1) return '1 day ago';
+  return `${diffDays} days ago`;
+};
+
+import { supabaseClient } from '../../lib/supabaseClient';
+import { Models, ModelRow } from '../Models/Models';
+
 export interface AppProps {
   initialArticles: Article[];
+  initialTotalCount?: number;
+  initialModels?: ModelRow[];
 }
 
-export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0, initialModels = [] }) => {
   const [activeTab, setActiveTab] = useState('feed');
   const [isMounted, setIsMounted] = useState(false);
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(
+    initialTotalCount ? initialArticles.length < initialTotalCount : initialArticles.length >= 5
+  );
+
+  const ITEMS_PER_PAGE = 5;
+
+  const loadMore = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const from = articles.length;
+    const to = from + ITEMS_PER_PAGE - 1;
+
+    const { data, count, error } = await supabaseClient
+      .from('articles')
+      .select('*', { count: 'exact' })
+      .neq('company', 'BUBBLE_INDEX_CACHE')
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (!error && data) {
+      const combined = [...articles, ...data];
+      const uniqueArticles = Array.from(
+        new Map(combined.map((art) => [art.id, art])).values()
+      );
+      setArticles(uniqueArticles);
+      if (count !== null) {
+        setHasMore(uniqueArticles.length < count);
+      } else {
+        setHasMore(data.length === ITEMS_PER_PAGE);
+      }
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       const parts = hash.split('/');
       const primaryTab = parts[0];
-      const validTabs = ['feed', 'benchmarks', 'events', 'about', 'learn'];
+      const validTabs = ['feed', 'models', 'events', 'about', 'learn'];
       if (validTabs.includes(primaryTab)) {
         setActiveTab(primaryTab);
         
@@ -54,9 +109,8 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-brand-offwhite text-brand-black flex flex-col font-inter antialiased">
+    <div className="min-h-screen bg-bg-base text-brand-black flex flex-col font-inter antialiased">
       <TopNavBar
-        onTuneClick={() => setIsDrawerOpen(true)}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
@@ -75,33 +129,44 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
                   <FeedHeader
                     category="CURATION FEED_v4.2"
                     title="Latest AI News"
-                    description="High fidelity technical feed with matching metrics and real-time sub-layer reasoning telemetry."
+                    description="A simple, curated feed of the latest developments in artificial intelligence."
                   />
 
                   <div className="flex flex-col" data-testid="articles-list">
-                    {initialArticles.length === 0 ? (
+                    {articles.length === 0 ? (
                       <div className="border-t border-brand-black/15 pt-8 text-center text-brand-warm-grey italic text-sm">
                         No simplified articles found. Try another search or filter.
                       </div>
                     ) : (
-                      initialArticles.map((article) => (
+                      articles.map((article) => (
                         <FeedRow
                           key={article.id}
                           company={article.company}
                           title={article.simplified_title}
                           summary={article.short_summary}
                           sourceUrl={article.source_url}
-                          timestamp={article.created_at ? new Date(article.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }) : '12:00 UTC'}
+                          timestamp={formatRelativeTime(article.created_at)}
+                          source={article.source}
                         />
                       ))
                     )}
                   </div>
+
+                  {hasMore && (
+                    <div className="flex justify-center mt-6">
+                      <button
+                        onClick={loadMore}
+                        disabled={isLoading}
+                        data-testid="load-more-btn"
+                        className="px-6 py-2.5 font-geist-mono text-xs uppercase tracking-wider border border-brand-black bg-brand-clay/5 text-brand-black hover:bg-brand-black hover:text-brand-offwhite disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
+                      >
+                        {isLoading ? 'Loading...' : 'Load More'}
+                      </button>
+                    </div>
+                  )}
                 </section>
 
-                <div className="border-t border-brand-black/15 my-6" />
 
-                <SentimentPoll />
-                <LatencyMap />
               </>
             )}
 
@@ -109,22 +174,14 @@ export const App: React.FC<AppProps> = ({ initialArticles = [] }) => {
 
             {activeTab === 'events' && <Events />}
 
-            {(activeTab === 'benchmarks' || activeTab === 'about') && (
-              <div className="border-t border-brand-black/15 pt-8 flex flex-col gap-4" data-testid={`placeholder-section-${activeTab}`}>
-                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-black uppercase">
-                  {activeTab}
-                </h2>
-                <p className="text-brand-warm-grey text-sm">
-                  This section is currently under active development. High-fidelity telemetry coming soon.
-                </p>
-              </div>
-            )}
+            {activeTab === 'about' && <About />}
+
+            {activeTab === 'models' && <Models initialModels={initialModels} />}
           </>
         )}
       </main>
 
       <Footer />
-      <TuningDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </div>
   );
 };
