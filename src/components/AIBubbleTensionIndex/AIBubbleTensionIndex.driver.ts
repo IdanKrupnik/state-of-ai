@@ -38,7 +38,7 @@ export class AIBubbleTensionIndexDriver {
   }
 
   getBubblePercentageText(): string | null {
-    const textEl = this.elementToUse.querySelector('.text-7xl');
+    const textEl = this.elementToUse.querySelector('.text-5xl');
     return textEl ? textEl.textContent : null;
   }
 
