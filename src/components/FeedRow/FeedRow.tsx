@@ -49,11 +49,11 @@ export const FeedRow: React.FC<FeedRowProps> = ({
         </div>
 
         {imageUrl && (
-          <div className="w-full aspect-[2/1] overflow-hidden rounded-lg border border-brand-black/10 bg-brand-clay/5 relative group-hover:border-brand-black/25 transition-colors">
+          <div className="w-full h-48 md:h-64 overflow-hidden rounded-lg border border-brand-black/10 bg-white relative group-hover:border-brand-black/25 transition-colors flex justify-center items-center">
             <img
               src={imageUrl}
               alt={title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+              className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-[1.01]"
               data-testid="feed-row-image"
             />
           </div>
