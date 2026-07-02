@@ -26,7 +26,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   useEffect(() => { hasInteractedRef.current = false; }, [targetPanX, targetPanY, targetZoom]);
 
   useEffect(() => {
-    if (isRecycling && statesRef.current.token.state === 'branching') {
+    if (isRecycling) {
       const sentence = promptTokens.join('');
       const PREDICTIONS: Record<string, { word: string; prob: number }[]> = {
         'The cat sat': [{ word: 'on', prob: 80 }],
@@ -43,6 +43,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       };
       const activePred = PREDICTIONS[sentence.trim()] || [{ word: 'next', prob: 99 }];
       const winner = activePred[0];
+      statesRef.current.token.typedText = sentence;
       statesRef.current.token.state = 'committing';
       statesRef.current.token.timer = 0;
       statesRef.current.token.pendingWord = (winner.word.startsWith(' ') || sentence.endsWith(' ') ? winner.word : ' ' + winner.word);
