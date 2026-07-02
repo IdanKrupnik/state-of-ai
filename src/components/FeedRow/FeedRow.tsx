@@ -50,8 +50,20 @@ export const FeedRow: React.FC<FeedRowProps> = ({
           </span>
         </div>
 
+        <div
+          data-testid="feed-row-content"
+          className={`${isOpen ? 'block' : 'hidden'} font-body-md text-on-surface-variant leading-relaxed mt-2`}
+        >
+          <p className="mb-2 text-brand-warm-grey font-bold">
+            AI SUMMARY
+          </p>
+          <div className="border-l-2 border-brand-black pl-4 mt-3">
+            <p>{summary}</p>
+          </div>
+        </div>
+
         {imageUrl && (
-          <div className="w-full h-28 md:h-36 overflow-hidden rounded-lg border border-brand-black/10 bg-brand-clay/5 relative group-hover:border-brand-black/25 transition-colors">
+          <div className="w-full max-w-md mx-auto aspect-[16/9] overflow-hidden rounded-lg border border-brand-black/10 bg-brand-clay/5 relative group-hover:border-brand-black/25 transition-colors">
             <img
               src={imageUrl}
               alt={title}
@@ -61,21 +73,12 @@ export const FeedRow: React.FC<FeedRowProps> = ({
           </div>
         )}
 
-        <div
-          data-testid="feed-row-content"
-          className={`${isOpen ? 'block' : 'hidden'} font-body-md text-on-surface-variant leading-relaxed`}
-        >
-          <p className="mb-2 text-brand-warm-grey font-bold">
-            AI SUMMARY
-          </p>
-          <div className="border-l-2 border-brand-black pl-4 mt-3">
-            <p>{summary}</p>
-          </div>
+        <div className={`${isOpen ? 'block' : 'hidden'} font-body-md leading-relaxed`}>
           <a
             href={sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 mt-4 text-primary font-bold hover:gap-2 transition-all"
+            className="inline-flex items-center gap-1 mt-2 text-primary font-bold hover:gap-2 transition-all"
             onClick={(e) => e.stopPropagation()}
           >
             Source material {sourceDisplay ? `(${sourceDisplay})` : ''}
