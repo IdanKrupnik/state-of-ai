@@ -48,13 +48,13 @@ describe('ConceptMuseum', () => {
     driver.clickLaunch();
     expect(driver.isOverlayOpen()).toBe(true);
     driver.clickBeginJourney();
-    expect(driver.getStepTitleText()).toBe('Phase 1: Tokenization & Embeddings');
+    expect(driver.getStepTitleText()).toBe('Phase 1: Input Text Parsing');
     driver.clickNextStep();
-    expect(driver.getStepTitleText()).toBe('Phase 2: Attention Mechanisms');
+    expect(driver.getStepTitleText()).toBe('Phase 2: Tokenization & Vocab Mapping');
     driver.clickNextStep();
-    expect(driver.getStepTitleText()).toBe('Phase 3: Neural Net Feed-Forward');
+    expect(driver.getStepTitleText()).toBe('Phase 3: Coordinate Vector Embeddings');
     driver.clickPrevStep();
-    expect(driver.getStepTitleText()).toBe('Phase 2: Attention Mechanisms');
+    expect(driver.getStepTitleText()).toBe('Phase 2: Tokenization & Vocab Mapping');
     driver.clickClose();
   });
 });

@@ -62,30 +62,57 @@ export interface TokenTreeState {
   cursorBlink: boolean;
 }
 
+export interface TokenBox {
+  text: string;
+  id: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  isFlipped: boolean;
+}
+
+export interface TokenizationState {
+  sentence: string;
+  tokens: TokenBox[];
+  scanIndex: number;
+  timer: number;
+}
+
 export const LLM_STEPS = [
   {
-    title: 'Phase 1: Tokenization & Embeddings',
-    description: 'Raw input text is split into tokens. Each token is mapped to a vector—a set of coordinates in a high-dimensional space—bringing similar concepts closer together.',
-    panX: 800, panY: 0, zoom: 1.3
+    title: 'Phase 1: Input Text Parsing',
+    description: 'A Large Language Model cannot process letters directly. When you enter a prompt, the raw string is read character-by-character to prepare for word division.',
+    panX: 1200, panY: 0, zoom: 1.3
   },
   {
-    title: 'Phase 2: Attention Mechanisms',
-    description: 'The model calculates attention weights between tokens. Hub words dynamically shoot laser coordinates to nearby words, indicating how strongly they associate.',
-    panX: 800, panY: 0, zoom: 1.6
+    title: 'Phase 2: Tokenization & Vocab Mapping',
+    description: 'The text is chopped into tokens (words or sub-words). Each token is assigned a unique index number from a massive Vocabulary ID database. Click boxes to toggle between text and ID.',
+    panX: 1200, panY: 0, zoom: 1.3
   },
   {
-    title: 'Phase 3: Neural Net Feed-Forward',
-    description: 'Word coordinates pass through dense layer synapses. Multiplying vectors by weights and biases extracts complex contextual relationships.',
-    panX: 0, panY: 0, zoom: 1.3
+    title: 'Phase 3: Coordinate Vector Embeddings',
+    description: 'Vocabulary IDs are looked up in a massive matrix to extract coordinates. Similar tokens (like "King" and "Queen") float near each other, capturing initial definitions.',
+    panX: 400, panY: 0, zoom: 1.3
   },
   {
-    title: 'Phase 4: Training via Backpropagation',
-    description: 'During training, prediction errors trigger backward gradient flows. Red error signals propagate in reverse to adjust synaptic weights and improve accuracy.',
-    panX: 0, panY: 0, zoom: 1.3
+    title: 'Phase 4: Attention Relationships',
+    description: 'The model calculates attention layers. Query words shoot laser links to context keys, measuring how strongly words in the prompt relate to one another.',
+    panX: 400, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 5: Next-Token Generation',
-    description: 'For inference, the model projects final probabilities for the next word. It commits the highest probability candidate, appends it, and repeats the process.',
-    panX: -800, panY: 0, zoom: 1.3
+    title: 'Phase 5: Neural Net Feed-Forward',
+    description: 'Token vectors pass through dense layer synapses. Multiplying values by weights and biases captures high-level logic, grammar, and reasoning patterns.',
+    panX: -400, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 6: Backpropagation & Training',
+    description: 'During training, target differences trigger gradient flows. Red error signals traverse connections backward to optimize node biases and connection strengths.',
+    panX: -400, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 7: Next-Token Selection',
+    description: 'The final vectors map to a probability list. The model builds a branching options tree, commits the highest percentage word, and repeats to predict the next word.',
+    panX: -1200, panY: 0, zoom: 1.3
   }
 ];
