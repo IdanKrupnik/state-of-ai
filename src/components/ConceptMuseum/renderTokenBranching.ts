@@ -58,12 +58,12 @@ export function updateAndRenderTokenTree(
   }
   ctx.font = '10px Geist Mono, Courier New, monospace'; ctx.fillStyle = '#18181b';
   const startX = -180; const startY = -20;
-  const lines = getWrappedLines(state.typedText, 25);
+  const lines = getWrappedLines(state.typedText, 35);
   lines.forEach((line, idx) => {
     ctx.fillText(line, startX, startY + idx * 16);
   });
   const lastLine = lines[lines.length - 1] || '';
-  const textWidth = ctx.measureText(lastLine).width;
+  const textWidth = lastLine.length * 6;
   const lastLineY = startY + (lines.length - 1) * 16;
   if (state.state === 'typing' && state.cursorBlink) {
     ctx.fillRect(startX + textWidth + 2, lastLineY - 8, 5, 10);
@@ -99,7 +99,7 @@ export function handleTokenTreeClick(
   if (state.state !== 'branching') return false;
   const sentence = promptTokens.join('');
   const startX = -180; const startY = -20;
-  const lines = getWrappedLines(state.typedText, 25);
+  const lines = getWrappedLines(state.typedText, 35);
   const lastLine = lines[lines.length - 1] || '';
   const lastLineY = startY + (lines.length - 1) * 16;
   const textWidth = lastLine.length * 6;
