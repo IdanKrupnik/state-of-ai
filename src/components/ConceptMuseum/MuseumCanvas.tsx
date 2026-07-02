@@ -48,10 +48,28 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
         ctx.beginPath(); ctx.moveTo(-range, y); ctx.lineTo(range, y); ctx.stroke();
       }
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.4)';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT A // LIVING NEURAL NETWORK', -1000, -180);
+      ctx.font = '7px Geist Mono, Courier New, monospace';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.fillText('• Light pulses represent forward-propagating signals.', -1000, 160);
+      ctx.fillText('• Click any node to manually fire signal pulses.', -1000, 172);
+
+      ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT B // AMBIENT VECTOR CLUSTERS', -120, -180);
+      ctx.font = '7px Geist Mono, Courier New, monospace';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.fillText('• Dim stars represent words floating in vector space.', -120, 160);
+      ctx.fillText('• Hover over words to activate semantic associations.', -120, 172);
+
+      ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT C // NEXT-TOKEN BRANCHING', 650, -180);
+      ctx.font = '7px Geist Mono, Courier New, monospace';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.fillText('• Typewriter shows real-time sequence prediction.', 650, 160);
+      ctx.fillText('• Click branching options to override word choices.', 650, 172);
       updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep);
       updateAndRenderVectorSpace(ctx, statesRef.current.vector);
       updateAndRenderTokenTree(ctx, statesRef.current.token);
