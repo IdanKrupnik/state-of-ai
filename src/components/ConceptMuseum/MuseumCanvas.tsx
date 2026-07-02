@@ -75,37 +75,37 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
         ctx.beginPath(); ctx.moveTo(-range, x); ctx.lineTo(range, x); ctx.stroke();
       }
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
-      ctx.fillText('EXHIBIT A // TEXT TOKENIZATION & VOCAB ID PARSING', -1320, -180);
+      ctx.fillText('EXHIBIT A // TEXT CHOPPING & WORD ID CODES', -1320, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Chops the prompt string into separate token boxes.', -1320, 60);
-      ctx.fillText('• Click token boxes to toggle vocabulary ID mapping.', -1320, 72);
+      ctx.fillText('• Slices sentences into separate, bite-sized word boxes.', -1320, 60);
+      ctx.fillText('• Click word cards to flip and reveal their secret numeric codes.', -1320, 72);
       ctx.fillText('INPUT TEXT', -1200, -8);
       ctx.fillText('VOCAB ID', -1200, 30);
       ctx.fillText('TOKEN SLICING', -1320, -50);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
-      ctx.fillText('EXHIBIT B // AMBIENT VECTOR SPACE EMBEDDINGS', -520, -180);
+      ctx.fillText('EXHIBIT B // THE COSMIC DICTIONARY GRID', -520, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Floating stars represent words in coordinate space.', -520, 140);
-      ctx.fillText('• Hover over word particles to view semantic lasers.', -520, 152);
+      ctx.fillText('• Maps words as stars based on their "meaning vibes".', -520, 140);
+      ctx.fillText('• Hover over stars to shoot lasers showing context links.', -520, 152);
       ctx.fillText('EMBEDDING VECTOR', -400, -170);
       ctx.fillText('ATTENTION WEIGHTS', -400, 160);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
-      ctx.fillText('EXHIBIT C // LIVING NEURAL NETWORK DYNAMICS', 280, -180);
+      ctx.fillText('EXHIBIT C // CALCULATING THE ANSWER', 280, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Signal pulses represent activations through layer synapses.', 280, 150);
-      ctx.fillText('• Click neuron nodes to manually trigger signal paths.', 280, 162);
+      ctx.fillText('• Electric pulses run logic forward through a dense web.', 280, 150);
+      ctx.fillText('• Click circular neuron nodes to fire a custom test pulse.', 280, 162);
       ctx.fillText('INPUT SYNAPSE', 220, 10);
       ctx.fillText('OUTPUT PREDICTION', 500, 10);
       ctx.fillText('SYNAPTIC WEIGHTS', 400, -90);
       ctx.fillText('ACTIVATION FUNCTION', 400, 90);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
-      ctx.fillText('EXHIBIT D // NEXT-TOKEN BRANCHING SELECTIONS', 1050, -180);
+      ctx.fillText('EXHIBIT D // DECIDING THE NEXT WORD', 1050, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Branches show predicted next word probability %.', 1050, 60);
-      ctx.fillText('• Click options to override next word selection.', 1050, 72);
+      ctx.fillText('• The AI forecasts candidate branches for the next word.', 1050, 60);
+      ctx.fillText('• Click any branch choice to override what the AI types next.', 1050, 72);
       ctx.fillText('PROMPT SO FAR', 650, -8);
       ctx.fillText('PREDICTED TOKENS', 930, 20);
       ctx.fillText('PROBABILITY TREE', 1200, -170);

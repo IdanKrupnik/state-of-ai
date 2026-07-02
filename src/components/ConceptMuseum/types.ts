@@ -82,43 +82,43 @@ export interface TokenizationState {
 
 export const LLM_STEPS = [
   {
-    title: 'Phase 1: Input Text Parsing',
-    description: 'A Large Language Model cannot process letters directly. When you enter a prompt, the raw string is read character-by-character. Look at Exhibit A on the left: the raw string represents the prompt typed by the user, waiting to be sliced into computational chunks.',
+    title: 'Phase 1: Reading Your Prompt',
+    description: 'AI models cannot read raw text directly like humans do. When you type a prompt, the model reads it character-by-character to prepare it for processing. Look at the raw input string in Exhibit A on the left.',
     panX: 1200, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 2: Tokenization & Vocab Mapping',
-    description: 'The text is chopped into tokens (words or sub-words), visible as box partitions in Exhibit A. Each token is assigned a unique index number from a massive Vocabulary ID database. Click the token boxes on the canvas to toggle them and see how text strings convert to integers.',
+    title: 'Phase 2: Chopping Words (Tokenization)',
+    description: 'The AI chops your sentence into bite-sized pieces called tokens (usually whole words or parts of words). It then assigns each token a unique number code. Click the word boxes in Exhibit A to flip them and see their secret ID codes!',
     panX: 1200, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 3: Coordinate Vector Embeddings',
-    description: 'Vocabulary IDs are looked up in a massive matrix to extract coordinate values. In Exhibit B, look at the floating stars: this represents the embedding space. Words with similar meanings occupy nearby coordinates, mapping semantic relationships.',
+    title: 'Phase 3: The Cosmic Dictionary (Embeddings)',
+    description: 'Next, the AI maps these ID codes onto a coordinate grid. Look at the floating stars in Exhibit B: this is the embedding space! Words with similar meanings (like "cat" and "dog") park near each other, while unrelated words float far apart.',
     panX: 400, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 4: Attention Relationships',
-    description: 'The model calculates attention layers. In Exhibit B, watch lasers fire from hub words: this represents attention weights highlighting context links dynamically, measuring how strongly words in the prompt relate to one another.',
+    title: 'Phase 4: Understanding Context (Attention)',
+    description: 'How does the AI know how words relate? It uses "Attention" to shine laser beams between words. Look at the lines firing in Exhibit B: this measures how strongly words connect (like linking the action "sat" to the object "mat").',
     panX: 400, panY: 0, zoom: 2.0
   },
   {
-    title: 'Phase 5: Neural Net Feed-Forward',
-    description: 'Word coordinates pass through dense layer synapses (lines in Exhibit C). Active neuron nodes process signals forward, multiplying input values by weights and biases to capture high-level logic, grammar, and reasoning patterns.',
+    title: 'Phase 5: Calculating the Answer (Neural Net)',
+    description: 'The signals now travel through a dense web of wires (layer synapses) in Exhibit C. These wires act like volume dials, amplifying important clues and muting useless ones. Click the circular neuron nodes to fire test signals down the wires!',
     panX: -400, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 6: Backpropagation & Training',
-    description: 'During training, target differences trigger gradient flows. Watch the red error signals traverse synaptic connections backward in Exhibit C: this represents backpropagation calibration to optimize synaptic weights and improve accuracy.',
+    title: 'Phase 6: Learning From Mistakes (Backpropagation)',
+    description: 'How does the AI get smarter? During training, it compares its guess with the correct answer. If it makes a mistake, it fires a red error pulse backward through the wires to recalibrate the dials (weights). Watch this happen in Exhibit C!',
     panX: -400, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 7: Next-Token Selection',
-    description: 'The final vectors map to a probability list. In Exhibit D, look at the predicted options tree branching from the typewriter text. Click a candidate word option directly on the canvas to commit it manually and see how the winning token is selected.',
+    title: 'Phase 7: Predicting the Next Word',
+    description: 'Based on all the clues, the AI creates a tree of candidate options for the next word. Look at the branch options in Exhibit D. You can override the AI by clicking any candidate option directly on the canvas to choose what it types next!',
     panX: -1200, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 8: Autoregressive Loop (Repetition)',
-    description: 'Once the next word is committed, it is appended to the input prompt context in Exhibit D. See the large curved blue dashed line circling back across the museum: this represents the autoregressive feedback loop recycling the output back as the new input, repeating the entire 8-phase cycle to generate text word-by-word.',
+    title: 'Phase 8: The Endless Loop (Autoregressiveness)',
+    description: 'Writing a sentence is just recycling! The AI takes the new word it just predicted, glues it to the end of your original prompt in green, and feeds the whole updated sentence back into Step 1 to guess the next word, repeating forever.',
     panX: -1200, panY: 0, zoom: 1.6
   }
 ];

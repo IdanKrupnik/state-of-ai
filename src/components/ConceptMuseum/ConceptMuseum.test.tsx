@@ -48,13 +48,13 @@ describe('ConceptMuseum', () => {
     driver.clickLaunch();
     expect(driver.isOverlayOpen()).toBe(true);
     driver.clickBeginJourney();
-    expect(driver.getStepTitleText()).toBe('Phase 1: Input Text Parsing');
+    expect(driver.getStepTitleText()).toBe('Phase 1: Reading Your Prompt');
     driver.clickNextStep();
-    expect(driver.getStepTitleText()).toBe('Phase 2: Tokenization & Vocab Mapping');
+    expect(driver.getStepTitleText()).toBe('Phase 2: Chopping Words (Tokenization)');
     driver.clickNextStep();
-    expect(driver.getStepTitleText()).toBe('Phase 3: Coordinate Vector Embeddings');
+    expect(driver.getStepTitleText()).toBe('Phase 3: The Cosmic Dictionary (Embeddings)');
     driver.clickPrevStep();
-    expect(driver.getStepTitleText()).toBe('Phase 2: Tokenization & Vocab Mapping');
+    expect(driver.getStepTitleText()).toBe('Phase 2: Chopping Words (Tokenization)');
     driver.clickClose();
   });
 });
