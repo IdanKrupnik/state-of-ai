@@ -75,7 +75,6 @@ const RSS_FEEDS = [
   { name: 'TechCrunch', url: 'https://techcrunch.com/category/artificial-intelligence/feed/' },
   { name: 'OpenAI', url: 'https://openai.com/news/rss.xml' },
   { name: 'Hugging Face', url: 'https://huggingface.co/blog/feed.xml' },
-  { name: 'The Rundown AI', url: 'https://www.rundown.ai/feed' },
   { name: 'Google Research', url: 'https://research.google/blog/rss/' },
   { name: 'Anthropic Engineering', url: 'https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml' },
   { name: 'Google API', url: 'https://developers.googleblog.com/atom.xml' }
