@@ -89,10 +89,10 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             <div className="mt-auto">
               <button
                 onClick={(e) => e.stopPropagation()}
-                className="px-4 py-2 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded flex items-center gap-1.5 shadow-sm border border-brand-black/10 cursor-pointer whitespace-nowrap"
+                className="px-2.5 py-1 text-[9px] md:text-[10px] font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded flex items-center gap-1 shadow-sm border border-brand-black/10 cursor-pointer whitespace-nowrap"
                 data-testid="feed-row-more-btn"
               >
-                <span className="material-symbols-outlined text-[14px]">thumb_up</span>
+                <span className="material-symbols-outlined text-[12px]">thumb_up</span>
                 I want more like this
               </button>
             </div>
