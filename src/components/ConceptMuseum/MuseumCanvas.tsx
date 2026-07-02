@@ -3,7 +3,11 @@ import { initNeuralNet, updateAndRenderNeuralNet } from './renderNeuralNet';
 import { initVectorSpace, updateAndRenderVectorSpace } from './renderVectorSpace';
 import { initTokenTree, updateAndRenderTokenTree } from './renderTokenBranching';
 
-export const MuseumCanvas: React.FC = () => {
+export interface MuseumCanvasProps {
+  nnStep: number;
+}
+
+export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ nnStep }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const transformRef = useRef({ zoom: 1.0, panX: 0, panY: 0, isDragging: false, startX: 0, startY: 0 });
 
@@ -23,12 +27,12 @@ export const MuseumCanvas: React.FC = () => {
     window.addEventListener('resize', resize);
     resize();
     const render = () => {
-      ctx.fillStyle = '#09090b';
+      ctx.fillStyle = '#fcfbfa';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.save();
       ctx.translate(canvas.width / 2 + transformRef.current.panX, canvas.height / 2 + transformRef.current.panY);
       ctx.scale(transformRef.current.zoom, transformRef.current.zoom);
-      ctx.strokeStyle = 'rgba(63, 63, 70, 0.08)';
+      ctx.strokeStyle = 'rgba(24, 24, 27, 0.04)';
       ctx.lineWidth = 1;
       const gridSize = 40;
       const range = 1500;
@@ -45,11 +49,11 @@ export const MuseumCanvas: React.FC = () => {
         ctx.stroke();
       }
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(228, 228, 231, 0.4)';
+      ctx.fillStyle = 'rgba(24, 24, 27, 0.4)';
       ctx.fillText('EXHIBIT A // LIVING NEURAL NETWORK', -1000, -180);
       ctx.fillText('EXHIBIT B // AMBIENT VECTOR CLUSTERS', -120, -180);
       ctx.fillText('EXHIBIT C // NEXT-TOKEN BRANCHING', 650, -180);
-      updateAndRenderNeuralNet(ctx, netState);
+      updateAndRenderNeuralNet(ctx, netState, nnStep);
       updateAndRenderVectorSpace(ctx, vectorState);
       updateAndRenderTokenTree(ctx, tokenState);
       ctx.restore();
@@ -60,7 +64,7 @@ export const MuseumCanvas: React.FC = () => {
       cancelAnimationFrame(animFrameId);
       window.removeEventListener('resize', resize);
     };
-  }, []);
+  }, [nnStep]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     transformRef.current.isDragging = true;

@@ -59,7 +59,7 @@ export function updateAndRenderTokenTree(
     }
   }
   ctx.font = '10px Geist Mono, Courier New, monospace';
-  ctx.fillStyle = '#f4f4f5';
+  ctx.fillStyle = '#18181b';
   const startX = 650;
   const startY = 0;
   ctx.fillText(state.typedText, startX, startY);
@@ -76,7 +76,7 @@ export function updateAndRenderTokenTree(
       const x = branchX + 40 * branchProgress;
       const isWinner = bIdx === 0;
       const activeColor = state.state === 'committing' && isWinner;
-      ctx.strokeStyle = activeColor ? '#38bdf8' : 'rgba(228, 228, 231, 0.2)';
+      ctx.strokeStyle = activeColor ? '#2563eb' : 'rgba(24, 24, 27, 0.15)';
       ctx.lineWidth = activeColor ? 1.5 : 1;
       ctx.beginPath();
       ctx.moveTo(branchX, startY - 3);
@@ -84,7 +84,7 @@ export function updateAndRenderTokenTree(
       ctx.stroke();
       if (branchProgress >= 0.8) {
         ctx.font = '8px Geist Mono, Courier New, monospace';
-        ctx.fillStyle = activeColor ? '#38bdf8' : 'rgba(228, 228, 231, 0.4)';
+        ctx.fillStyle = activeColor ? '#2563eb' : 'rgba(24, 24, 27, 0.45)';
         ctx.fillText(`[${b.word}: ${b.prob}%]`, x + 5, y);
       }
     });

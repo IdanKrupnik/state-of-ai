@@ -50,4 +50,33 @@ export class ConceptMuseumDriver {
     const overlay = this.getOverlay();
     return !!(overlay && overlay.querySelector('[data-testid="museum-canvas"]'));
   }
+
+  getPrevStepButton(): HTMLElement | null {
+    const overlay = this.getOverlay();
+    return overlay ? overlay.querySelector('[data-testid="prev-step-btn"]') : null;
+  }
+
+  getNextStepButton(): HTMLElement | null {
+    const overlay = this.getOverlay();
+    return overlay ? overlay.querySelector('[data-testid="next-step-btn"]') : null;
+  }
+
+  clickPrevStep(): this {
+    const btn = this.getPrevStepButton();
+    if (btn) fireEvent.click(btn);
+    return this;
+  }
+
+  clickNextStep(): this {
+    const btn = this.getNextStepButton();
+    if (btn) fireEvent.click(btn);
+    return this;
+  }
+
+  getStepTitleText(): string | null {
+    const overlay = this.getOverlay();
+    if (!overlay) return null;
+    const h4 = overlay.querySelector('h4');
+    return h4 ? h4.textContent : null;
+  }
 }

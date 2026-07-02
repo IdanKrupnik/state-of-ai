@@ -41,4 +41,17 @@ describe('ConceptMuseum', () => {
     expect(HTMLElement.prototype.requestFullscreen).toHaveBeenCalled();
     driver.clickClose();
   });
+
+  it('should support step-by-step navigation in the neural net explorer', () => {
+    const { container } = render(<ConceptMuseum />);
+    const driver = new ConceptMuseumDriver(container);
+    driver.clickLaunch();
+    expect(driver.isOverlayOpen()).toBe(true);
+    expect(driver.getStepTitleText()).toBe('1. Input Layer');
+    driver.clickNextStep();
+    expect(driver.getStepTitleText()).toBe('2. Hidden Layer 1 (Weights)');
+    driver.clickPrevStep();
+    expect(driver.getStepTitleText()).toBe('1. Input Layer');
+    driver.clickClose();
+  });
 });

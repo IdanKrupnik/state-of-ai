@@ -51,9 +51,9 @@ export function updateAndRenderVectorSpace(
     s.y += s.vy;
     if (s.x < -150 || s.x > 150) s.vx *= -1;
     if (s.y < -150 || s.y > 150) s.vy *= -1;
-    ctx.fillStyle = `rgba(228, 228, 231, ${s.alpha})`;
+    ctx.fillStyle = `rgba(24, 24, 27, ${s.alpha})`;
     ctx.beginPath();
-    ctx.arc(s.x, s.y, 1, 0, Math.PI * 2);
+    ctx.arc(s.x, s.y, 1.2, 0, Math.PI * 2);
     ctx.fill();
   });
   words.forEach(w => {
@@ -68,7 +68,7 @@ export function updateAndRenderVectorSpace(
   const laserOpacity = timer < 2000 ? 0.6 : Math.max(0, 0.6 - (timer - 2000) / 1000 * 0.6);
   if (activeHub && laserOpacity > 0) {
     activeNeighbors.forEach(n => {
-      ctx.strokeStyle = `rgba(56, 189, 248, ${laserOpacity})`;
+      ctx.strokeStyle = `rgba(37, 99, 235, ${laserOpacity})`;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       ctx.moveTo(activeHub.x, activeHub.y);
@@ -80,9 +80,9 @@ export function updateAndRenderVectorSpace(
   words.forEach(w => {
     const isActive = w.text === currentCluster.hub || currentCluster.neighbors.includes(w.text);
     const inRange = isActive && laserOpacity > 0;
-    ctx.fillStyle = inRange ? '#38bdf8' : 'rgba(228, 228, 231, 0.25)';
+    ctx.fillStyle = inRange ? '#2563eb' : 'rgba(24, 24, 27, 0.4)';
     ctx.fillText(w.text, w.x - 10, w.y - 4);
-    ctx.fillStyle = inRange ? '#38bdf8' : 'rgba(228, 228, 231, 0.4)';
+    ctx.fillStyle = inRange ? '#2563eb' : 'rgba(24, 24, 27, 0.55)';
     ctx.beginPath();
     ctx.arc(w.x, w.y, w.isHub ? 2.5 : 1.5, 0, Math.PI * 2);
     ctx.fill();

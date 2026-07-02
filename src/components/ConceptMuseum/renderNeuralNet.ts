@@ -18,18 +18,39 @@ export function initNeuralNet(): NeuralNetState {
 
 export function updateAndRenderNeuralNet(
   ctx: CanvasRenderingContext2D,
-  state: NeuralNetState
+  state: NeuralNetState,
+  nnStep: number
 ) {
   const { nodes, pulses } = state;
-  if (Math.random() < 0.04 && pulses.length < 12) {
-    pulses.push({
-      fromLayer: 0,
-      fromIndex: Math.floor(Math.random() * nodes[0].length),
-      toLayer: 1,
-      toIndex: Math.floor(Math.random() * nodes[1].length),
-      progress: 0,
-      speed: 0.015 + Math.random() * 0.015,
-    });
+  if (Math.random() < 0.04 && pulses.length < 10) {
+    if (nnStep === 0) {
+      nodes[0][Math.floor(Math.random() * nodes[0].length)].flare = 1.0;
+    } else if (nnStep === 1) {
+      pulses.push({
+        fromLayer: 0, fromIndex: Math.floor(Math.random() * nodes[0].length),
+        toLayer: 1, toIndex: Math.floor(Math.random() * nodes[1].length),
+        progress: 0, speed: 0.02
+      });
+    } else if (nnStep === 2) {
+      pulses.push({
+        fromLayer: 1, fromIndex: Math.floor(Math.random() * nodes[1].length),
+        toLayer: 2, toIndex: Math.floor(Math.random() * nodes[2].length),
+        progress: 0, speed: 0.02
+      });
+    } else if (nnStep === 3) {
+      pulses.push({
+        fromLayer: 2, fromIndex: Math.floor(Math.random() * nodes[2].length),
+        toLayer: 3, toIndex: Math.floor(Math.random() * nodes[3].length),
+        progress: 0, speed: 0.02
+      });
+    } else if (nnStep === 4) {
+      const fromL = 1 + Math.floor(Math.random() * 3);
+      pulses.push({
+        fromLayer: fromL, fromIndex: Math.floor(Math.random() * nodes[fromL].length),
+        toLayer: fromL - 1, toIndex: Math.floor(Math.random() * nodes[fromL - 1].length),
+        progress: 0, speed: 0.02
+      });
+    }
   }
   nodes.forEach(layer => layer.forEach(n => {
     if (n.flare > 0) n.flare -= 0.04;
@@ -39,21 +60,10 @@ export function updateAndRenderNeuralNet(
     p.progress += p.speed;
     if (p.progress >= 1) {
       nodes[p.toLayer][p.toIndex].flare = 1.0;
-      const nextLayer = p.toLayer + 1;
-      if (nextLayer < nodes.length) {
-        pulses.push({
-          fromLayer: p.toLayer,
-          fromIndex: p.toIndex,
-          toLayer: nextLayer,
-          toIndex: Math.floor(Math.random() * nodes[nextLayer].length),
-          progress: 0,
-          speed: 0.015 + Math.random() * 0.015,
-        });
-      }
       pulses.splice(i, 1);
     }
   }
-  ctx.strokeStyle = 'rgba(63, 63, 70, 0.2)';
+  ctx.strokeStyle = 'rgba(24, 24, 27, 0.08)';
   ctx.lineWidth = 1;
   for (let l = 0; l < nodes.length - 1; l++) {
     nodes[l].forEach(from => {
@@ -70,22 +80,23 @@ export function updateAndRenderNeuralNet(
     const to = nodes[p.toLayer][p.toIndex];
     const x = from.x + (to.x - from.x) * p.progress;
     const y = from.y + (to.y - from.y) * p.progress;
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.3)';
+    ctx.strokeStyle = nnStep === 4 ? 'rgba(239, 68, 68, 0.3)' : 'rgba(37, 99, 235, 0.3)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(from.x, from.y);
     ctx.lineTo(to.x, to.y);
     ctx.stroke();
-    ctx.fillStyle = '#38bdf8';
+    ctx.fillStyle = nnStep === 4 ? '#ef4444' : '#2563eb';
     ctx.beginPath();
     ctx.arc(x, y, 3, 0, Math.PI * 2);
     ctx.fill();
   });
-  nodes.forEach(layer => {
+  nodes.forEach((layer, lIdx) => {
     layer.forEach(n => {
-      ctx.fillStyle = n.flare > 0 ? `rgba(14, 165, 233, ${0.2 + n.flare * 0.5})` : '#18181b';
-      ctx.strokeStyle = n.flare > 0 ? '#38bdf8' : 'rgba(228, 228, 231, 0.2)';
-      ctx.lineWidth = n.flare > 0 ? 2 : 1;
+      const isLayerActive = nnStep === 0 && lIdx === 0;
+      ctx.fillStyle = n.flare > 0 || isLayerActive ? 'rgba(37, 99, 235, 0.15)' : '#ffffff';
+      ctx.strokeStyle = n.flare > 0 || isLayerActive ? (nnStep === 4 ? '#ef4444' : '#2563eb') : 'rgba(24, 24, 27, 0.2)';
+      ctx.lineWidth = n.flare > 0 || isLayerActive ? 2 : 1;
       ctx.beginPath();
       ctx.arc(n.x, n.y, 6, 0, Math.PI * 2);
       ctx.fill();
