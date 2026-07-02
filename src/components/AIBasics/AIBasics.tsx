@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PromptToOutputVisualizer } from '../PromptToOutputVisualizer/PromptToOutputVisualizer';
 import { Terminology } from '../Terminology/Terminology';
+import { ConceptMuseum } from '../ConceptMuseum/ConceptMuseum';
 
 interface SectionProps {
   id: string;
@@ -55,6 +56,8 @@ export const AIBasics: React.FC = () => {
           A foundational inquiry into the mechanisms, architectures, and deployment paradigms governing contemporary synthetic intelligence.
         </p>
       </section>
+
+      <ConceptMuseum />
 
       <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40" data-testid="learn-toc-mobile-container">
         <button

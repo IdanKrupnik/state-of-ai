@@ -1,8 +1,12 @@
 import React from 'react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, act } from '@testing-library/react';
 import { AIBasics } from './AIBasics';
 import { AIBasicsDriver } from './AIBasics.driver';
+
+vi.mock('../ConceptMuseum/ConceptMuseum', () => ({
+  ConceptMuseum: () => <div data-testid="concept-museum-mock" />,
+}));
 
 describe('AIBasics Component', () => {
   it('should render main headers and technical subsections correctly', () => {
