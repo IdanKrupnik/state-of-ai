@@ -25,19 +25,19 @@ export function renderTooltipsAndCheckHover(ctx: CanvasRenderingContext2D, vx: n
     const t = active as CanvasTooltipItem;
     const gx = t.exhibitX + t.lx;
     ctx.fillStyle = 'rgba(255, 255, 255, 0.98)'; ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.2;
-    ctx.beginPath(); ctx.roundRect(gx + 10, t.ly - 30, 160, 48, 6); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#18181b'; ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
-    ctx.fillText(`${t.term.toUpperCase()}:`, gx + 15, t.ly - 18);
-    ctx.fillStyle = 'rgba(24, 24, 27, 0.7)'; ctx.font = '6px Geist Mono, Courier New, monospace';
+    ctx.beginPath(); ctx.roundRect(gx + 12, t.ly - 45, 220, 75, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#18181b'; ctx.font = 'bold 10px Geist Mono, Courier New, monospace';
+    ctx.fillText(`${t.term.toUpperCase()}:`, gx + 22, t.ly - 30);
+    ctx.fillStyle = 'rgba(24, 24, 27, 0.7)'; ctx.font = '9px Geist Mono, Courier New, monospace';
     const words = t.definition.split(' ');
-    let line = ''; let yOffset = -8;
+    let line = ''; let yOffset = -16;
     words.forEach(w => {
-      if (ctx.measureText(line + w).width > 140) {
-        ctx.fillText(line, gx + 15, t.ly + yOffset);
-        line = w + ' '; yOffset += 8;
+      if (ctx.measureText(line + w).width > 200) {
+        ctx.fillText(line, gx + 22, t.ly + yOffset);
+        line = w + ' '; yOffset += 11;
       } else line += w + ' ';
     });
-    ctx.fillText(line, gx + 15, t.ly + yOffset);
+    ctx.fillText(line, gx + 22, t.ly + yOffset);
   }
 }
 
