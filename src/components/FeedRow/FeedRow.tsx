@@ -34,13 +34,15 @@ export const FeedRow: React.FC<FeedRowProps> = ({
 
   return (
     <div
-      onClick={() => setIsOpen(!isOpen)}
       data-testid="feed-row"
-      className="group border-b border-outline-variant py-6 cursor-pointer hover:bg-surface-container-low transition-colors px-2 -mx-2"
+      className="group border-b border-outline-variant py-6 px-2 -mx-2 hover:bg-surface-container-low transition-colors"
     >
       <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
-          <h4 className="font-headline-sm text-headline-sm group-hover:underline underline-offset-4 text-brand-black flex-grow">
+          <h4
+            onClick={() => setIsOpen(!isOpen)}
+            className="font-headline-sm text-headline-sm hover:underline underline-offset-4 text-brand-black flex-grow cursor-pointer"
+          >
             {title}
           </h4>
           <span className="font-label-mono text-label-mono text-brand-warm-grey shrink-0 mt-1">
@@ -49,11 +51,11 @@ export const FeedRow: React.FC<FeedRowProps> = ({
         </div>
 
         {imageUrl && (
-          <div className="w-full h-48 md:h-64 overflow-hidden rounded-lg border border-brand-black/10 bg-white relative group-hover:border-brand-black/25 transition-colors flex justify-center items-center">
+          <div className="w-full h-28 md:h-36 overflow-hidden rounded-lg border border-brand-black/10 bg-brand-clay/5 relative group-hover:border-brand-black/25 transition-colors">
             <img
               src={imageUrl}
               alt={title}
-              className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-[1.01]"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
               data-testid="feed-row-image"
             />
           </div>

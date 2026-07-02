@@ -25,7 +25,11 @@ export class FeedRowDriver {
   }
 
   toggle(): this {
-    fireEvent.click(this.elementToUse);
+    const heading = this.elementToUse.querySelector('h4');
+    if (!heading) {
+      throw new Error('FeedRow title heading not found');
+    }
+    fireEvent.click(heading);
     return this;
   }
 

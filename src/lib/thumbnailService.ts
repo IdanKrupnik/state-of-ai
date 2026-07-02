@@ -18,17 +18,23 @@ async function generateMetaphor(article: Article): Promise<string> {
     contents: content,
     config: {
       temperature: 0.0,
-      systemInstruction: `You are an expert UI/UX illustrator specializing in cute, strict graphic minimalism. Your sole task is to translate an article's title and summary into a single, dead-simple, slightly amusing visual metaphor in black and white.
+      systemInstruction: `You are an expert UI/UX illustrator specializing in retro editorial graphics. Your sole task is to generate a text-to-image prompt for a new article.
 
-The metaphor must directly convey the key concepts or entities in the title (for example, a partnership between HP and OpenAI, or a mathematical concept represented by simple cute objects). Keep the drawing cute, simple, and slightly humorous to be noticeable.
+You must output ONLY the final text-to-image prompt. No explanation, no quotes, no conversation.
 
-Strict rules for your output:
-1. Output ONLY the final image prompt in English. No conversation, no introductory phrases, no explanations, and no quotes.
-2. Focus on ONE central, recognizable object or a simple interaction between two cute objects.
-3. Completely avoid human faces or detailed bodies; prefer cute abstract silhouettes, animals, or iconic symbols.
-4. Always enforce a flat 2D style.
-5. Force a strict black and white color scheme.
-6. Absolute ban on text, letters, slogans, complex textures, shadows, shading, realism, gradients, or blur.`,
+The output prompt must adhere strictly to this style and layout template:
+A retro digital illustration in a clean, minimalist comic book style with a hand-drawn feel, replicating an editorial newspaper graphic.
+
+Composition & Subject: A conceptual layout representing an AI article summary. The visual focus is on [INSERT VISUAL METAPHOR HERE] drawn with clean, bold black ink outlines and flat, offset-print color blocking. Abstract, curving vector data streams and digital nodes connect the elements to represent server data collection and discovery.
+
+Color Palette & Texture: Limited and muted color palette consisting of deep black, dark navy blue, light blue shading, and stark white highlights. The background is a solid, warm off-white beige with a very subtle, fine paper grain texture. No gradients.
+
+Typography & Layout: Clean layout optimized for an article thumbnail. In the top-left, clean black sans-serif text reads: "[INSERT ARTICLE TITLE HERE]". Below the headline, a solid black rectangular text box contains white or light blue text reading: "[INSERT KEY PHRASE HERE]". In the top-right corner, minimalist branding text reads: "STATE OF AI".
+
+Instructions for replacing placeholders:
+1. Replace [INSERT VISUAL METAPHOR HERE] with a description of a cute, slightly amusing visual metaphor that depicts the main entities, logos, or concepts and action of the article. For example, for an article about HP and OpenAI, depict a stylized HP logo and OpenAI logo shaking hands. For an article about vLLM and HF Jobs, depict a cute rocket launch with a single command button.
+2. Replace [INSERT ARTICLE TITLE HERE] with the simplified title of the article (maximum 6 words).
+3. Replace [INSERT KEY PHRASE HERE] with a 2-4 word key phrase summarizing the topic of the article.`,
     },
   });
   if (!response.text) {
@@ -38,13 +44,12 @@ Strict rules for your output:
 }
 
 async function generateImagenImage(prompt: string): Promise<Buffer> {
-  const finalPrompt = `${prompt}, ultra-minimalist vector art, flat 2D design, simple cute black and white line art, solid shapes, sharp black outlines, black and white only, textless, no shadows, no gradients, clean crisp solid white background.`;
   const response = await ai.models.generateImages({
     model: 'imagen-4.0-generate-001',
-    prompt: finalPrompt,
+    prompt: prompt,
     config: {
       numberOfImages: 1,
-      aspectRatio: '1:1',
+      aspectRatio: '16:9',
       outputMimeType: 'image/png',
     },
   });
