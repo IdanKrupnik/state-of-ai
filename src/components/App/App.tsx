@@ -117,7 +117,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
-      <TelemetryTicker />
+      <TelemetryTicker articles={articles} />
 
       <main className="max-w-[72rem] w-full mx-auto px-4 py-8 flex-grow flex flex-col gap-10">
         {!isMounted ? (
