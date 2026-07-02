@@ -1,37 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MuseumCanvas } from './MuseumCanvas';
-
-const LLM_STEPS = [
-  {
-    title: 'Phase 1: Tokenization & Embeddings',
-    description: 'Raw input text is split into tokens. Each token is mapped to a vector—a set of coordinates in a high-dimensional space—bringing similar concepts closer together.',
-    panX: 800, panY: 0, zoom: 1.3
-  },
-  {
-    title: 'Phase 2: Attention Mechanisms',
-    description: 'The model calculates attention weights between tokens. Hub words dynamically shoot laser coordinates to nearby words, indicating how strongly they associate.',
-    panX: 800, panY: 0, zoom: 1.6
-  },
-  {
-    title: 'Phase 3: Neural Net Feed-Forward',
-    description: 'Word coordinates pass through dense layer synapses. Multiplying vectors by weights and biases extracts complex contextual relationships.',
-    panX: 0, panY: 0, zoom: 1.3
-  },
-  {
-    title: 'Phase 4: Training via Backpropagation',
-    description: 'During training, prediction errors trigger backward gradient flows. Red error signals propagate in reverse to adjust synaptic weights and improve accuracy.',
-    panX: 0, panY: 0, zoom: 1.3
-  },
-  {
-    title: 'Phase 5: Next-Token Generation',
-    description: 'For inference, the model projects final probabilities for the next word. It commits the highest probability candidate, appends it, and repeats the process.',
-    panX: -800, panY: 0, zoom: 1.3
-  }
-];
+import { LLM_STEPS } from './types';
 
 export const ConceptMuseum: React.FC = () => {
   const [isExplorerOpen, setIsExplorerOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isIntro, setIsIntro] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +40,7 @@ export const ConceptMuseum: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => { setIsExplorerOpen(true); setActiveStep(0); }}
+          onClick={() => { setIsExplorerOpen(true); setIsIntro(true); setActiveStep(0); }}
           className="px-5 py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer shrink-0"
           data-testid="launch-museum-btn"
         >
@@ -75,28 +49,14 @@ export const ConceptMuseum: React.FC = () => {
       </div>
 
       {isExplorerOpen && (
-        <div
-          ref={containerRef}
-          className="fixed inset-0 z-50 bg-[#fcfbfa] text-zinc-900 flex flex-col overflow-hidden"
-          data-testid="museum-overlay"
-        >
+        <div ref={containerRef} className="fixed inset-0 z-50 bg-[#fcfbfa] text-zinc-900 flex flex-col overflow-hidden" data-testid="museum-overlay">
           <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-brand-black/10 shadow-sm z-10">
-            <span className="font-geist-mono text-xs text-brand-warm-grey font-bold uppercase tracking-wider">
-              AI CONCEPT MUSEUM // ACTIVE EXHIBITS
-            </span>
+            <span className="font-geist-mono text-xs text-brand-warm-grey font-bold uppercase tracking-wider">AI CONCEPT MUSEUM // ACTIVE EXHIBITS</span>
             <div className="flex items-center gap-3">
-              <button
-                onClick={toggleFullscreen}
-                className="px-3 py-1.5 text-xs font-geist-mono uppercase tracking-wider border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black rounded cursor-pointer transition-colors"
-                data-testid="fullscreen-toggle-btn"
-              >
+              <button onClick={toggleFullscreen} className="px-3 py-1.5 text-xs font-geist-mono border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black rounded cursor-pointer transition-colors" data-testid="fullscreen-toggle-btn">
                 {isFullScreen ? 'Exit Fullscreen' : 'Fullscreen ⛶'}
               </button>
-              <button
-                onClick={() => setIsExplorerOpen(false)}
-                className="px-3 py-1.5 text-xs font-geist-mono uppercase tracking-wider bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded cursor-pointer transition-colors"
-                data-testid="close-museum-btn"
-              >
+              <button onClick={() => setIsExplorerOpen(false)} className="px-3 py-1.5 text-xs font-geist-mono bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded cursor-pointer transition-colors" data-testid="close-museum-btn">
                 Exit Museum ×
               </button>
             </div>
@@ -104,50 +64,39 @@ export const ConceptMuseum: React.FC = () => {
 
           <div className="flex-1 relative">
             <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} />
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-xl bg-white border border-brand-black/15 rounded-2xl p-6 shadow-2xl z-10 flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <span className="font-geist-mono text-[9px] uppercase tracking-wider text-brand-warm-grey">
-                  How LLMs Work // Phase {activeStep + 1} of 5
-                </span>
-                <div className="flex items-center gap-1.5">
-                  {LLM_STEPS.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                        i === activeStep ? 'bg-primary w-3' : 'bg-brand-clay/35'
-                      }`}
-                    />
-                  ))}
+            {isIntro ? (
+              <div className="absolute inset-0 bg-[#fcfbfa]/60 backdrop-blur-sm z-20 flex items-center justify-center p-4">
+                <div className="bg-white border border-brand-black/10 rounded-2xl p-8 max-w-md shadow-2xl text-center flex flex-col gap-5">
+                  <h3 className="text-xl font-extrabold text-brand-black">Welcome to the AI Concept Museum</h3>
+                  <p className="text-xs text-brand-warm-grey leading-relaxed">
+                    We will guide you step-by-step through how Large Language Models (LLMs) work in practice. Explore the interactive visual exhibits to see how mathematical vectors, neural network weights, and token probability branches generate language.
+                  </p>
+                  <button onClick={() => setIsIntro(false)} className="w-full py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer" data-testid="begin-journey-btn">
+                    Begin Journey &rarr;
+                  </button>
                 </div>
               </div>
-              
-              <div>
-                <h4 className="font-bold text-sm text-brand-black">{step.title}</h4>
-                <p className="text-xs leading-relaxed text-brand-warm-grey mt-1">{step.description}</p>
+            ) : (
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-xl bg-white border border-brand-black/15 rounded-2xl p-6 shadow-2xl z-10 flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-geist-mono text-[9px] uppercase tracking-wider text-brand-warm-grey">How LLMs Work // Phase {activeStep + 1} of 5</span>
+                  <div className="flex items-center gap-1.5">
+                    {LLM_STEPS.map((_, i) => (
+                      <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === activeStep ? 'bg-primary w-3' : 'bg-brand-clay/35'}`} />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-brand-black">{step.title}</h4>
+                  <p className="text-xs leading-relaxed text-brand-warm-grey mt-1">{step.description}</p>
+                </div>
+                <div className="flex items-center justify-between pt-3 border-t border-brand-black/5">
+                  <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Previous Phase</button>
+                  <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">Drag to pan • Scroll to zoom</span>
+                  <button onClick={() => setActiveStep(prev => Math.min(4, prev + 1))} disabled={activeStep === 4} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">Next Phase &rarr;</button>
+                </div>
               </div>
-
-              <div className="flex items-center justify-between pt-3 border-t border-brand-black/5">
-                <button
-                  onClick={() => setActiveStep(prev => Math.max(0, prev - 1))}
-                  disabled={activeStep === 0}
-                  className="px-3 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/10 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black disabled:opacity-30 rounded cursor-pointer transition-all duration-200"
-                  data-testid="prev-step-btn"
-                >
-                  &larr; Previous Phase
-                </button>
-                <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">
-                  Drag to pan • Scroll to zoom
-                </span>
-                <button
-                  onClick={() => setActiveStep(prev => Math.min(4, prev + 1))}
-                  disabled={activeStep === 4}
-                  className="px-3 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200"
-                  data-testid="next-step-btn"
-                >
-                  Next Phase &rarr;
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       )}

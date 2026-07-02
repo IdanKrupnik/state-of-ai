@@ -47,6 +47,7 @@ describe('ConceptMuseum', () => {
     const driver = new ConceptMuseumDriver(container);
     driver.clickLaunch();
     expect(driver.isOverlayOpen()).toBe(true);
+    driver.clickBeginJourney();
     expect(driver.getStepTitleText()).toBe('Phase 1: Tokenization & Embeddings');
     driver.clickNextStep();
     expect(driver.getStepTitleText()).toBe('Phase 2: Attention Mechanisms');

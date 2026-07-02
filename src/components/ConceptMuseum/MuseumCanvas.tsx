@@ -14,6 +14,11 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const transRef = useRef({ zoom: 1.0, panX: 0, panY: 0, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
   const statesRef = useRef({ net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
+  const hasInteractedRef = useRef(false);
+
+  useEffect(() => {
+    hasInteractedRef.current = false;
+  }, [targetPanX, targetPanY, targetZoom]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,7 +34,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
     const render = () => {
       ctx.fillStyle = '#fcfbfa';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      if (!transRef.current.isDragging) {
+      if (!transRef.current.isDragging && !hasInteractedRef.current) {
         transRef.current.panX += (targetPanX - transRef.current.panX) * 0.08;
         transRef.current.panY += (targetPanY - transRef.current.panY) * 0.08;
         transRef.current.zoom += (targetZoom - transRef.current.zoom) * 0.08;
@@ -98,6 +103,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
     transRef.current.dragDist = 0;
     transRef.current.startX = e.clientX - transRef.current.panX;
     transRef.current.startY = e.clientY - transRef.current.panY;
+    hasInteractedRef.current = true;
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -128,6 +134,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       onMouseUp={handleMouseUp}
       onMouseLeave={() => { transRef.current.isDragging = false; }}
       onWheel={(e) => {
+        hasInteractedRef.current = true;
         const factor = 1.05;
         const nextZoom = e.deltaY < 0 ? transRef.current.zoom * factor : transRef.current.zoom / factor;
         transRef.current.zoom = Math.min(2.0, Math.max(0.4, nextZoom));

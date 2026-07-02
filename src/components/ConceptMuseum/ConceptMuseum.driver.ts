@@ -79,4 +79,15 @@ export class ConceptMuseumDriver {
     const h4 = overlay.querySelector('h4');
     return h4 ? h4.textContent : null;
   }
+
+  getBeginJourneyButton(): HTMLElement | null {
+    const overlay = this.getOverlay();
+    return overlay ? overlay.querySelector('[data-testid="begin-journey-btn"]') : null;
+  }
+
+  clickBeginJourney(): this {
+    const btn = this.getBeginJourneyButton();
+    if (btn) fireEvent.click(btn);
+    return this;
+  }
 }
