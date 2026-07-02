@@ -79,7 +79,7 @@ export const ConceptMuseum: React.FC = () => {
             ) : (
               <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-xl bg-white border border-brand-black/15 rounded-2xl p-6 shadow-2xl z-10 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-geist-mono text-[9px] uppercase tracking-wider text-brand-warm-grey">How LLMs Work // Phase {activeStep + 1} of 5</span>
+                  <span className="font-geist-mono text-[9px] uppercase tracking-wider text-brand-warm-grey">How LLMs Work // Phase {activeStep + 1} of {LLM_STEPS.length}</span>
                   <div className="flex items-center gap-1.5">
                     {LLM_STEPS.map((_, i) => (
                       <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === activeStep ? 'bg-primary w-3' : 'bg-brand-clay/35'}`} />
@@ -93,7 +93,7 @@ export const ConceptMuseum: React.FC = () => {
                 <div className="flex items-center justify-between pt-3 border-t border-brand-black/5">
                   <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Previous Phase</button>
                   <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">Drag to pan • Scroll to zoom</span>
-                  <button onClick={() => setActiveStep(prev => Math.min(4, prev + 1))} disabled={activeStep === 4} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">Next Phase &rarr;</button>
+                  <button onClick={() => setActiveStep(prev => Math.min(LLM_STEPS.length - 1, prev + 1))} disabled={activeStep === LLM_STEPS.length - 1} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">Next Phase &rarr;</button>
                 </div>
               </div>
             )}

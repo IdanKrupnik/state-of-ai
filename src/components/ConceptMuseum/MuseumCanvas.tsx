@@ -3,6 +3,7 @@ import { initTokenization, updateAndRenderTokenization, handleTokenizationClick 
 import { initNeuralNet, updateAndRenderNeuralNet, handleNeuralNetClick } from './renderNeuralNet';
 import { initVectorSpace, updateAndRenderVectorSpace, handleVectorSpaceHover } from './renderVectorSpace';
 import { initTokenTree, updateAndRenderTokenTree, handleTokenTreeClick } from './renderTokenBranching';
+import { renderTooltipsAndCheckHover, checkTooltipClick } from './canvasTooltips';
 
 export interface MuseumCanvasProps {
   targetPanX: number;
@@ -17,24 +18,18 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   const statesRef = useRef({ tokenization: initTokenization(), net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
   const hasInteractedRef = useRef(false);
 
-  useEffect(() => {
-    hasInteractedRef.current = false;
-  }, [targetPanX, targetPanY, targetZoom]);
+  useEffect(() => { hasInteractedRef.current = false; }, [targetPanX, targetPanY, targetZoom]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !canvas.getContext('2d')) return;
     const ctx = canvas.getContext('2d')!;
     let animFrameId: number;
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     window.addEventListener('resize', resize);
     resize();
     const render = () => {
-      ctx.fillStyle = '#fcfbfa';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#fcfbfa'; ctx.fillRect(0, 0, canvas.width, canvas.height);
       if (!transRef.current.isDragging && !hasInteractedRef.current) {
         transRef.current.panX += (targetPanX - transRef.current.panX) * 0.08;
         transRef.current.panY += (targetPanY - transRef.current.panY) * 0.08;
@@ -43,65 +38,69 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.save();
       ctx.translate(canvas.width / 2 + transRef.current.panX, canvas.height / 2 + transRef.current.panY);
       ctx.scale(transRef.current.zoom, transRef.current.zoom);
-      ctx.strokeStyle = 'rgba(24, 24, 27, 0.04)';
-      ctx.lineWidth = 1;
-      const size = 40;
-      const range = 2000;
+      ctx.strokeStyle = 'rgba(24, 24, 27, 0.04)'; ctx.lineWidth = 1;
+      const size = 40; const range = 2000;
       for (let x = -range; x <= range; x += size) {
         ctx.beginPath(); ctx.moveTo(x, -range); ctx.lineTo(x, range); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(-range, x); ctx.lineTo(range, x); ctx.stroke();
       }
-      for (let y = -range; y <= range; y += size) {
-        ctx.beginPath(); ctx.moveTo(-range, y); ctx.lineTo(range, y); ctx.stroke();
-      }
-      ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
+      ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT A // TEXT TOKENIZATION & VOCAB ID PARSING', -1320, -180);
-      ctx.font = '7px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
       ctx.fillText('• Chops the prompt string into separate token boxes.', -1320, 160);
       ctx.fillText('• Click token boxes to toggle vocabulary ID mapping.', -1320, 172);
+      ctx.fillText('INPUT TEXT', -1200, -8);
+      ctx.fillText('VOCAB ID', -1200, 30);
 
-      ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
+      ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT B // AMBIENT VECTOR SPACE EMBEDDINGS', -520, -180);
-      ctx.font = '7px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
       ctx.fillText('• Floating stars represent words in coordinate space.', -520, 160);
       ctx.fillText('• Hover over word particles to view semantic lasers.', -520, 172);
 
-      ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
+      ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT C // LIVING NEURAL NETWORK DYNAMICS', 280, -180);
-      ctx.font = '7px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
       ctx.fillText('• Signal pulses represent activations through layer synapses.', 280, 160);
       ctx.fillText('• Click neuron nodes to manually trigger signal paths.', 280, 172);
+      ctx.fillText('INPUT SYNAPSE', 220, 10);
+      ctx.fillText('OUTPUT PREDICTION', 500, 10);
 
-      ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
+      ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT D // NEXT-TOKEN BRANCHING SELECTIONS', 1050, -180);
-      ctx.font = '7px Geist Mono, Courier New, monospace';
-      ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+      ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
       ctx.fillText('• Branches show predicted next word probability %.', 1050, 160);
       ctx.fillText('• Click options to override next word selection.', 1050, 172);
+      ctx.fillText('PROMPT SO FAR', 650, -8);
+      ctx.fillText('PREDICTED TOKENS', 930, 20);
+
+      if (nnStep === 7) {
+        ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+        ctx.lineDashOffset = -Date.now() * 0.05;
+        ctx.beginPath(); ctx.moveTo(950, -10); ctx.bezierCurveTo(700, -320, -1100, -320, -1400, -10); ctx.stroke();
+        ctx.setLineDash([]); ctx.fillStyle = '#2563eb';
+        ctx.beginPath(); ctx.moveTo(-1400, -10); ctx.lineTo(-1394, -20); ctx.lineTo(-1390, -16); ctx.fill();
+        ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
+        ctx.fillText('AUTOREGRESSIVE FEEDBACK LOOP: CHOSEN WORD BECOMES NEW INPUT', -220, -255);
+      }
 
       ctx.save(); ctx.translate(-1200, 0); updateAndRenderTokenization(ctx, statesRef.current.tokenization); ctx.restore();
       ctx.save(); ctx.translate(-400, 0); updateAndRenderVectorSpace(ctx, statesRef.current.vector); ctx.restore();
       ctx.save(); ctx.translate(400, 0); updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep); ctx.restore();
       ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token); ctx.restore();
+      
+      const v = { x: (canvas.width / 2 + transRef.current.panX), y: (canvas.height / 2 + transRef.current.panY) };
+      const mouseCoords = { x: (transRef.current.startX - v.x) / transRef.current.zoom, y: (transRef.current.startY - v.y) / transRef.current.zoom };
+      renderTooltipsAndCheckHover(ctx, mouseCoords.x, mouseCoords.y);
       ctx.restore();
       animFrameId = requestAnimationFrame(render);
     };
     render();
-    return () => {
-      cancelAnimationFrame(animFrameId);
-      window.removeEventListener('resize', resize);
-    };
+    return () => { cancelAnimationFrame(animFrameId); window.removeEventListener('resize', resize); };
   }, [targetPanX, targetPanY, targetZoom, nnStep]);
 
   const getVirtualCoords = (clientX: number, clientY: number) => {
-    const canvas = canvasRef.current!;
-    const rect = canvas.getBoundingClientRect();
+    const canvas = canvasRef.current!; const rect = canvas.getBoundingClientRect();
     return {
       x: (clientX - rect.left - canvas.width / 2 - transRef.current.panX) / transRef.current.zoom,
       y: (clientY - rect.top - canvas.height / 2 - transRef.current.panY) / transRef.current.zoom
@@ -109,10 +108,8 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    transRef.current.isDragging = true;
-    transRef.current.dragDist = 0;
-    transRef.current.startX = e.clientX - transRef.current.panX;
-    transRef.current.startY = e.clientY - transRef.current.panY;
+    transRef.current.isDragging = true; transRef.current.dragDist = 0;
+    transRef.current.startX = e.clientX - transRef.current.panX; transRef.current.startY = e.clientY - transRef.current.panY;
     hasInteractedRef.current = true;
   };
 
@@ -123,16 +120,17 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
     const dx = e.clientX - (transRef.current.panX + transRef.current.startX);
     const dy = e.clientY - (transRef.current.panY + transRef.current.startY);
     transRef.current.dragDist += Math.hypot(dx, dy);
-    transRef.current.panX = e.clientX - transRef.current.startX;
-    transRef.current.panY = e.clientY - transRef.current.startY;
+    transRef.current.panX = e.clientX - transRef.current.startX; transRef.current.panY = e.clientY - transRef.current.startY;
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
     if (transRef.current.isDragging && transRef.current.dragDist < 5) {
       const v = getVirtualCoords(e.clientX, e.clientY);
-      handleTokenizationClick(statesRef.current.tokenization, v.x + 1200, v.y);
-      handleNeuralNetClick(statesRef.current.net, v.x - 400, v.y);
-      handleTokenTreeClick(statesRef.current.token, v.x - 1200, v.y);
+      if (!checkTooltipClick(v.x, v.y)) {
+        handleTokenizationClick(statesRef.current.tokenization, v.x + 1200, v.y);
+        handleNeuralNetClick(statesRef.current.net, v.x - 400, v.y);
+        handleTokenTreeClick(statesRef.current.token, v.x - 1200, v.y);
+      }
     }
     transRef.current.isDragging = false;
   };
@@ -146,8 +144,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       onMouseLeave={() => { transRef.current.isDragging = false; }}
       onWheel={(e) => {
         hasInteractedRef.current = true;
-        const factor = 1.05;
-        const nextZoom = e.deltaY < 0 ? transRef.current.zoom * factor : transRef.current.zoom / factor;
+        const factor = 1.05; const nextZoom = e.deltaY < 0 ? transRef.current.zoom * factor : transRef.current.zoom / factor;
         transRef.current.zoom = Math.min(2.0, Math.max(0.4, nextZoom));
       }}
       className="w-full h-full block cursor-grab active:cursor-grabbing select-none"

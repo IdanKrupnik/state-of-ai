@@ -114,5 +114,19 @@ export const LLM_STEPS = [
     title: 'Phase 7: Next-Token Selection',
     description: 'The final vectors map to a probability list. The model builds a branching options tree, commits the highest percentage word, and repeats to predict the next word.',
     panX: -1200, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 8: Autoregressive Loop (Repetition)',
+    description: 'Once the output word is selected, it is fed back to the front as new input. The loop repeats (Tokenization → Embedding → Attention → Generation) to generate the next word.',
+    panX: -1200, panY: 0, zoom: 1.3
   }
 ];
+
+export interface CanvasTooltipItem {
+  id: string;
+  exhibitX: number;
+  lx: number;
+  ly: number;
+  term: string;
+  definition: string;
+}
