@@ -79,7 +79,7 @@ button,
 
 .ticker-content {
   display: inline-block;
-  animation: ticker 900s linear infinite;
+  animation: ticker 240s linear infinite;
 }
 
 .ticker-wrap:hover .ticker-content {
@@ -88,10 +88,10 @@ button,
 
 @keyframes ticker {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
