@@ -154,7 +154,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                     )}
                   </div>
 
-                  {hasMore && (
+                  {hasMore ? (
                     <div className="flex justify-center mt-6">
                       <button
                         onClick={loadMore}
@@ -165,6 +165,12 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                         {isLoading ? 'Loading...' : 'Load More'}
                       </button>
                     </div>
+                  ) : (
+                    articles.length > 0 && (
+                      <div className="text-center mt-6 text-brand-warm-grey text-xs font-geist-mono uppercase tracking-wider" data-testid="no-more-items-message">
+                        No more articles to load
+                      </div>
+                    )
                   )}
                 </section>
 

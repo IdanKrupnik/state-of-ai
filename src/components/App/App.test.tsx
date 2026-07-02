@@ -135,5 +135,7 @@ describe('App Component', () => {
     });
 
     expect(driver.hasLoadMoreButton()).toBe(false);
+    expect(driver.hasNoMoreItemsMessage()).toBe(true);
+    expect(driver.getNoMoreItemsMessageText()).toBe('No more articles to load');
   });
 });

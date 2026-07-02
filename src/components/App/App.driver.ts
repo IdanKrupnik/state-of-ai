@@ -109,5 +109,14 @@ export class AppDriver {
     }
     return btn.disabled;
   }
+
+  hasNoMoreItemsMessage(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="no-more-items-message"]');
+  }
+
+  getNoMoreItemsMessageText(): string | null {
+    const el = this.elementToUse.querySelector('[data-testid="no-more-items-message"]');
+    return el ? el.textContent?.trim() || null : null;
+  }
 }
 
