@@ -10,9 +10,11 @@ export interface MuseumCanvasProps {
   targetPanY: number;
   targetZoom: number;
   nnStep: number;
+  promptTokens: string[];
+  setPromptTokens: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPanY, targetZoom, nnStep }) => {
+export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPanY, targetZoom, nnStep, promptTokens, setPromptTokens }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const transRef = useRef({ zoom: 1.0, panX: 0, panY: 0, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
   const statesRef = useRef({ tokenization: initTokenization(), net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
@@ -91,10 +93,10 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
         ctx.fillText('AUTOREGRESSIVE FEEDBACK LOOP: CHOSEN WORD BECOMES NEW INPUT', -220, -255);
       }
 
-      ctx.save(); ctx.translate(-1200, 0); updateAndRenderTokenization(ctx, statesRef.current.tokenization); ctx.restore();
+      ctx.save(); ctx.translate(-1200, 0); updateAndRenderTokenization(ctx, statesRef.current.tokenization, promptTokens); ctx.restore();
       ctx.save(); ctx.translate(-400, 0); updateAndRenderVectorSpace(ctx, statesRef.current.vector); ctx.restore();
       ctx.save(); ctx.translate(400, 0); updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep); ctx.restore();
-      ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token); ctx.restore();
+      ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token, promptTokens); ctx.restore();
       
       const rect = canvas.getBoundingClientRect();
       const mouseVx = (mousePosRef.current.x - rect.left - canvas.width / 2 - transRef.current.panX) / transRef.current.zoom;
@@ -105,7 +107,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
     };
     render();
     return () => { cancelAnimationFrame(animFrameId); window.removeEventListener('resize', resize); };
-  }, [targetPanX, targetPanY, targetZoom, nnStep]);
+  }, [targetPanX, targetPanY, targetZoom, nnStep, promptTokens]);
 
   const getVirtualCoords = (clientX: number, clientY: number) => {
     const canvas = canvasRef.current!; const rect = canvas.getBoundingClientRect();
@@ -138,7 +140,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       if (!checkTooltipClick(v.x, v.y)) {
         handleTokenizationClick(statesRef.current.tokenization, v.x + 1200, v.y);
         handleNeuralNetClick(statesRef.current.net, v.x - 400, v.y);
-        handleTokenTreeClick(statesRef.current.token, v.x - 1200, v.y);
+        handleTokenTreeClick(statesRef.current.token, v.x - 1200, v.y, promptTokens, setPromptTokens);
       }
     }
     transRef.current.isDragging = false;

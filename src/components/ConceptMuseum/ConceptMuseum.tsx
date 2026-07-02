@@ -7,6 +7,7 @@ export const ConceptMuseum: React.FC = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isIntro, setIsIntro] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
+  const [promptTokens, setPromptTokens] = useState(['The', ' cat', ' sat']);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,6 +22,34 @@ export const ConceptMuseum: React.FC = () => {
       containerRef.current.requestFullscreen().catch(() => {});
     } else {
       document.exitFullscreen().catch(() => {});
+    }
+  };
+
+  const handleNextPhase = () => {
+    if (activeStep === LLM_STEPS.length - 1) {
+      const nextOptions: Record<string, string> = {
+        'The cat sat': ' on',
+        'The cat sat on': ' the',
+        'The cat sat on the': ' mat',
+        'The cat sat on the mat': ' and',
+        'The cat sat on the mat and': ' went',
+        'The cat sat on the mat and went': ' to',
+        'The cat sat on the mat and went to': ' sleep',
+        'The cat sat on the mat and went to sleep': ' under',
+        'The cat sat on the mat and went to sleep under': ' a',
+        'The cat sat on the mat and went to sleep under a': ' warm',
+        'The cat sat on the mat and went to sleep under a warm': ' rug'
+      };
+      const text = promptTokens.join('');
+      const nextWord = nextOptions[text];
+      if (nextWord) {
+        setPromptTokens(prev => [...prev, nextWord]);
+      } else {
+        setPromptTokens(['The', ' cat', ' sat']);
+      }
+      setActiveStep(0);
+    } else {
+      setActiveStep(prev => prev + 1);
     }
   };
 
@@ -40,7 +69,7 @@ export const ConceptMuseum: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => { setIsExplorerOpen(true); setIsIntro(true); setActiveStep(0); }}
+          onClick={() => { setIsExplorerOpen(true); setIsIntro(true); setActiveStep(0); setPromptTokens(['The', ' cat', ' sat']); }}
           className="px-5 py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer shrink-0"
           data-testid="launch-museum-btn"
         >
@@ -63,7 +92,7 @@ export const ConceptMuseum: React.FC = () => {
           </div>
 
           <div className="flex-1 relative">
-            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} />
+            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} promptTokens={promptTokens} setPromptTokens={setPromptTokens} />
             {isIntro ? (
               <div className="absolute inset-0 bg-[#fcfbfa]/60 backdrop-blur-sm z-20 flex items-center justify-center p-4">
                 <div className="bg-white border border-brand-black/10 rounded-2xl p-8 max-w-md shadow-2xl text-center flex flex-col gap-5">
@@ -93,7 +122,9 @@ export const ConceptMuseum: React.FC = () => {
                 <div className="flex items-center justify-between pt-3 border-t border-brand-black/5">
                   <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Previous Phase</button>
                   <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">Drag to pan • Scroll to zoom</span>
-                  <button onClick={() => setActiveStep(prev => Math.min(LLM_STEPS.length - 1, prev + 1))} disabled={activeStep === LLM_STEPS.length - 1} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">Next Phase &rarr;</button>
+                  <button onClick={handleNextPhase} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">
+                    {activeStep === LLM_STEPS.length - 1 ? 'Recycle & Loop ↺' : 'Next Phase \u2192'}
+                  </button>
                 </div>
               </div>
             )}
