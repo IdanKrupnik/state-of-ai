@@ -16,7 +16,7 @@ export interface MuseumCanvasProps {
 
 export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPanY, targetZoom, nnStep, promptTokens, setPromptTokens }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const transRef = useRef({ zoom: 1.0, panX: 0, panY: 0, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
+  const transRef = useRef({ zoom: targetZoom, panX: targetPanX, panY: targetPanY, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
   const statesRef = useRef({ tokenization: initTokenization(), net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
   const hasInteractedRef = useRef(false);
   const mousePosRef = useRef({ x: 0, y: 0 });
