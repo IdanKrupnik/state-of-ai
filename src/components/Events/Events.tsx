@@ -93,7 +93,7 @@ export const Events: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-14 py-4" data-testid="events-section">
-      <header className="border-b border-outline-variant/30 pb-6">
+      <header className="border-b border-outline-variant pb-6">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-secondary dot-glow animate-pulse" />
           <span className="font-geist-mono text-xs uppercase tracking-[0.2em] text-brand-warm-grey">
@@ -130,7 +130,7 @@ export const Events: React.FC = () => {
         </div>
       </section>
 
-      <section className="border-t border-outline-variant/30 pt-10 flex flex-col gap-6" data-testid="past-events-log">
+      <section className="border-t border-outline-variant pt-10 flex flex-col gap-6" data-testid="past-events-log">
         <h2 className="text-xl font-bold tracking-tight text-brand-black uppercase">
           Past Events Log
         </h2>
@@ -140,7 +140,7 @@ export const Events: React.FC = () => {
             return (
               <div
                 key={evt.id}
-                className="border border-outline-variant/30 p-5 bg-brand-clay/5 flex flex-col gap-3 hover:border-brand-black hover:shadow-sm transition-all duration-200"
+                className="border border-outline-variant p-5 bg-brand-clay/5 flex flex-col gap-3 hover:border-brand-black hover:shadow-sm transition-all duration-200"
                 data-testid={`past-event-card-${evt.id}`}
               >
                 <div className="flex justify-between items-baseline flex-wrap gap-2 text-xs font-geist-mono text-brand-warm-grey">
@@ -164,7 +164,7 @@ export const Events: React.FC = () => {
                   </div>
 
                   {isExpanded && (
-                    <div className="mt-3 border-t border-outline-variant/30 pt-4 flex flex-col gap-4" data-testid={`past-details-dropdown-${evt.id}`}>
+                    <div className="mt-3 border-t border-outline-variant pt-4 flex flex-col gap-4" data-testid={`past-details-dropdown-${evt.id}`}>
                       <div className="flex flex-col gap-1">
                         <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase tracking-widest">
                           RECORDING /

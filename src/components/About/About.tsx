@@ -3,7 +3,7 @@ import React from 'react';
 export const About: React.FC = () => {
   return (
     <div className="flex flex-col gap-12 py-4" data-testid="about-section">
-      <header className="border-b border-outline-variant/30 pb-6">
+      <header className="border-b border-outline-variant pb-6">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-secondary dot-glow animate-pulse" />
           <span className="font-geist-mono text-xs uppercase tracking-[0.2em] text-brand-warm-grey">
@@ -19,7 +19,7 @@ export const About: React.FC = () => {
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="border border-outline-variant/30 p-6 bg-brand-clay/5 hover:border-brand-black hover:shadow-sm transition-all duration-200">
+        <div className="border border-outline-variant p-6 bg-brand-clay/5 hover:border-brand-black hover:shadow-sm transition-all duration-200">
           <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase tracking-widest block mb-2">
             01 / MISSION
           </span>
@@ -29,7 +29,7 @@ export const About: React.FC = () => {
           </p>
         </div>
 
-        <div className="border border-outline-variant/30 p-6 bg-brand-clay/5 hover:border-brand-black hover:shadow-sm transition-all duration-200">
+        <div className="border border-outline-variant p-6 bg-brand-clay/5 hover:border-brand-black hover:shadow-sm transition-all duration-200">
           <span className="font-geist-mono text-[10px] text-brand-warm-grey uppercase tracking-widest block mb-2">
             02 / PHILOSOPHY
           </span>
@@ -40,7 +40,7 @@ export const About: React.FC = () => {
         </div>
       </section>
 
-      <section className="border-t border-outline-variant/30 pt-10 flex flex-col gap-6">
+      <section className="border-t border-outline-variant pt-10 flex flex-col gap-6">
         <h2 className="text-xl font-bold tracking-tight text-brand-black uppercase">
           Our Core Pillars
         </h2>

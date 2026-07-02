@@ -37,7 +37,7 @@
   --brand-clay: #ecece8;
   --brand-warm-grey: #787870;
   --outline: #747878;
-  --outline-variant: #c4c7c7;
+  --outline-variant: rgba(24, 24, 27, 0.08);
   --brand-nav-bg: #111111;
   --brand-nav-text: #fdf8f8;
 }
@@ -52,7 +52,7 @@
   --brand-clay: #262624;
   --brand-warm-grey: #9a9a90;
   --outline: #555555;
-  --outline-variant: #333333;
+  --outline-variant: rgba(253, 248, 248, 0.15);
   --brand-nav-bg: #222222;
   --brand-nav-text: #fdf8f8;
 }

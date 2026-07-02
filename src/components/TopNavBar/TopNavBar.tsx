@@ -29,7 +29,7 @@ export const ThemeSwitch: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative w-8 h-8 flex items-center justify-center border border-outline-variant/30 hover:border-brand-nav-text/40 text-brand-nav-text bg-transparent transition-all duration-300 cursor-pointer select-none focus:outline-none"
+      className="relative w-8 h-8 flex items-center justify-center border border-outline-variant hover:border-brand-nav-text/40 text-brand-nav-text bg-transparent transition-all duration-300 cursor-pointer select-none focus:outline-none"
       aria-label="Toggle theme"
       data-testid="theme-switch"
     >
@@ -156,7 +156,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               <a
                 key={tab.id}
                 onClick={(e) => handleTabClick(tab.id, e)}
-                className={`py-2 border-b border-outline-variant/30 transition-colors duration-200 ${
+                className={`py-2 border-b border-outline-variant transition-colors duration-200 ${
                   isActive
                     ? 'font-bold text-brand-nav-text'
                     : (tab.id === 'pricing' ? 'text-brand-nav-text' : 'text-brand-nav-text/85 hover:text-brand-nav-text')

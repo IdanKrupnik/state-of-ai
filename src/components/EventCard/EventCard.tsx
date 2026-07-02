@@ -25,7 +25,7 @@ export const EventCard: React.FC<EventProps> = ({
   return (
     <article className="relative group pl-8" data-testid={`event-card-${id}`}>
       <div className="absolute left-[-8px] top-[28px] w-4 h-4 bg-brand-offwhite border border-outline-variant rounded-full group-hover:border-secondary transition-colors z-10" />
-      <div className="border border-outline-variant/30 p-5 bg-brand-clay/5 flex flex-col gap-3 hover:border-brand-black hover:shadow-sm transition-all duration-200">
+      <div className="border border-outline-variant p-5 bg-brand-clay/5 flex flex-col gap-3 hover:border-brand-black hover:shadow-sm transition-all duration-200">
         <div className="flex justify-between items-baseline flex-wrap gap-2">
           <div className="flex items-center gap-3">
             <span className="font-geist-mono text-xs text-brand-warm-grey">{date}</span>

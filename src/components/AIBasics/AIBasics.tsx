@@ -83,7 +83,7 @@ export const AIBasics: React.FC = () => {
           <div className="relative bg-brand-offwhite w-full rounded-t-2xl p-6 flex flex-col gap-6 shadow-2xl border-t border-outline-variant transform translate-y-0 transition-transform duration-300 z-10">
             <div className="w-12 h-1 bg-brand-clay/40 rounded-full mx-auto" />
 
-            <div className="flex justify-between items-center pb-2 border-b border-outline-variant/30">
+            <div className="flex justify-between items-center pb-2 border-b border-outline-variant">
               <span className="font-geist-mono text-xs font-bold text-brand-black tracking-wider">
                 DOCUMENT INDEX
               </span>
@@ -119,7 +119,7 @@ export const AIBasics: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-12 items-start">
         <aside className="hidden md:flex flex-col gap-4 sticky top-24 font-geist-mono text-xs uppercase tracking-wider text-brand-warm-grey" data-testid="learn-toc">
-          <span className="font-bold text-brand-black pb-2 border-b border-outline-variant/30">
+          <span className="font-bold text-brand-black pb-2 border-b border-outline-variant">
             Navigation
           </span>
           {tocItems.map((item) => (

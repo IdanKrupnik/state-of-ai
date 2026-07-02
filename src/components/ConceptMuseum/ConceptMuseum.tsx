@@ -61,7 +61,7 @@ export const ConceptMuseum: React.FC = () => {
 
   return (
     <div className="w-full flex flex-col items-center py-4" data-testid="concept-museum-container">
-      <div className="w-full max-w-2xl bg-brand-clay/5 border border-outline-variant/30 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-brand-black transition-colors duration-300">
+      <div className="w-full max-w-2xl bg-brand-clay/5 border border-outline-variant rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-brand-black transition-colors duration-300">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1.5 text-brand-warm-grey">
             <span className="material-symbols-outlined text-sm animate-pulse">auto_awesome</span>
