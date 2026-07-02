@@ -28,7 +28,7 @@ export const Pricing: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl w-full mx-auto" data-testid="pricing-container">
         
         {/* Free Plan Card */}
-        <div className="border border-brand-black/10 bg-white/40 rounded-lg p-8 hover:border-brand-black/25 transition-all flex flex-col justify-between gap-6 min-h-[400px]">
+        <div className="border border-brand-black/10 bg-brand-offwhite/40 rounded-lg p-8 hover:border-brand-black/25 transition-all flex flex-col justify-between gap-6 min-h-[400px]">
           <div className="flex flex-col gap-1.5">
             <span className="font-geist-mono text-xs uppercase tracking-wider font-semibold text-brand-black">
               Free Access
@@ -73,7 +73,7 @@ export const Pricing: React.FC = () => {
         </div>
 
         {/* Pro Plan Card */}
-        <div className="border border-brand-black bg-white rounded-lg p-8 shadow-md flex flex-col justify-between gap-6 relative overflow-hidden min-h-[400px]">
+        <div className="border border-brand-black bg-brand-offwhite rounded-lg p-8 shadow-md flex flex-col justify-between gap-6 relative overflow-hidden min-h-[400px]">
           <div className="absolute top-0 right-0 bg-brand-black text-brand-offwhite text-[9px] font-geist-mono uppercase tracking-widest font-extrabold px-3 py-1 rounded-bl-sm">
             Popular
           </div>
