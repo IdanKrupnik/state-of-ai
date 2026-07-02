@@ -1,7 +1,5 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Activity, Brain, Calendar, Info, BookOpen, DollarSign } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 
 export interface TopNavBarProps {
   activeTab?: string;
@@ -69,12 +67,12 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   };
 
   const tabs = [
-    { id: 'feed', label: 'Feed', icon: Activity },
-    { id: 'models', label: 'Models', icon: Brain },
-    { id: 'events', label: 'Events', icon: Calendar },
-    { id: 'about', label: 'About', icon: Info },
-    { id: 'learn', label: 'Learn', icon: BookOpen },
-    { id: 'pricing', label: 'Pricing', icon: DollarSign },
+    { id: 'feed', label: 'Feed' },
+    { id: 'models', label: 'Models' },
+    { id: 'events', label: 'Events' },
+    { id: 'about', label: 'About' },
+    { id: 'learn', label: 'Learn' },
+    { id: 'pricing', label: 'Pricing' },
   ];
 
   return (
@@ -111,7 +109,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               <a
                 key={tab.id}
                 onClick={(e) => handleTabClick(tab.id, e)}
-                className={`flex items-center gap-1.5 transition-colors cursor-pointer ${
+                className={`transition-colors cursor-pointer ${
                   isActive
                     ? 'font-semibold text-brand-nav-text border-b-2 border-brand-nav-text pb-1'
                     : 'text-brand-warm-grey hover:text-brand-nav-text'
@@ -119,7 +117,6 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 href={`#${tab.id}`}
                 data-testid={`nav-tab-${tab.id}`}
               >
-                <tab.icon className="w-[14px] h-[14px] shrink-0" />
                 {tab.label}
               </a>
             );
@@ -159,13 +156,12 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               <a
                 key={tab.id}
                 onClick={(e) => handleTabClick(tab.id, e)}
-                className={`flex items-center gap-2 py-2 border-b border-outline-variant/30 ${
+                className={`py-2 border-b border-outline-variant/30 ${
                   isActive ? 'font-bold text-brand-nav-text' : 'text-brand-warm-grey hover:text-brand-nav-text'
                 } ${tab.id === 'pricing' ? 'italic font-bold' : ''}`}
                 href={`#${tab.id}`}
                 data-testid={`mobile-nav-tab-${tab.id}`}
               >
-                <tab.icon className="w-3.5 h-3.5 shrink-0" />
                 {tab.label}
               </a>
             );
@@ -178,4 +174,3 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     </header>
   );
 };
-
