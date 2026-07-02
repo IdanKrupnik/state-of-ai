@@ -77,7 +77,12 @@ const RSS_FEEDS = [
   { name: 'Hugging Face', url: 'https://huggingface.co/blog/feed.xml' },
   { name: 'Google Research', url: 'https://research.google/blog/rss/' },
   { name: 'Anthropic Engineering', url: 'https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml' },
-  { name: 'Google API', url: 'https://developers.googleblog.com/atom.xml' }
+  { name: 'Google API', url: 'https://developers.googleblog.com/atom.xml' },
+  { name: 'NVIDIA Developer', url: 'https://developer.nvidia.com/blog/feed' },
+  { name: 'VentureBeat AI', url: 'https://venturebeat.com/category/ai/feed/' },
+  { name: 'MIT Tech Review AI', url: 'https://www.technologyreview.com/topic/artificial-intelligence/feed/' },
+  { name: 'AWS Machine Learning', url: 'https://aws.amazon.com/blogs/machine-learning/feed/' },
+  { name: 'r/MachineLearning (Reddit)', url: 'https://www.reddit.com/r/MachineLearning/.rss' }
 ];
 
 export async function fetchAndCombineFeeds(): Promise<ParsedItem[]> {
