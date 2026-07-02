@@ -74,6 +74,7 @@ async function uploadAndGetUrl(articleId: string, buffer: Buffer): Promise<strin
 
 export async function processArticle(article: Article): Promise<void> {
   try {
+    await supabase.storage.createBucket('article-thumbnails', { public: true }).catch(() => {});
     console.log(`Processing article ${article.id}: ${article.original_title}`);
     const metaphor = await generateMetaphor(article);
     const buffer = await generateImagenImage(metaphor);

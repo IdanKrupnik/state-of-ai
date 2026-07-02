@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Database } from '@/types/database.types';
 import { fetchAndCombineFeeds, detectCompany, ParsedItem } from './newsFetcher';
 import { NextResponse } from 'next/server';
+import { processArticle } from './thumbnailService';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -129,6 +130,10 @@ export async function handleNewsSync(req: Request): Promise<NextResponse> {
     }
 
     const insertedData = await saveArticles(processedArticles);
+
+    for (const article of insertedData) {
+      await processArticle(article);
+    }
 
     return NextResponse.json({
       success: true,
