@@ -42,7 +42,11 @@ export function updateAndRenderTokenization(
   ctx.fillStyle = '#18181b';
   ctx.fillText('INPUT STRING:', -130, -60);
   ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-  ctx.fillText(`"${sentence}"`, -130, -48);
+  let displaySentence = sentence;
+  if (displaySentence.length > 25) {
+    displaySentence = '...' + displaySentence.slice(-22);
+  }
+  ctx.fillText(`"${displaySentence}"`, -130, -48);
   state.tokens.forEach((t, idx) => {
     const isScanning = idx === state.scanIndex;
     const isGenerated = idx >= 3;
@@ -52,7 +56,7 @@ export function updateAndRenderTokenization(
     ctx.beginPath(); ctx.roundRect(t.x, t.y, t.width, t.height, 4); ctx.fill(); ctx.stroke();
     ctx.fillStyle = isGenerated ? '#10b981' : (isScanning ? '#2563eb' : '#18181b');
     ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-    const content = t.isFlipped ? `ID: ${t.id}` : `"${t.text}"`;
+    const content = t.isFlipped ? `ID: ${t.id}` : (isGenerated ? '""' : `"${t.text}"`);
     ctx.fillText(content, t.x + 8, t.y + 17);
     if (idx < state.scanIndex) {
       ctx.font = '6px Geist Mono, Courier New, monospace';
