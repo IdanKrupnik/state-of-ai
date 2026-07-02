@@ -15,7 +15,7 @@ const PREDICTIONS: Record<string, { word: string; prob: number }[]> = {
 };
 
 export function initTokenTree(): TokenTreeState {
-  return { stepIndex: 0, typedText: '', targetText: '', state: 'typing', timer: 0, cursorBlink: true };
+  return { stepIndex: 0, typedText: '', targetText: '', state: 'typing', timer: 0, cursorBlink: true, pendingWord: '' };
 }
 
 function getWrappedLines(text: string, maxWidthChars: number): string[] {
@@ -36,17 +36,17 @@ function getWrappedLines(text: string, maxWidthChars: number): string[] {
 export function updateAndRenderTokenTree(
   ctx: CanvasRenderingContext2D,
   state: TokenTreeState,
-  promptTokens: string[]
+  promptTokens: string[],
+  setPromptTokens?: React.Dispatch<React.SetStateAction<string[]>>,
+  onLoopReset?: () => void
 ) {
   state.timer += 16.67;
   if (state.timer % 500 < 16.67) state.cursorBlink = !state.cursorBlink;
   const sentence = promptTokens.join('');
   const prevSentence = promptTokens.slice(0, -1).join('');
-  if (state.targetText !== sentence) {
-    state.typedText = prevSentence;
-    state.targetText = sentence;
-    state.state = 'typing';
-    state.timer = 0;
+  if (state.targetText !== sentence && state.state !== 'committing') {
+    state.typedText = prevSentence; state.targetText = sentence;
+    state.state = 'typing'; state.timer = 0;
   }
   if (state.state === 'typing') {
     if (state.timer >= 80) {
@@ -58,9 +58,18 @@ export function updateAndRenderTokenTree(
   }
   ctx.font = '10px Geist Mono, Courier New, monospace'; ctx.fillStyle = '#18181b';
   const startX = -180; const startY = -20;
-  const lines = getWrappedLines(state.typedText, 35);
+  const displayVal = state.state === 'committing' ? state.typedText + state.pendingWord : state.typedText;
+  const lines = getWrappedLines(displayVal, 35);
   lines.forEach((line, idx) => {
-    ctx.fillText(line, startX, startY + idx * 16);
+    ctx.fillStyle = '#18181b';
+    if (state.state === 'committing' && idx === lines.length - 1 && state.pendingWord) {
+      const baseText = line.slice(0, line.length - state.pendingWord.length);
+      ctx.fillText(baseText, startX, startY + idx * 16);
+      ctx.fillStyle = '#10b981';
+      ctx.fillText(state.pendingWord, startX + ctx.measureText(baseText).width, startY + idx * 16);
+    } else {
+      ctx.fillText(line, startX, startY + idx * 16);
+    }
   });
   const lastLine = lines[lines.length - 1] || '';
   const textWidth = lastLine.length * 6;
@@ -71,21 +80,30 @@ export function updateAndRenderTokenTree(
   const activePred = PREDICTIONS[sentence.trim()] || [{ word: 'next', prob: 99 }];
   if (state.state === 'branching' || state.state === 'committing') {
     const branchX = startX + textWidth + 8;
-    const branchProgress = state.state === 'committing' ? 1 : Math.min(1, state.timer / 600);
+    const progress = state.state === 'committing' ? 1 : Math.min(1, state.timer / 600);
     activePred.forEach((b, bIdx) => {
       const targetY = lastLineY + (bIdx - 1) * 30;
-      const y = lastLineY + (targetY - lastLineY) * branchProgress;
-      const x = branchX + 40 * branchProgress;
-      const isWinner = bIdx === 0;
-      const activeColor = state.state === 'committing' && isWinner;
-      ctx.strokeStyle = activeColor ? '#2563eb' : 'rgba(24, 24, 27, 0.15)'; ctx.lineWidth = activeColor ? 1.5 : 1;
+      const y = lastLineY + (targetY - lastLineY) * progress;
+      const x = branchX + 40 * progress;
+      const isSelected = state.state === 'committing' && (b.word === state.pendingWord.trim() || bIdx === 0);
+      ctx.strokeStyle = isSelected ? '#10b981' : 'rgba(24, 24, 27, 0.15)'; ctx.lineWidth = isSelected ? 1.5 : 1;
+      if (state.state === 'committing' && !isSelected) ctx.strokeStyle = `rgba(24, 24, 27, ${Math.max(0, 0.15 - state.timer / 1200)})`;
       ctx.beginPath(); ctx.moveTo(branchX, lastLineY - 3); ctx.lineTo(x, y - 3); ctx.stroke();
-      if (branchProgress >= 0.8) {
+      if (progress >= 0.8) {
         ctx.font = '8px Geist Mono, Courier New, monospace';
-        ctx.fillStyle = activeColor ? '#2563eb' : 'rgba(24, 24, 27, 0.45)';
+        ctx.fillStyle = isSelected ? '#10b981' : 'rgba(24, 24, 27, 0.45)';
+        if (state.state === 'committing' && !isSelected) ctx.fillStyle = `rgba(24, 24, 27, ${Math.max(0, 0.45 - state.timer / 1200)})`;
         ctx.fillText(`[${b.word}: ${b.prob}%]`, x + 5, y);
       }
     });
+  }
+  if (state.state === 'committing' && state.timer >= 1200) {
+    state.state = 'typing';
+    if (setPromptTokens && onLoopReset) {
+      setPromptTokens(prev => [...prev, state.pendingWord]);
+      onLoopReset();
+    }
+    state.pendingWord = '';
   }
 }
 
@@ -93,8 +111,7 @@ export function handleTokenTreeClick(
   state: TokenTreeState,
   vx: number,
   vy: number,
-  promptTokens: string[],
-  setPromptTokens: React.Dispatch<React.SetStateAction<string[]>>
+  promptTokens: string[]
 ): boolean {
   if (state.state !== 'branching') return false;
   const sentence = promptTokens.join('');
@@ -112,8 +129,7 @@ export function handleTokenTreeClick(
     if (dx >= 0 && dx <= 100 && Math.abs(dy) <= 15) {
       state.state = 'committing';
       state.timer = 0;
-      const formattedWord = b.word.startsWith(' ') || sentence.endsWith(' ') ? b.word : ' ' + b.word;
-      setPromptTokens(prev => [...prev, formattedWord]);
+      state.pendingWord = (b.word.startsWith(' ') || sentence.endsWith(' ') ? b.word : ' ' + b.word);
       return true;
     }
   }

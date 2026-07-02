@@ -60,6 +60,7 @@ export interface TokenTreeState {
   state: 'typing' | 'branching' | 'committing' | 'finished';
   timer: number;
   cursorBlink: boolean;
+  pendingWord: string;
 }
 
 export interface TokenBox {

@@ -12,9 +12,11 @@ export interface MuseumCanvasProps {
   nnStep: number;
   promptTokens: string[];
   setPromptTokens: React.Dispatch<React.SetStateAction<string[]>>;
+  isRecycling?: boolean;
+  onLoopReset?: () => void;
 }
 
-export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPanY, targetZoom, nnStep, promptTokens, setPromptTokens }) => {
+export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPanY, targetZoom, nnStep, promptTokens, setPromptTokens, isRecycling, onLoopReset }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const transRef = useRef({ zoom: targetZoom, panX: targetPanX, panY: targetPanY, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
   const statesRef = useRef({ tokenization: initTokenization(), net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
@@ -22,6 +24,30 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   const mousePosRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => { hasInteractedRef.current = false; }, [targetPanX, targetPanY, targetZoom]);
+
+  useEffect(() => {
+    if (isRecycling && statesRef.current.token.state === 'branching') {
+      const sentence = promptTokens.join('');
+      const PREDICTIONS: Record<string, { word: string; prob: number }[]> = {
+        'The cat sat': [{ word: 'on', prob: 80 }],
+        'The cat sat on': [{ word: 'the', prob: 92 }],
+        'The cat sat on the': [{ word: 'mat', prob: 74 }],
+        'The cat sat on the mat': [{ word: 'and', prob: 85 }],
+        'The cat sat on the mat and': [{ word: 'went', prob: 78 }],
+        'The cat sat on the mat and went': [{ word: 'to', prob: 95 }],
+        'The cat sat on the mat and went to': [{ word: 'sleep', prob: 88 }],
+        'The cat sat on the mat and went to sleep': [{ word: 'under', prob: 70 }],
+        'The cat sat on the mat and went to sleep under': [{ word: 'a', prob: 90 }],
+        'The cat sat on the mat and went to sleep under a': [{ word: 'warm', prob: 65 }],
+        'The cat sat on the mat and went to sleep under a warm': [{ word: 'rug', prob: 84 }]
+      };
+      const activePred = PREDICTIONS[sentence.trim()] || [{ word: 'next', prob: 99 }];
+      const winner = activePred[0];
+      statesRef.current.token.state = 'committing';
+      statesRef.current.token.timer = 0;
+      statesRef.current.token.pendingWord = (winner.word.startsWith(' ') || sentence.endsWith(' ') ? winner.word : ' ' + winner.word);
+    }
+  }, [isRecycling, promptTokens]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -89,7 +115,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.save(); ctx.translate(-1200, 0); updateAndRenderTokenization(ctx, statesRef.current.tokenization, promptTokens); ctx.restore();
       ctx.save(); ctx.translate(-400, 0); updateAndRenderVectorSpace(ctx, statesRef.current.vector); ctx.restore();
       ctx.save(); ctx.translate(400, 0); updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep); ctx.restore();
-      ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token, promptTokens); ctx.restore();
+      ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token, promptTokens, setPromptTokens, onLoopReset); ctx.restore();
       
       const rect = canvas.getBoundingClientRect();
       const mouseVx = (mousePosRef.current.x - rect.left - canvas.width / 2) / transRef.current.zoom - transRef.current.panX;
@@ -135,7 +161,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       if (!checkTooltipClick(v.x, v.y)) {
         handleTokenizationClick(statesRef.current.tokenization, v.x + 1200, v.y);
         handleNeuralNetClick(statesRef.current.net, v.x - 400, v.y);
-        handleTokenTreeClick(statesRef.current.token, v.x - 1200, v.y, promptTokens, setPromptTokens);
+        handleTokenTreeClick(statesRef.current.token, v.x - 1200, v.y, promptTokens);
       }
     }
     transRef.current.isDragging = false;

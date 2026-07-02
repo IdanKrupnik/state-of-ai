@@ -8,28 +8,12 @@ export const ConceptMuseum: React.FC = () => {
   const [isIntro, setIsIntro] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [promptTokens, setPromptTokens] = useState(['The', ' cat', ' sat']);
+  const [isRecycling, setIsRecycling] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleNextPhase = () => {
     if (activeStep === LLM_STEPS.length - 1) {
-      const nextOptions: Record<string, string> = {
-        'The cat sat': ' on',
-        'The cat sat on': ' the',
-        'The cat sat on the': ' mat',
-        'The cat sat on the mat': ' and',
-        'The cat sat on the mat and': ' went',
-        'The cat sat on the mat and went': ' to',
-        'The cat sat on the mat and went to': ' sleep',
-        'The cat sat on the mat and went to sleep': ' under',
-        'The cat sat on the mat and went to sleep under': ' a',
-        'The cat sat on the mat and went to sleep under a': ' warm',
-        'The cat sat on the mat and went to sleep under a warm': ' rug'
-      };
-      const text = promptTokens.join('');
-      const nextWord = nextOptions[text];
-      if (nextWord) setPromptTokens(prev => [...prev, nextWord]);
-      else setPromptTokens(['The', ' cat', ' sat']);
-      setActiveStep(0);
+      setIsRecycling(true);
     } else setActiveStep(prev => prev + 1);
   };
 
@@ -70,7 +54,7 @@ export const ConceptMuseum: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => { setIsExplorerOpen(true); setIsIntro(true); setActiveStep(0); setPromptTokens(['The', ' cat', ' sat']); }}
+          onClick={() => { setIsExplorerOpen(true); setIsIntro(true); setActiveStep(0); setPromptTokens(['The', ' cat', ' sat']); setIsRecycling(false); }}
           className="px-5 py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer shrink-0"
           data-testid="launch-museum-btn"
         >
@@ -93,7 +77,7 @@ export const ConceptMuseum: React.FC = () => {
           </div>
 
           <div className="flex-1 relative">
-            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} promptTokens={promptTokens} setPromptTokens={setPromptTokens} />
+            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} promptTokens={promptTokens} setPromptTokens={setPromptTokens} isRecycling={isRecycling} onLoopReset={() => { setActiveStep(0); setIsRecycling(false); }} />
             {isIntro ? (
               <div className="absolute inset-0 bg-[#fcfbfa]/60 backdrop-blur-sm z-20 flex items-center justify-center p-4">
                 <div className="bg-white border border-brand-black/10 rounded-2xl p-8 max-w-md shadow-2xl text-center flex flex-col gap-5">
