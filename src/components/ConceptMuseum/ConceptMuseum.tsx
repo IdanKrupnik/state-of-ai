@@ -83,13 +83,13 @@ export const ConceptMuseum: React.FC = () => {
 
       {isExplorerOpen && (
         <div ref={containerRef} className="fixed inset-0 h-[100dvh] w-screen z-50 bg-[#fcfbfa] text-zinc-900 flex flex-col overflow-hidden" data-testid="museum-overlay">
-          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white border-b border-brand-black/10 shadow-sm z-10">
-            <span className="font-geist-mono text-[10px] sm:text-xs text-brand-warm-grey font-bold uppercase tracking-wider">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white border-b border-zinc-200 shadow-sm z-10">
+            <span className="font-geist-mono text-[10px] sm:text-xs text-zinc-500 font-bold uppercase tracking-wider">
               <span className="hidden sm:inline">AI Concept Museum // Active Exhibits</span>
               <span className="sm:hidden">AI Museum</span>
             </span>
             <div className="flex items-center gap-1.5 sm:gap-3">
-              <button onClick={toggleFullscreen} className="px-2 py-1.5 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-geist-mono border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black rounded cursor-pointer transition-colors" data-testid="fullscreen-toggle-btn">
+              <button onClick={toggleFullscreen} className="px-2 py-1.5 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-geist-mono border border-zinc-200 bg-zinc-50 text-zinc-500 hover:border-zinc-400 hover:text-zinc-800 rounded cursor-pointer transition-colors" data-testid="fullscreen-toggle-btn">
                 {isFullScreen ? 'Exit Fullscreen' : 'Fullscreen ⛶'}
               </button>
               <button onClick={() => { if (typeof window !== 'undefined') { window.location.hash = 'learn'; window.dispatchEvent(new HashChangeEvent('hashchange')); } }} className="px-2 py-1.5 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-geist-mono bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded cursor-pointer transition-colors" data-testid="close-museum-btn">
@@ -102,34 +102,34 @@ export const ConceptMuseum: React.FC = () => {
             <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} promptTokens={promptTokens} setPromptTokens={setPromptTokens} isRecycling={isRecycling} onLoopReset={() => { setActiveStep(0); setIsRecycling(false); }} />
             {isIntro ? (
               <div className="absolute inset-0 bg-[#fcfbfa]/60 backdrop-blur-sm z-20 flex items-center justify-center p-4">
-                <div className="bg-white border border-brand-black/10 rounded-2xl p-8 max-w-md shadow-2xl text-center flex flex-col gap-5">
-                  <h3 className="text-xl font-extrabold text-brand-black">Welcome to the AI Concept Museum</h3>
-                  <p className="text-xs text-brand-warm-grey leading-relaxed">
+                <div className="bg-white border border-zinc-200 rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-md shadow-2xl text-center flex flex-col gap-5">
+                  <h3 className="text-xl font-extrabold text-zinc-900">Welcome to the AI Concept Museum</h3>
+                  <p className="text-xs text-zinc-500 leading-relaxed">
                     We will guide you step-by-step through how Large Language Models (LLMs) work in practice. Explore the interactive visual exhibits to see how mathematical vectors, neural network weights, and token probability branches generate language.
                   </p>
-                  <button onClick={() => setIsIntro(false)} className="w-full py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer" data-testid="begin-journey-btn">
+                  <button onClick={() => setIsIntro(false)} className="w-full py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-zinc-900 text-zinc-50 hover:bg-zinc-800 transition-all duration-200 rounded cursor-pointer" data-testid="begin-journey-btn">
                     Begin Journey &rarr;
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[94%] sm:w-[92%] max-w-xl bg-white border border-brand-black/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 shadow-2xl z-10 flex flex-col gap-2.5 sm:gap-4">
+              <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[94%] sm:w-[92%] max-w-xl bg-white border border-zinc-200 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 shadow-2xl z-10 flex flex-col gap-2.5 sm:gap-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-geist-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-brand-warm-grey">How LLMs Work // Phase {activeStep + 1} of {LLM_STEPS.length}</span>
+                  <span className="font-geist-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-zinc-500">How LLMs Work // Phase {activeStep + 1} of {LLM_STEPS.length}</span>
                   <div className="flex items-center gap-1">
                     {LLM_STEPS.map((_, i) => (
-                      <div key={i} className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-all duration-300 ${i === activeStep ? 'bg-primary w-2 sm:w-3' : 'bg-brand-clay/35'}`} />
+                      <div key={i} className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-all duration-300 ${i === activeStep ? 'bg-zinc-800 w-2 sm:w-3' : 'bg-zinc-200'}`} />
                     ))}
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-brand-black">{step.title}</h4>
-                  <p className="text-[10px] sm:text-xs leading-normal sm:leading-relaxed text-brand-warm-grey mt-0.5 sm:mt-1">{step.description}</p>
+                  <h4 className="font-bold text-xs sm:text-sm text-zinc-900">{step.title}</h4>
+                  <p className="text-[10px] sm:text-xs leading-normal sm:leading-relaxed text-zinc-600 mt-0.5 sm:mt-1">{step.description}</p>
                 </div>
-                <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-brand-black/5">
-                  <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-2 py-1 sm:px-3 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Prev Phase</button>
-                  <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">Use Arrow Keys • Drag to pan</span>
-                  <button onClick={handleNextPhase} className="px-2 py-1 sm:px-3 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">
+                <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-zinc-100">
+                  <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-2 py-1 sm:px-3 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold font-geist-mono border border-zinc-200 bg-zinc-50 text-zinc-600 hover:border-zinc-400 hover:text-zinc-800 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Prev Phase</button>
+                  <span className="text-[9px] font-geist-mono text-zinc-400 uppercase tracking-wider hidden sm:inline">Use Arrow Keys • Drag to pan</span>
+                  <button onClick={handleNextPhase} className="px-2 py-1 sm:px-3 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold font-geist-mono border border-zinc-900 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">
                     {activeStep === LLM_STEPS.length - 1 ? 'Recycle & Loop ↺' : 'Next Phase \u2192'}
                   </button>
                 </div>
