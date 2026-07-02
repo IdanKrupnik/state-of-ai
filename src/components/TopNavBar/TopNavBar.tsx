@@ -113,7 +113,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                   isActive
                     ? 'font-semibold text-brand-nav-text border-b-2 border-brand-nav-text pb-1'
                     : 'text-brand-warm-grey hover:text-brand-nav-text'
-                } ${tab.id === 'pricing' ? 'italic font-bold' : ''}`}
+                } ${tab.id === 'pricing' ? 'font-bold' : ''}`}
                 href={`#${tab.id}`}
                 data-testid={`nav-tab-${tab.id}`}
               >
@@ -158,7 +158,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 onClick={(e) => handleTabClick(tab.id, e)}
                 className={`py-2 border-b border-outline-variant/30 ${
                   isActive ? 'font-bold text-brand-nav-text' : 'text-brand-warm-grey hover:text-brand-nav-text'
-                } ${tab.id === 'pricing' ? 'italic font-bold' : ''}`}
+                } ${tab.id === 'pricing' ? 'font-bold' : ''}`}
                 href={`#${tab.id}`}
                 data-testid={`mobile-nav-tab-${tab.id}`}
               >
