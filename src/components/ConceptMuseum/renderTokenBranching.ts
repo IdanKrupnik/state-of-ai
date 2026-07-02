@@ -60,7 +60,7 @@ export function updateAndRenderTokenTree(
   }
   ctx.font = '10px Geist Mono, Courier New, monospace';
   ctx.fillStyle = '#18181b';
-  const startX = 650;
+  const startX = -150;
   const startY = 0;
   ctx.fillText(state.typedText, startX, startY);
   const textWidth = ctx.measureText(state.typedText).width;
@@ -94,7 +94,7 @@ export function updateAndRenderTokenTree(
 export function handleTokenTreeClick(state: TokenTreeState, vx: number, vy: number): boolean {
   if (state.state !== 'branching') return false;
   const currentStep = STEPS[state.stepIndex];
-  const startX = 650;
+  const startX = -150;
   const startY = 0;
   const estimatedWidth = state.typedText.length * 6;
   const branchX = startX + estimatedWidth + 48;

@@ -2,7 +2,7 @@ import { NeuralNetState } from './types';
 
 export function initNeuralNet(): NeuralNetState {
   const layerSizes = [4, 5, 5, 3];
-  const xOffset = -1000;
+  const xOffset = -180;
   const xSpacing = 120;
   const ySpacing = 65;
   return {
@@ -24,10 +24,10 @@ export function updateAndRenderNeuralNet(
   nnStep: number
 ) {
   const { nodes, pulses } = state;
-  if (Math.random() < 0.04 && pulses.length < 10) {
-    if (nnStep === 0) {
-      nodes[0][Math.floor(Math.random() * nodes[0].length)].flare = 1.0;
-    } else if (nnStep === 4) {
+  const isBackprop = nnStep === 3;
+  const isActivePhase = nnStep === 2 || nnStep === 3;
+  if (Math.random() < 0.04 && pulses.length < 10 && isActivePhase) {
+    if (isBackprop) {
       const fromL = 1 + Math.floor(Math.random() * 3);
       pulses.push({
         fromLayer: fromL, fromIndex: Math.floor(Math.random() * nodes[fromL].length),
@@ -35,10 +35,10 @@ export function updateAndRenderNeuralNet(
         progress: 0, speed: 0.02
       });
     } else {
-      const layer = nnStep - 1;
+      const fromL = Math.floor(Math.random() * 3);
       pulses.push({
-        fromLayer: layer, fromIndex: Math.floor(Math.random() * nodes[layer].length),
-        toLayer: layer + 1, toIndex: Math.floor(Math.random() * nodes[layer + 1].length),
+        fromLayer: fromL, fromIndex: Math.floor(Math.random() * nodes[fromL].length),
+        toLayer: fromL + 1, toIndex: Math.floor(Math.random() * nodes[fromL + 1].length),
         progress: 0, speed: 0.02
       });
     }
@@ -59,10 +59,7 @@ export function updateAndRenderNeuralNet(
   for (let l = 0; l < nodes.length - 1; l++) {
     nodes[l].forEach(from => {
       nodes[l + 1].forEach(to => {
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(to.x, to.y);
-        ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
       });
     });
   }
@@ -71,27 +68,18 @@ export function updateAndRenderNeuralNet(
     const to = nodes[p.toLayer][p.toIndex];
     const x = from.x + (to.x - from.x) * p.progress;
     const y = from.y + (to.y - from.y) * p.progress;
-    ctx.strokeStyle = nnStep === 4 ? 'rgba(239, 68, 68, 0.3)' : 'rgba(37, 99, 235, 0.3)';
+    ctx.strokeStyle = isBackprop ? 'rgba(239, 68, 68, 0.3)' : 'rgba(37, 99, 235, 0.3)';
     ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(from.x, from.y);
-    ctx.lineTo(to.x, to.y);
-    ctx.stroke();
-    ctx.fillStyle = nnStep === 4 ? '#ef4444' : '#2563eb';
-    ctx.beginPath();
-    ctx.arc(x, y, 3, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
+    ctx.fillStyle = isBackprop ? '#ef4444' : '#2563eb';
+    ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
   });
-  nodes.forEach((layer, lIdx) => {
+  nodes.forEach(layer => {
     layer.forEach(n => {
-      const isLayerActive = nnStep === 0 && lIdx === 0;
-      ctx.fillStyle = n.flare > 0 || isLayerActive ? 'rgba(37, 99, 235, 0.15)' : '#ffffff';
-      ctx.strokeStyle = n.flare > 0 || isLayerActive ? (nnStep === 4 ? '#ef4444' : '#2563eb') : 'rgba(24, 24, 27, 0.2)';
-      ctx.lineWidth = n.flare > 0 || isLayerActive ? 2 : 1;
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, 6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
+      ctx.fillStyle = n.flare > 0 ? 'rgba(37, 99, 235, 0.15)' : '#ffffff';
+      ctx.strokeStyle = n.flare > 0 ? (isBackprop ? '#ef4444' : '#2563eb') : 'rgba(24, 24, 27, 0.2)';
+      ctx.lineWidth = n.flare > 0 ? 2 : 1;
+      ctx.beginPath(); ctx.arc(n.x, n.y, 6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     });
   });
 }

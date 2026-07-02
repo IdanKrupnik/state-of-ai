@@ -3,18 +3,28 @@ import { MuseumCanvas } from './MuseumCanvas';
 
 const LLM_STEPS = [
   {
-    title: 'Phase 1: Input & Embedding Space',
-    description: 'Your prompt is broken into tokens and converted into coordinate vectors in a high-dimensional space, grouping words with similar semantic meanings together.',
-    panX: 120, panY: 0, zoom: 1.3
+    title: 'Phase 1: Tokenization & Embeddings',
+    description: 'Raw input text is split into tokens. Each token is mapped to a vector—a set of coordinates in a high-dimensional space—bringing similar concepts closer together.',
+    panX: 800, panY: 0, zoom: 1.3
   },
   {
-    title: 'Phase 2: Neural Net Processing',
-    description: 'These word vectors travel through layers of interconnected neurons, calculating context and weights to understand the sentence structure.',
-    panX: 1050, panY: 0, zoom: 1.3
+    title: 'Phase 2: Attention Mechanisms',
+    description: 'The model calculates attention weights between tokens. Hub words dynamically shoot laser coordinates to nearby words, indicating how strongly they associate.',
+    panX: 800, panY: 0, zoom: 1.6
   },
   {
-    title: 'Phase 3: Next-Token Selection',
-    description: 'The model computes branching probability options for the next word in the sequence. It commits the highest percentage word, then repeats the loop.',
+    title: 'Phase 3: Neural Net Feed-Forward',
+    description: 'Word coordinates pass through dense layer synapses. Multiplying vectors by weights and biases extracts complex contextual relationships.',
+    panX: 0, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 4: Training via Backpropagation',
+    description: 'During training, prediction errors trigger backward gradient flows. Red error signals propagate in reverse to adjust synaptic weights and improve accuracy.',
+    panX: 0, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 5: Next-Token Generation',
+    description: 'For inference, the model projects final probabilities for the next word. It commits the highest probability candidate, appends it, and repeats the process.',
     panX: -800, panY: 0, zoom: 1.3
   }
 ];
@@ -93,11 +103,11 @@ export const ConceptMuseum: React.FC = () => {
           </div>
 
           <div className="flex-1 relative">
-            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep === 1 ? 1 : 0} />
+            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep} />
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-xl bg-white border border-brand-black/15 rounded-2xl p-6 shadow-2xl z-10 flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <span className="font-geist-mono text-[9px] uppercase tracking-wider text-brand-warm-grey">
-                  How LLMs Work // Phase {activeStep + 1} of 3
+                  How LLMs Work // Phase {activeStep + 1} of 5
                 </span>
                 <div className="flex items-center gap-1.5">
                   {LLM_STEPS.map((_, i) => (
@@ -129,8 +139,8 @@ export const ConceptMuseum: React.FC = () => {
                   Drag to pan • Scroll to zoom
                 </span>
                 <button
-                  onClick={() => setActiveStep(prev => Math.min(2, prev + 1))}
-                  disabled={activeStep === 2}
+                  onClick={() => setActiveStep(prev => Math.min(4, prev + 1))}
+                  disabled={activeStep === 4}
                   className="px-3 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200"
                   data-testid="next-step-btn"
                 >

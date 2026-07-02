@@ -49,19 +49,19 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       }
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
       ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
-      ctx.fillText('EXHIBIT A // LIVING NEURAL NETWORK', -1000, -180);
+      ctx.fillText('EXHIBIT A // AMBIENT VECTOR CLUSTERS', -920, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace';
       ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Light pulses represent forward-propagating signals.', -1000, 160);
-      ctx.fillText('• Click any node to manually fire signal pulses.', -1000, 172);
+      ctx.fillText('• Dim stars represent words floating in vector space.', -920, 160);
+      ctx.fillText('• Hover over words to activate semantic associations.', -920, 172);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
       ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
-      ctx.fillText('EXHIBIT B // AMBIENT VECTOR CLUSTERS', -120, -180);
+      ctx.fillText('EXHIBIT B // LIVING NEURAL NETWORK', -120, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace';
       ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Dim stars represent words floating in vector space.', -120, 160);
-      ctx.fillText('• Hover over words to activate semantic associations.', -120, 172);
+      ctx.fillText('• Light pulses represent forward-propagating signals.', -120, 160);
+      ctx.fillText('• Click any node to manually fire signal pulses.', -120, 172);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
       ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
@@ -70,9 +70,10 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
       ctx.fillText('• Typewriter shows real-time sequence prediction.', 650, 160);
       ctx.fillText('• Click branching options to override word choices.', 650, 172);
-      updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep);
-      updateAndRenderVectorSpace(ctx, statesRef.current.vector);
-      updateAndRenderTokenTree(ctx, statesRef.current.token);
+
+      ctx.save(); ctx.translate(-800, 0); updateAndRenderVectorSpace(ctx, statesRef.current.vector); ctx.restore();
+      ctx.save(); ctx.translate(0, 0); updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep); ctx.restore();
+      ctx.save(); ctx.translate(800, 0); updateAndRenderTokenTree(ctx, statesRef.current.token); ctx.restore();
       ctx.restore();
       animFrameId = requestAnimationFrame(render);
     };
@@ -101,7 +102,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const v = getVirtualCoords(e.clientX, e.clientY);
-    handleVectorSpaceHover(statesRef.current.vector, v.x, v.y);
+    handleVectorSpaceHover(statesRef.current.vector, v.x + 800, v.y);
     if (!transRef.current.isDragging) return;
     const dx = e.clientX - (transRef.current.panX + transRef.current.startX);
     const dy = e.clientY - (transRef.current.panY + transRef.current.startY);
@@ -114,7 +115,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
     if (transRef.current.isDragging && transRef.current.dragDist < 5) {
       const v = getVirtualCoords(e.clientX, e.clientY);
       handleNeuralNetClick(statesRef.current.net, v.x, v.y);
-      handleTokenTreeClick(statesRef.current.token, v.x, v.y);
+      handleTokenTreeClick(statesRef.current.token, v.x - 800, v.y);
     }
     transRef.current.isDragging = false;
   };
