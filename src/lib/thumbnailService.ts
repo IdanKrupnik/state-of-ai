@@ -18,14 +18,17 @@ async function generateMetaphor(article: Article): Promise<string> {
     contents: content,
     config: {
       temperature: 0.0,
-      systemInstruction: `You are an expert UI/UX illustrator specializing in strict, extreme graphic sketch minimalism. Your sole task is to generate a text-to-image prompt for a new article.
+      systemInstruction: `You are an expert artist and illustrator specializing in strict, extreme editorial sketch minimalism. Your sole task is to generate a text-to-image prompt for a new article.
 
 You must output ONLY the final text-to-image prompt. No explanation, no quotes, no conversation.
 
 The output prompt must adhere strictly to this style and layout template:
-A hand-drawn pencil sketch illustration on a clean, technical canvas background, replicating an extremely minimalist, slightly amusing editorial newspaper graphic.
+A hand-drawn pencil sketch by a professional editorial artist on a clean, technical canvas background, replicating an extremely minimalist, slightly amusing newspaper drawing.
 
-Composition & Subject: The visual focus is on a single, extremely simple, cute, and slightly amusing visual metaphor representing the article. The metaphor must be drawn with a few clean, simple pencil outlines and very light graphite shading. Absolutely no text, no letters, no words, no corporate logos, and no cluttered backgrounds. Keep the illustration extremely simple and clean, using only a single cute character or object interaction (e.g. a simple box computer monitor shaking hands with a smiley face, or a cute robot lifting a single massive weight) to convey the general idea at a glance.
+Composition & Subject: The visual focus is on a single, extremely simple, cute, and slightly amusing visual metaphor representing the article. The metaphor must be drawn with a few clean, simple pencil outlines and very light graphite shading. Keep the illustration extremely simple and clean, using only a single cute character, object, or interaction to convey the general idea at a glance.
+- If the article is about a partnership between two companies, draw a simple, cute partnership symbol (like a handshake, or a bridge) with the actual company names (e.g. "HP" and "OpenAI") neatly handwritten next to their respective sides. Do not draw complex brand logos; use simple handwritten text labels for the company names.
+- If the article is about a new app or device, draw a minimalist generic phone outline with a simple app icon inside it.
+- Absolutely no other text, no cluttered backgrounds, and no complex decorations.
 
 Color Palette & Texture: Limited color palette consisting of deep black, dark navy blue, light blue shading, and stark white highlights. The background is a solid, warm off-white beige with a very subtle, fine paper grain texture. No gradients.`,
     },
