@@ -87,9 +87,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
       ctx.fillText('• Slices sentences into separate, bite-sized word boxes.', -1320, 60);
       ctx.fillText('• Click word cards to flip and reveal their secret numeric codes.', -1320, 72);
-      ctx.fillText('INPUT TEXT', -1200, -8);
-      ctx.fillText('VOCAB ID', -1200, 30);
-      ctx.fillText('TOKEN SLICING', -1320, -50);
+
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT B // THE COSMIC DICTIONARY GRID', -520, -180);
