@@ -138,4 +138,19 @@ describe('App Component', () => {
     expect(driver.hasNoMoreItemsMessage()).toBe(true);
     expect(driver.getNoMoreItemsMessageText()).toBe('No more articles to load');
   });
+
+  it('should support hiding/removing articles from the feed when not interested', () => {
+    const { container } = render(<App initialArticles={mockArticles} />);
+    const driver = new AppDriver(container);
+
+    let rows = driver.getArticleRowDrivers();
+    expect(rows).toHaveLength(3);
+
+    rows[0].clickHideButton();
+
+    rows = driver.getArticleRowDrivers();
+    expect(rows).toHaveLength(2);
+    expect(rows[0].getTitleText()).toBe('GPT-5 teaser released');
+    expect(rows[1].getTitleText()).toBe('Gemini 2.0 now live');
+  });
 });

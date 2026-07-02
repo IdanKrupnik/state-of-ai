@@ -53,4 +53,24 @@ describe('FeedRow Component', () => {
     expect(driver.hasMoreButton()).toBe(true);
     driver.clickMoreButton();
   });
+
+  it('should render the not-interested button and support hide interaction when onHide callback is provided', () => {
+    let hideClicked = false;
+    const { container } = render(
+      <FeedRow
+        company="OpenAI"
+        title="GPT-4 Release"
+        summary="A major update to our LLM model."
+        sourceUrl="https://openai.com"
+        timestamp="10:00 UTC"
+        onHide={() => {
+          hideClicked = true;
+        }}
+      />
+    );
+    const driver = new FeedRowDriver(container);
+    expect(driver.hasHideButton()).toBe(true);
+    driver.clickHideButton();
+    expect(hideClicked).toBe(true);
+  });
 });

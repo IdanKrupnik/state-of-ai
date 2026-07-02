@@ -8,6 +8,7 @@ export interface FeedRowProps {
   timestamp?: string;
   source?: string;
   imageUrl?: string | null;
+  onHide?: () => void;
 }
 
 export const FeedRow: React.FC<FeedRowProps> = ({
@@ -18,6 +19,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
   timestamp = '12:00 UTC',
   source,
   imageUrl,
+  onHide,
 }) => {
   const [isInPreferences, setIsInPreferences] = useState(false);
 
@@ -88,13 +90,13 @@ export const FeedRow: React.FC<FeedRowProps> = ({
               </div>
             )}
             
-            <div className="mt-auto">
+            <div className="mt-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full justify-end">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsInPreferences(!isInPreferences);
                 }}
-                className={`px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border rounded flex items-center gap-1.5 transition-all duration-200 cursor-pointer ${
+                className={`px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border rounded flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer ${
                   isInPreferences
                     ? 'border-brand-neon-green/25 bg-brand-neon-green/5 text-brand-neon-green hover:bg-brand-neon-green/10'
                     : 'border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black'
@@ -104,8 +106,24 @@ export const FeedRow: React.FC<FeedRowProps> = ({
                 <span className="material-symbols-outlined text-[13px]">
                   {isInPreferences ? 'check' : 'thumb_up'}
                 </span>
-                {isInPreferences ? 'Added to preferences' : 'I want more like this'}
+                {isInPreferences ? 'Added' : 'More like this'}
               </button>
+
+              {onHide && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onHide();
+                  }}
+                  className="px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-red-500/20 bg-red-500/5 text-red-600 hover:bg-red-500/10 rounded flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer"
+                  data-testid="feed-row-hide-btn"
+                >
+                  <span className="material-symbols-outlined text-[13px]">
+                    close
+                  </span>
+                  Not Interested
+                </button>
+              )}
             </div>
           </div>
         </div>

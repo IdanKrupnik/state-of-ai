@@ -46,10 +46,13 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
   const [activeTab, setActiveTab] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [hiddenArticleIds, setHiddenArticleIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(
     initialTotalCount ? initialArticles.length < initialTotalCount : initialArticles.length >= 5
   );
+
+  const visibleArticles = articles.filter((art) => !hiddenArticleIds.includes(art.id));
 
   const ITEMS_PER_PAGE = 5;
 
@@ -117,7 +120,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
-      <TelemetryTicker articles={articles} />
+      <TelemetryTicker articles={visibleArticles} />
 
       <main className="max-w-[72rem] w-full mx-auto px-4 py-8 flex-grow flex flex-col gap-10">
         {!isMounted ? (
@@ -136,12 +139,12 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                   />
 
                   <div className="flex flex-col gap-6" data-testid="articles-list">
-                    {articles.length === 0 ? (
+                    {visibleArticles.length === 0 ? (
                       <div className="border-t border-brand-black/15 pt-8 text-center text-brand-warm-grey italic text-sm">
                         No simplified articles found. Try another search or filter.
                       </div>
                     ) : (
-                      articles.map((article) => (
+                      visibleArticles.map((article) => (
                         <FeedRow
                           key={article.id}
                           company={article.company}
@@ -151,6 +154,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                           timestamp={formatRelativeTime(article.created_at)}
                           source={article.source}
                           imageUrl={article.image_url}
+                          onHide={() => setHiddenArticleIds((prev) => [...prev, article.id])}
                         />
                       ))
                     )}

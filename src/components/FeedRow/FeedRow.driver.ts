@@ -75,4 +75,17 @@ export class FeedRowDriver {
     fireEvent.click(btn);
     return this;
   }
+
+  hasHideButton(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="feed-row-hide-btn"]');
+  }
+
+  clickHideButton(): this {
+    const btn = this.elementToUse.querySelector('[data-testid="feed-row-hide-btn"]');
+    if (!btn) {
+      throw new Error('Not-interested button not found');
+    }
+    fireEvent.click(btn);
+    return this;
+  }
 }
