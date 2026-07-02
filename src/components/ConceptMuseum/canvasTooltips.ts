@@ -1,14 +1,14 @@
 import { CanvasTooltipItem } from './types';
 
 const TOOLTIPS: CanvasTooltipItem[] = [
-  { id: 'vocab', exhibitX: -1200, lx: -100, ly: 40, term: 'Vocab ID', definition: 'A unique integer representing a token in the model\'s vocabulary database.' },
-  { id: 'slice', exhibitX: -1200, lx: -20, ly: -50, term: 'Token Slicing', definition: 'Chopping prompt strings into clean chunks based on whitespace or character patterns.' },
-  { id: 'embed', exhibitX: -400, lx: 90, ly: -183, term: 'Embedding Vector', definition: 'A coordinate coordinate representing a word\'s core definition.' },
-  { id: 'att', exhibitX: -400, lx: 90, ly: 167, term: 'Attention Weights', definition: 'Laser scores highlighting connection strengths between prompt context words.' },
-  { id: 'w', exhibitX: 400, lx: 60, ly: -90, term: 'Synaptic Weights', definition: 'Multiplier values on connection lines scaling signals during feed-forward passes.' },
-  { id: 'act', exhibitX: 400, lx: 60, ly: 90, term: 'Activation Function', definition: 'Non-linear filter determining if a neuron fires based on input values.' },
-  { id: 'prob', exhibitX: 1200, lx: 155, ly: -183, term: 'Probability Tree', definition: 'Branches showing upcoming candidate word options and likelihoods.' },
-  { id: 'auto', exhibitX: 0, lx: 60, ly: -255, term: 'Autoregressive Loop', definition: 'Feeding predicted outputs back as inputs to generate words recursively.' }
+  { id: 'vocab', exhibitX: -1200, lx: -100, ly: 40, term: 'Vocab ID', definition: 'A dictionary number representing a word. Computers cannot read letters, so they convert every word into a unique number.' },
+  { id: 'slice', exhibitX: -1200, lx: -20, ly: -50, term: 'Token Slicing', definition: 'Splitting sentences into word pieces. This breaks text down into clean segments that the AI can easily digest.' },
+  { id: 'embed', exhibitX: -400, lx: 90, ly: -183, term: 'Embedding Vector', definition: 'Mapping words onto a semantic grid. Words with similar meanings are placed close together on this map.' },
+  { id: 'att', exhibitX: -400, lx: 90, ly: 167, term: 'Attention Weights', definition: 'Connections that link words. This measures how strongly words in a sentence relate to each other.' },
+  { id: 'w', exhibitX: 400, lx: 60, ly: -90, term: 'Synaptic Weights', definition: 'Fidelity filters on neuron pathways. They act like knobs that scale signals as they flow through the neural net.' },
+  { id: 'act', exhibitX: 400, lx: 60, ly: 90, term: 'Activation Function', definition: 'A filter determining if a node fires. It only lets strong, important signals pass through to the next layer.' },
+  { id: 'prob', exhibitX: 1200, lx: 155, ly: -183, term: 'Probability Tree', definition: 'A list of potential next words. The AI calculates which word makes the most sense to output next.' },
+  { id: 'auto', exhibitX: 0, lx: 60, ly: -255, term: 'Autoregressive Loop', definition: 'Recycling generated words. The chosen output is sent back to the start as new input to build sentences.' }
 ];
 
 export function renderTooltipsAndCheckHover(ctx: CanvasRenderingContext2D, vx: number, vy: number) {
