@@ -7,18 +7,21 @@ export interface ParsedItem {
 }
 
 export function parseRss(xml: string, sourceName: string): ParsedItem[] {
-  const itemMatches = xml.match(/<item[\s\S]*?>([\s\S]*?)<\/item>/g) || [];
+  const itemMatches = xml.match(/<(item|entry)[\s\S]*?>([\s\S]*?)<\/(item|entry)>/g) || [];
   const cleanCdata = (str: string) =>
     str.startsWith('<![CDATA[') ? str.substring(9, str.length - 3) : str.trim();
 
   return itemMatches
     .map((itemXml) => {
       const titleMatch = itemXml.match(/<title[\s\S]*?>([\s\S]*?)<\/title>/);
-      const linkMatch = itemXml.match(/<link[\s\S]*?>([\s\S]*?)<\/link>/);
-      const descMatch = itemXml.match(/<description[\s\S]*?>([\s\S]*?)<\/description>/);
+      const linkMatch = itemXml.match(/<link[\s\S]*?href="([^"]+)"/) || itemXml.match(/<link[\s\S]*?>([\s\S]*?)<\/link>/);
+      const descMatch = itemXml.match(/<description[\s\S]*?>([\s\S]*?)<\/description>/) ||
+                        itemXml.match(/<summary[\s\S]*?>([\s\S]*?)<\/summary>/) ||
+                        itemXml.match(/<content[\s\S]*?>([\s\S]*?)<\/content>/);
       const pubDateMatch = itemXml.match(/<pubDate[\s\S]*?>([\s\S]*?)<\/pubDate>/) ||
                            itemXml.match(/<dc:date[\s\S]*?>([\s\S]*?)<\/dc:date>/) ||
-                           itemXml.match(/<published[\s\S]*?>([\s\S]*?)<\/published>/);
+                           itemXml.match(/<published[\s\S]*?>([\s\S]*?)<\/published>/) ||
+                           itemXml.match(/<updated[\s\S]*?>([\s\S]*?)<\/updated>/);
 
       const title = cleanCdata(titleMatch ? titleMatch[1] : '');
       const link = cleanCdata(linkMatch ? linkMatch[1] : '');
@@ -74,7 +77,9 @@ const RSS_FEEDS = [
   { name: 'Hugging Face', url: 'https://huggingface.co/blog/feed.xml' },
   { name: 'The Rundown AI', url: 'https://www.rundown.ai/feed' },
   { name: 'Google Research', url: 'https://research.google/blog/rss/' },
-  { name: 'Anthropic Engineering', url: 'https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml' }
+  { name: 'Anthropic Engineering', url: 'https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml' },
+  { name: 'Google API', url: 'https://developers.googleblog.com/atom.xml' },
+  { name: 'NVIDIA Blog', url: 'https://blogs.nvidia.com/feed/' }
 ];
 
 export async function fetchAndCombineFeeds(): Promise<ParsedItem[]> {
