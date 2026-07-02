@@ -35,7 +35,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
   return (
     <div
       data-testid="feed-row"
-      className="group border-b border-outline-variant py-6 px-2 -mx-2 hover:bg-surface-container-low transition-colors"
+      className="group border border-outline-variant/30 p-6 bg-brand-clay/5 rounded-xl flex flex-col gap-4 hover:border-brand-black hover:shadow-sm transition-all duration-200"
     >
       <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
