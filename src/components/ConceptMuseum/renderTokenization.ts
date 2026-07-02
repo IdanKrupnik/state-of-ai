@@ -45,11 +45,12 @@ export function updateAndRenderTokenization(
   ctx.fillText(`"${sentence}"`, -130, -48);
   state.tokens.forEach((t, idx) => {
     const isScanning = idx === state.scanIndex;
-    ctx.strokeStyle = isScanning ? '#2563eb' : 'rgba(24, 24, 27, 0.15)';
-    ctx.lineWidth = isScanning ? 1.5 : 1;
-    ctx.fillStyle = isScanning ? 'rgba(37, 99, 235, 0.05)' : '#ffffff';
+    const isGenerated = idx >= 3;
+    ctx.strokeStyle = isGenerated ? '#10b981' : (isScanning ? '#2563eb' : 'rgba(24, 24, 27, 0.15)');
+    ctx.lineWidth = isGenerated ? 1.5 : (isScanning ? 1.5 : 1);
+    ctx.fillStyle = isGenerated ? 'rgba(16, 185, 129, 0.05)' : (isScanning ? 'rgba(37, 99, 235, 0.05)' : '#ffffff');
     ctx.beginPath(); ctx.roundRect(t.x, t.y, t.width, t.height, 4); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = isScanning ? '#2563eb' : '#18181b';
+    ctx.fillStyle = isGenerated ? '#10b981' : (isScanning ? '#2563eb' : '#18181b');
     ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
     const content = t.isFlipped ? `ID: ${t.id}` : `"${t.text}"`;
     ctx.fillText(content, t.x + 8, t.y + 17);

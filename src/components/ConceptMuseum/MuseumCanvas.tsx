@@ -84,15 +84,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.fillText('PREDICTED TOKENS', 930, 20);
       ctx.fillText('PROBABILITY TREE', 1200, -170);
 
-      if (nnStep === 7) {
-        ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
-        ctx.lineDashOffset = -Date.now() * 0.05;
-        ctx.beginPath(); ctx.moveTo(950, -10); ctx.bezierCurveTo(700, -320, -1100, -320, -1400, -10); ctx.stroke();
-        ctx.setLineDash([]); ctx.fillStyle = '#2563eb';
-        ctx.beginPath(); ctx.moveTo(-1400, -10); ctx.lineTo(-1394, -20); ctx.lineTo(-1390, -16); ctx.fill();
-        ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
-        ctx.fillText('AUTOREGRESSIVE FEEDBACK LOOP: CHOSEN WORD BECOMES NEW INPUT', -220, -255);
-      }
+
 
       ctx.save(); ctx.translate(-1200, 0); updateAndRenderTokenization(ctx, statesRef.current.tokenization, promptTokens); ctx.restore();
       ctx.save(); ctx.translate(-400, 0); updateAndRenderVectorSpace(ctx, statesRef.current.vector); ctx.restore();
