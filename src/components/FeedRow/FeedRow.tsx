@@ -103,7 +103,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
                 }`}
                 data-testid="feed-row-more-btn"
               >
-                <span className="material-symbols-outlined text-[13px]">
+                <span className="material-symbols-outlined text-[10px]">
                   {isInPreferences ? 'check' : 'thumb_up'}
                 </span>
                 {isInPreferences ? 'Added' : 'More like this'}
@@ -118,8 +118,8 @@ export const FeedRow: React.FC<FeedRowProps> = ({
                   className="px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black rounded flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer w-full"
                   data-testid="feed-row-hide-btn"
                 >
-                  <span className="material-symbols-outlined text-[13px]">
-                    delete
+                  <span className="material-symbols-outlined text-[10px]">
+                    close
                   </span>
                   Not Interested
                 </button>
