@@ -50,6 +50,13 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   }, [isRecycling, promptTokens]);
 
   useEffect(() => {
+    statesRef.current.tokenization = initTokenization();
+    statesRef.current.net = initNeuralNet();
+    statesRef.current.vector = initVectorSpace();
+    statesRef.current.token = initTokenTree();
+  }, [nnStep]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !canvas.getContext('2d')) return;
     const ctx = canvas.getContext('2d')!;
