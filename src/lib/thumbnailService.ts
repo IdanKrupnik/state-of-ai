@@ -39,7 +39,7 @@ Strict rules for your output:
 async function generateImagenImage(prompt: string): Promise<Buffer> {
   const finalPrompt = `${prompt}, ultra-minimalist vector art, flat 2D design, simple iconic line art, solid shapes, sharp outlines, maximum 2 solid colors, textless, no shadows, no gradients, clean crisp solid white background.`;
   const response = await ai.models.generateImages({
-    model: 'imagen-3.0-generate-002',
+    model: 'imagen-4.0-generate-001',
     prompt: finalPrompt,
     config: {
       numberOfImages: 1,
