@@ -38,15 +38,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
       data-testid="feed-row"
       className="group border-b border-outline-variant py-6 cursor-pointer hover:bg-surface-container-low transition-colors px-2 -mx-2"
     >
-      <div className="flex items-start gap-4">
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={title}
-            className="w-16 h-16 object-cover border border-brand-black/10 shrink-0 bg-brand-clay/10"
-            data-testid="feed-row-image"
-          />
-        )}
+      <div className="flex items-start gap-4 md:gap-6">
         <div className="flex-grow">
           <h4 className="font-headline-sm text-headline-sm group-hover:underline underline-offset-4 text-brand-black">
             {title}
@@ -73,9 +65,21 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             </a>
           </div>
         </div>
-        <span className="font-label-mono text-label-mono text-brand-warm-grey shrink-0 mt-1">
-          {timestamp}
-        </span>
+        <div className="flex flex-col items-end gap-3 shrink-0">
+          <span className="font-label-mono text-label-mono text-brand-warm-grey shrink-0 mt-1">
+            {timestamp}
+          </span>
+          {imageUrl && (
+            <div className="w-16 h-16 md:w-20 md:h-20 overflow-hidden rounded-md border border-brand-black/10 bg-brand-clay/10 relative group-hover:border-brand-black/25 transition-colors">
+              <img
+                src={imageUrl}
+                alt={title}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                data-testid="feed-row-image"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
