@@ -18,16 +18,17 @@ async function generateMetaphor(article: Article): Promise<string> {
     contents: content,
     config: {
       temperature: 0.0,
-      systemInstruction: `You are an expert UI/UX illustrator specializing in strict graphic minimalism. Your sole task is to translate a long article into a single, dead-simple visual metaphor for a text-to-image AI. 
+      systemInstruction: `You are an expert UI/UX illustrator specializing in cute, strict graphic minimalism. Your sole task is to translate an article's title and summary into a single, dead-simple, slightly amusing visual metaphor in black and white.
 
-The image must be simple enough that a user can understand the core concept of the article within exactly 1 second of glancing at it on a mobile feed.
+The metaphor must directly convey the key concepts or entities in the title (for example, a partnership between HP and OpenAI, or a mathematical concept represented by simple cute objects). Keep the drawing cute, simple, and slightly humorous to be noticeable.
 
 Strict rules for your output:
 1. Output ONLY the final image prompt in English. No conversation, no introductory phrases, no explanations, and no quotes.
-2. Focus on ONE central, recognizable object or basic geometric concept.
-3. Completely avoid human faces or detailed bodies; prefer abstract silhouettes or iconic symbols.
+2. Focus on ONE central, recognizable object or a simple interaction between two cute objects.
+3. Completely avoid human faces or detailed bodies; prefer cute abstract silhouettes, animals, or iconic symbols.
 4. Always enforce a flat 2D style.
-5. Absolute ban on text, letters, slogans, complex textures, shadows, shading, realism, gradients, or blur.`,
+5. Force a strict black and white color scheme.
+6. Absolute ban on text, letters, slogans, complex textures, shadows, shading, realism, gradients, or blur.`,
     },
   });
   if (!response.text) {
@@ -37,7 +38,7 @@ Strict rules for your output:
 }
 
 async function generateImagenImage(prompt: string): Promise<Buffer> {
-  const finalPrompt = `${prompt}, ultra-minimalist vector art, flat 2D design, simple iconic line art, solid shapes, sharp outlines, maximum 2 solid colors, textless, no shadows, no gradients, clean crisp solid white background.`;
+  const finalPrompt = `${prompt}, ultra-minimalist vector art, flat 2D design, simple cute black and white line art, solid shapes, sharp black outlines, black and white only, textless, no shadows, no gradients, clean crisp solid white background.`;
   const response = await ai.models.generateImages({
     model: 'imagen-4.0-generate-001',
     prompt: finalPrompt,
