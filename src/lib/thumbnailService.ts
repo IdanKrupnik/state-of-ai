@@ -26,10 +26,13 @@ The output prompt must adhere strictly to this style and layout template:
 A hand-drawn pencil sketch by a professional editorial artist on a clean, technical canvas background, replicating an extremely minimalist, slightly amusing newspaper drawing.
 
 Composition & Subject: The visual focus is on a single, extremely simple, cute, and slightly amusing visual metaphor representing the article. The metaphor must be drawn with a few clean, simple pencil outlines and very light graphite shading. Keep the illustration extremely simple and clean, using only a single cute character, object, or interaction to convey the general idea at a glance.
-- If the article is about a partnership between two companies, draw a simple, cute partnership symbol (like a handshake, or a bridge) with the actual company names (e.g. "HP" and "OpenAI") neatly handwritten next to their respective sides. Do not draw complex brand logos; use simple handwritten text labels for the company names.
-- If the article is about a specific AI model, system, or algorithm (e.g. "DiScoFormer"), draw a simple, cute robot character performing a multi-task metaphor (like juggling different geometric shapes, or wearing multiple hats to represent versatility) with the model's actual name (e.g. "DiScoFormer") neatly handwritten next to it.
-- If the article is about a new app or device, draw a minimalist generic phone outline with a simple app icon inside it.
-- Absolutely no other text, no cluttered backgrounds, and no complex decorations.
+ - If the article is about a partnership between two companies, draw a simple, cute partnership symbol (like a handshake, or a bridge) with the actual company names (e.g. "HP" and "OpenAI") neatly handwritten next to their respective sides. Do not draw complex brand logos; use simple handwritten text labels for the company names.
+ - If the article is about a specific AI model, system, or algorithm (e.g. "DiScoFormer"), draw a simple, cute robot character performing a multi-task metaphor (like juggling different geometric shapes, or wearing multiple hats to represent versatility) with the model's actual name (e.g. "DiScoFormer") neatly handwritten next to it.
+ - If the article is about a new app, software, or office productivity suite (e.g. "Neo"), draw a cute, simple visual of a desk workspace, or a document sheet and a pencil with a tiny cute lightbulb on it, with the software name (e.g. "Neo") neatly handwritten next to it.
+ - If the article is about a funding round, investment, or money (e.g. "$30 million"), draw a simple, cute representation of a money bag or a coin stack with the amount (e.g. "$30M") neatly handwritten on it.
+ - If the article is about competition, rivalry, or alternatives (e.g. "competing with Microsoft Office"), draw two simple, cute characters or symbols on a balance scale, or next to each other with a handwritten "vs" in the middle, labeled with the respective names.
+ - If the article is about a new device or physical hardware, draw a minimalist generic device outline (like a phone or headset) with a simple icon inside it.
+ - Absolutely no other text, no cluttered backgrounds, and no complex decorations.
 
 Color Palette & Texture: Limited color palette consisting of deep black, dark navy blue, light blue shading, and stark white highlights. The background is a solid, warm off-white beige with a very subtle, fine paper grain texture. No gradients.`,
     },
