@@ -59,7 +59,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             </div>
           </div>
 
-          <div className="font-body-md leading-relaxed mt-auto">
+          <div className="font-body-md leading-relaxed mt-auto flex items-center justify-between gap-4 flex-wrap">
             <a
               href={sourceUrl}
               target="_blank"
@@ -70,6 +70,13 @@ export const FeedRow: React.FC<FeedRowProps> = ({
               Source material {sourceDisplay ? `(${sourceDisplay})` : ''}
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </a>
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="px-3.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/10 bg-brand-clay/10 text-brand-warm-grey hover:bg-brand-black hover:text-brand-offwhite transition-all duration-200 rounded cursor-pointer"
+              data-testid="feed-row-more-btn"
+            >
+              I want more like this
+            </button>
           </div>
         </div>
 

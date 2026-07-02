@@ -62,4 +62,17 @@ export class FeedRowDriver {
     const img = this.elementToUse.querySelector('[data-testid="feed-row-image"]');
     return img ? img.getAttribute('src') : null;
   }
+
+  hasMoreButton(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="feed-row-more-btn"]');
+  }
+
+  clickMoreButton(): this {
+    const btn = this.elementToUse.querySelector('[data-testid="feed-row-more-btn"]');
+    if (!btn) {
+      throw new Error('More-like-this button not found');
+    }
+    fireEvent.click(btn);
+    return this;
+  }
 }
