@@ -79,7 +79,7 @@ button,
 
 .ticker-content {
   display: inline-block;
-  animation: ticker 30s linear infinite;
+  animation: ticker 80s linear infinite;
 }
 
 .ticker-wrap:hover .ticker-content {
@@ -151,4 +151,16 @@ button,
 }
 .dark .border-brand-black\/25 {
   border-color: rgba(253, 248, 248, 0.25) !important;
+}
+
+header.fixed {
+  background-color: rgba(17, 17, 17, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.dark header.fixed {
+  background-color: rgba(18, 18, 17, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
