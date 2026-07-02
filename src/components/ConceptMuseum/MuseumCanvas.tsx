@@ -4,10 +4,13 @@ import { initVectorSpace, updateAndRenderVectorSpace, handleVectorSpaceHover } f
 import { initTokenTree, updateAndRenderTokenTree, handleTokenTreeClick } from './renderTokenBranching';
 
 export interface MuseumCanvasProps {
+  targetPanX: number;
+  targetPanY: number;
+  targetZoom: number;
   nnStep: number;
 }
 
-export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ nnStep }) => {
+export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPanY, targetZoom, nnStep }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const transRef = useRef({ zoom: 1.0, panX: 0, panY: 0, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
   const statesRef = useRef({ net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
@@ -26,6 +29,11 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ nnStep }) => {
     const render = () => {
       ctx.fillStyle = '#fcfbfa';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (!transRef.current.isDragging) {
+        transRef.current.panX += (targetPanX - transRef.current.panX) * 0.08;
+        transRef.current.panY += (targetPanY - transRef.current.panY) * 0.08;
+        transRef.current.zoom += (targetZoom - transRef.current.zoom) * 0.08;
+      }
       ctx.save();
       ctx.translate(canvas.width / 2 + transRef.current.panX, canvas.height / 2 + transRef.current.panY);
       ctx.scale(transRef.current.zoom, transRef.current.zoom);
@@ -55,7 +63,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ nnStep }) => {
       cancelAnimationFrame(animFrameId);
       window.removeEventListener('resize', resize);
     };
-  }, [nnStep]);
+  }, [targetPanX, targetPanY, targetZoom, nnStep]);
 
   const getVirtualCoords = (clientX: number, clientY: number) => {
     const canvas = canvasRef.current!;

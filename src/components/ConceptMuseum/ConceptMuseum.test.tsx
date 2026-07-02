@@ -47,11 +47,11 @@ describe('ConceptMuseum', () => {
     const driver = new ConceptMuseumDriver(container);
     driver.clickLaunch();
     expect(driver.isOverlayOpen()).toBe(true);
-    expect(driver.getStepTitleText()).toBe('1. Input Layer');
+    expect(driver.getStepTitleText()).toBe('Phase 1: Input & Embedding Space');
     driver.clickNextStep();
-    expect(driver.getStepTitleText()).toBe('2. Hidden Layer 1 (Weights)');
+    expect(driver.getStepTitleText()).toBe('Phase 2: Neural Net Processing');
     driver.clickPrevStep();
-    expect(driver.getStepTitleText()).toBe('1. Input Layer');
+    expect(driver.getStepTitleText()).toBe('Phase 1: Input & Embedding Space');
     driver.clickClose();
   });
 });

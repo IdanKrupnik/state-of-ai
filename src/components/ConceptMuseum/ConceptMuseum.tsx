@@ -1,18 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MuseumCanvas } from './MuseumCanvas';
 
-const NN_STEPS = [
-  { title: '1. Input Layer', description: 'Data features (like word embeddings or pixel values) are loaded into input nodes.' },
-  { title: '2. Hidden Layer 1 (Weights)', description: 'Values travel forward, multiplied by connection weights to map low-level features.' },
-  { title: '3. Hidden Layer 2 (Activations)', description: 'Features are transformed non-linearly using activation functions like ReLU.' },
-  { title: '4. Output Prediction', description: 'The network computes final output probabilities or classifications.' },
-  { title: '5. Backpropagation', description: 'Gradients flow backward from outputs to adjust weights and minimize prediction error.' }
+const LLM_STEPS = [
+  {
+    title: 'Phase 1: Input & Embedding Space',
+    description: 'Your prompt is broken into tokens and converted into coordinate vectors in a high-dimensional space, grouping words with similar semantic meanings together.',
+    panX: 120, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 2: Neural Net Processing',
+    description: 'These word vectors travel through layers of interconnected neurons, calculating context and weights to understand the sentence structure.',
+    panX: 1050, panY: 0, zoom: 1.3
+  },
+  {
+    title: 'Phase 3: Next-Token Selection',
+    description: 'The model computes branching probability options for the next word in the sequence. It commits the highest percentage word, then repeats the loop.',
+    panX: -800, panY: 0, zoom: 1.3
+  }
 ];
 
 export const ConceptMuseum: React.FC = () => {
   const [isExplorerOpen, setIsExplorerOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [nnStep, setNnStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,6 +40,8 @@ export const ConceptMuseum: React.FC = () => {
     }
   };
 
+  const step = LLM_STEPS[activeStep];
+
   return (
     <div className="w-full flex flex-col items-center py-4" data-testid="concept-museum-container">
       <div className="w-full max-w-2xl bg-brand-clay/5 border border-outline-variant/30 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-brand-black transition-colors duration-300">
@@ -44,7 +56,7 @@ export const ConceptMuseum: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => setIsExplorerOpen(true)}
+          onClick={() => { setIsExplorerOpen(true); setActiveStep(0); }}
           className="px-5 py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer shrink-0"
           data-testid="launch-museum-btn"
         >
@@ -59,11 +71,9 @@ export const ConceptMuseum: React.FC = () => {
           data-testid="museum-overlay"
         >
           <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-brand-black/10 shadow-sm z-10">
-            <div className="flex items-center gap-3">
-              <span className="font-geist-mono text-xs text-brand-warm-grey font-bold uppercase tracking-wider">
-                AI CONCEPT MUSEUM // ACTIVE EXHIBITS
-              </span>
-            </div>
+            <span className="font-geist-mono text-xs text-brand-warm-grey font-bold uppercase tracking-wider">
+              AI CONCEPT MUSEUM // ACTIVE EXHIBITS
+            </span>
             <div className="flex items-center gap-3">
               <button
                 onClick={toggleFullscreen}
@@ -83,27 +93,27 @@ export const ConceptMuseum: React.FC = () => {
           </div>
 
           <div className="flex-1 relative">
-            <MuseumCanvas nnStep={nnStep} />
+            <MuseumCanvas targetPanX={step.panX} targetPanY={step.panY} targetZoom={step.zoom} nnStep={activeStep === 1 ? 1 : 0} />
             <div className="absolute bottom-6 left-6 px-4 py-2 rounded-full bg-white border border-brand-black/10 text-[10px] font-geist-mono uppercase tracking-wider text-brand-warm-grey shadow-md pointer-events-none">
               Drag to pan, scroll to zoom.
             </div>
             <div className="absolute bottom-6 right-6 w-80 bg-white border border-brand-black/10 rounded-xl p-4 shadow-lg z-10 flex flex-col gap-2.5">
               <div className="flex items-center justify-between">
                 <span className="font-geist-mono text-[9px] uppercase tracking-wider text-brand-warm-grey">
-                  Neural Net Explorer // Step {nnStep + 1} of 5
+                  LLM Stepper // Phase {activeStep + 1} of 3
                 </span>
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={() => setNnStep(prev => Math.max(0, prev - 1))}
-                    disabled={nnStep === 0}
+                    onClick={() => setActiveStep(prev => Math.max(0, prev - 1))}
+                    disabled={activeStep === 0}
                     className="w-5 h-5 flex items-center justify-center rounded border border-brand-black/10 hover:border-brand-black text-[10px] disabled:opacity-30 cursor-pointer"
                     data-testid="prev-step-btn"
                   >
                     &lt;
                   </button>
                   <button
-                    onClick={() => setNnStep(prev => Math.min(4, prev + 1))}
-                    disabled={nnStep === 4}
+                    onClick={() => setActiveStep(prev => Math.min(2, prev + 1))}
+                    disabled={activeStep === 2}
                     className="w-5 h-5 flex items-center justify-center rounded border border-brand-black/10 hover:border-brand-black text-[10px] disabled:opacity-30 cursor-pointer"
                     data-testid="next-step-btn"
                   >
@@ -112,8 +122,8 @@ export const ConceptMuseum: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h4 className="font-bold text-xs text-brand-black">{NN_STEPS[nnStep].title}</h4>
-                <p className="text-[10px] leading-normal text-brand-warm-grey mt-1">{NN_STEPS[nnStep].description}</p>
+                <h4 className="font-bold text-xs text-brand-black">{step.title}</h4>
+                <p className="text-[10px] leading-normal text-brand-warm-grey mt-1">{step.description}</p>
               </div>
             </div>
           </div>
