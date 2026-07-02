@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export interface FeedRowProps {
   company: string;
@@ -19,8 +19,6 @@ export const FeedRow: React.FC<FeedRowProps> = ({
   source,
   imageUrl,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const getSourceDisplay = () => {
     if (source) return source;
     try {
@@ -39,10 +37,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
     >
       <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
-          <h4
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-xl md:text-2xl font-bold font-inter tracking-tight text-brand-black flex-grow cursor-pointer hover:underline underline-offset-4"
-          >
+          <h4 className="text-xl md:text-2xl font-bold font-inter tracking-tight text-brand-black flex-grow">
             {title}
           </h4>
           <span className="font-label-mono text-label-mono text-brand-warm-grey shrink-0 mt-1">
@@ -52,9 +47,10 @@ export const FeedRow: React.FC<FeedRowProps> = ({
 
         <div
           data-testid="feed-row-content"
-          className={`${isOpen ? 'block' : 'hidden'} font-body-md text-on-surface-variant leading-relaxed mt-2`}
+          className="font-body-md text-on-surface-variant leading-relaxed mt-2"
         >
-          <p className="mb-2 text-brand-warm-grey font-bold">
+          <p className="mb-2 text-brand-warm-grey font-bold flex items-center gap-1.5 uppercase text-xs font-geist-mono tracking-wider">
+            <span className="material-symbols-outlined text-[16px] text-brand-warm-grey">smart_toy</span>
             AI SUMMARY
           </p>
           <div className="border-l-2 border-brand-black pl-4 mt-3">
@@ -73,7 +69,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
           </div>
         )}
 
-        <div className={`${isOpen ? 'block' : 'hidden'} font-body-md leading-relaxed`}>
+        <div className="font-body-md leading-relaxed">
           <a
             href={sourceUrl}
             target="_blank"
