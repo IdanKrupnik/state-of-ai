@@ -79,7 +79,7 @@ button,
 
 .ticker-content {
   display: inline-block;
-  animation: ticker 160s linear infinite;
+  animation: ticker 360s linear infinite;
 }
 
 .ticker-wrap:hover .ticker-content {
@@ -163,4 +163,10 @@ header.fixed {
   background-color: rgba(18, 18, 17, 0.9) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.dark [data-testid="load-more-btn"]:hover {
+  background-color: var(--brand-black) !important;
+  color: var(--brand-offwhite) !important;
+  border-color: var(--brand-black) !important;
 }
