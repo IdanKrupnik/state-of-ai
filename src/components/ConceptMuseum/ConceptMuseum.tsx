@@ -32,6 +32,25 @@ export const ConceptMuseum: React.FC = () => {
     };
   }, [isExplorerOpen, isIntro, activeStep, promptTokens]);
 
+  useEffect(() => {
+    const checkHash = () => {
+      if (typeof window !== 'undefined') {
+        const hash = window.location.hash;
+        const isOpen = hash.includes('learn/museum') || hash.includes('#learn/museum');
+        setIsExplorerOpen(isOpen);
+        if (isOpen && !isExplorerOpen) {
+          setIsIntro(true);
+          setActiveStep(0);
+          setPromptTokens(['The', ' cat', ' sat']);
+          setIsRecycling(false);
+        }
+      }
+    };
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, [isExplorerOpen]);
+
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
     if (!document.fullscreenElement) containerRef.current.requestFullscreen().catch(() => {});
@@ -54,7 +73,7 @@ export const ConceptMuseum: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => { setIsExplorerOpen(true); setIsIntro(true); setActiveStep(0); setPromptTokens(['The', ' cat', ' sat']); setIsRecycling(false); }}
+          onClick={() => { if (typeof window !== 'undefined') { window.location.hash = 'learn/museum'; window.dispatchEvent(new HashChangeEvent('hashchange')); } }}
           className="px-5 py-3 text-xs font-bold font-geist-mono uppercase tracking-wider bg-brand-black text-brand-offwhite hover:bg-brand-black/90 transition-all duration-200 rounded cursor-pointer shrink-0"
           data-testid="launch-museum-btn"
         >
@@ -70,7 +89,7 @@ export const ConceptMuseum: React.FC = () => {
               <button onClick={toggleFullscreen} className="px-3 py-1.5 text-xs font-geist-mono border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black rounded cursor-pointer transition-colors" data-testid="fullscreen-toggle-btn">
                 {isFullScreen ? 'Exit Fullscreen' : 'Fullscreen ⛶'}
               </button>
-              <button onClick={() => setIsExplorerOpen(false)} className="px-3 py-1.5 text-xs font-geist-mono bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded cursor-pointer transition-colors" data-testid="close-museum-btn">
+              <button onClick={() => { if (typeof window !== 'undefined') { window.location.hash = 'learn'; window.dispatchEvent(new HashChangeEvent('hashchange')); } }} className="px-3 py-1.5 text-xs font-geist-mono bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded cursor-pointer transition-colors" data-testid="close-museum-btn">
                 Exit Museum ×
               </button>
             </div>

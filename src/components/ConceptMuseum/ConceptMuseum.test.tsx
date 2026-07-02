@@ -18,6 +18,9 @@ describe('ConceptMuseum', () => {
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
+    if (typeof window !== 'undefined') {
+      window.location.hash = '';
+    }
   });
 
   it('should render the launch CTA and handle the open/close museum lifecycle', () => {
