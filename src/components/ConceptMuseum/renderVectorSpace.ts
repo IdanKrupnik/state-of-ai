@@ -88,3 +88,16 @@ export function updateAndRenderVectorSpace(
     ctx.fill();
   });
 }
+
+export function handleVectorSpaceHover(state: VectorSpaceState, vx: number, vy: number) {
+  for (let i = 0; i < state.words.length; i++) {
+    const w = state.words[i];
+    if (Math.hypot(w.x - vx, w.y - vy) < 18) {
+      if (state.activeIndex !== w.clusterId) {
+        state.activeIndex = w.clusterId;
+        state.timer = 0;
+      }
+      break;
+    }
+  }
+}

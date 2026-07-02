@@ -5,15 +5,17 @@ export function initNeuralNet(): NeuralNetState {
   const xOffset = -1000;
   const xSpacing = 120;
   const ySpacing = 65;
-  const nodes = layerSizes.map((size, lIdx) => {
-    const layerYStart = -((size - 1) * ySpacing) / 2;
-    return Array.from({ length: size }, (_, nIdx) => ({
-      x: xOffset + lIdx * xSpacing,
-      y: layerYStart + nIdx * ySpacing,
-      flare: 0,
-    }));
-  });
-  return { nodes, pulses: [] };
+  return {
+    nodes: layerSizes.map((size, lIdx) => {
+      const layerYStart = -((size - 1) * ySpacing) / 2;
+      return Array.from({ length: size }, (_, nIdx) => ({
+        x: xOffset + lIdx * xSpacing,
+        y: layerYStart + nIdx * ySpacing,
+        flare: 0,
+      }));
+    }),
+    pulses: []
+  };
 }
 
 export function updateAndRenderNeuralNet(
@@ -25,29 +27,18 @@ export function updateAndRenderNeuralNet(
   if (Math.random() < 0.04 && pulses.length < 10) {
     if (nnStep === 0) {
       nodes[0][Math.floor(Math.random() * nodes[0].length)].flare = 1.0;
-    } else if (nnStep === 1) {
-      pulses.push({
-        fromLayer: 0, fromIndex: Math.floor(Math.random() * nodes[0].length),
-        toLayer: 1, toIndex: Math.floor(Math.random() * nodes[1].length),
-        progress: 0, speed: 0.02
-      });
-    } else if (nnStep === 2) {
-      pulses.push({
-        fromLayer: 1, fromIndex: Math.floor(Math.random() * nodes[1].length),
-        toLayer: 2, toIndex: Math.floor(Math.random() * nodes[2].length),
-        progress: 0, speed: 0.02
-      });
-    } else if (nnStep === 3) {
-      pulses.push({
-        fromLayer: 2, fromIndex: Math.floor(Math.random() * nodes[2].length),
-        toLayer: 3, toIndex: Math.floor(Math.random() * nodes[3].length),
-        progress: 0, speed: 0.02
-      });
     } else if (nnStep === 4) {
       const fromL = 1 + Math.floor(Math.random() * 3);
       pulses.push({
         fromLayer: fromL, fromIndex: Math.floor(Math.random() * nodes[fromL].length),
         toLayer: fromL - 1, toIndex: Math.floor(Math.random() * nodes[fromL - 1].length),
+        progress: 0, speed: 0.02
+      });
+    } else {
+      const layer = nnStep - 1;
+      pulses.push({
+        fromLayer: layer, fromIndex: Math.floor(Math.random() * nodes[layer].length),
+        toLayer: layer + 1, toIndex: Math.floor(Math.random() * nodes[layer + 1].length),
         progress: 0, speed: 0.02
       });
     }
@@ -103,4 +94,25 @@ export function updateAndRenderNeuralNet(
       ctx.stroke();
     });
   });
+}
+
+export function handleNeuralNetClick(state: NeuralNetState, vx: number, vy: number): boolean {
+  for (let lIdx = 0; lIdx < state.nodes.length; lIdx++) {
+    for (let nIdx = 0; nIdx < state.nodes[lIdx].length; nIdx++) {
+      const n = state.nodes[lIdx][nIdx];
+      if (Math.hypot(n.x - vx, n.y - vy) < 12) {
+        n.flare = 1.0;
+        const nextL = lIdx + 1;
+        if (nextL < state.nodes.length) {
+          state.pulses.push({
+            fromLayer: lIdx, fromIndex: nIdx,
+            toLayer: nextL, toIndex: Math.floor(Math.random() * state.nodes[nextL].length),
+            progress: 0, speed: 0.02
+          });
+        }
+        return true;
+      }
+    }
+  }
+  return false;
 }

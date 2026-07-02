@@ -90,3 +90,29 @@ export function updateAndRenderTokenTree(
     });
   }
 }
+
+export function handleTokenTreeClick(state: TokenTreeState, vx: number, vy: number): boolean {
+  if (state.state !== 'branching') return false;
+  const currentStep = STEPS[state.stepIndex];
+  const startX = 650;
+  const startY = 0;
+  const estimatedWidth = state.typedText.length * 6;
+  const branchX = startX + estimatedWidth + 48;
+  for (let bIdx = 0; bIdx < currentStep.branches.length; bIdx++) {
+    const b = currentStep.branches[bIdx];
+    const targetY = startY + (bIdx - 1) * 30;
+    const dx = vx - branchX;
+    const dy = vy - targetY;
+    if (dx >= 0 && dx <= 100 && Math.abs(dy) <= 15) {
+      state.state = 'committing';
+      state.timer = 0;
+      if (bIdx !== 0) {
+        const clicked = currentStep.branches[bIdx];
+        currentStep.branches.splice(bIdx, 1);
+        currentStep.branches.unshift(clicked);
+      }
+      return true;
+    }
+  }
+  return false;
+}
