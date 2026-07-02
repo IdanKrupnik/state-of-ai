@@ -119,7 +119,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
                   data-testid="feed-row-hide-btn"
                 >
                   <span className="material-symbols-outlined text-[13px]">
-                    close
+                    delete
                   </span>
                   Not Interested
                 </button>
