@@ -113,23 +113,23 @@ export const ConceptMuseum: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[94%] sm:w-[92%] max-w-xl bg-white border border-zinc-200 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 shadow-2xl z-10 flex flex-col gap-2.5 sm:gap-4">
+              <div className="fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-xl bg-white border border-zinc-200 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl z-20 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-geist-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-zinc-500">How LLMs Work // Phase {activeStep + 1} of {LLM_STEPS.length}</span>
-                  <div className="flex items-center gap-1">
+                  <span className="font-geist-mono text-[9px] uppercase tracking-wider text-zinc-500">How LLMs Work // Phase {activeStep + 1} of {LLM_STEPS.length}</span>
+                  <div className="flex items-center gap-1.5">
                     {LLM_STEPS.map((_, i) => (
-                      <div key={i} className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-all duration-300 ${i === activeStep ? 'bg-zinc-800 w-2 sm:w-3' : 'bg-zinc-200'}`} />
+                      <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === activeStep ? 'bg-zinc-800 w-3' : 'bg-zinc-200'}`} />
                     ))}
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-zinc-900">{step.title}</h4>
-                  <p className="text-[10px] sm:text-xs leading-normal sm:leading-relaxed text-zinc-600 mt-0.5 sm:mt-1">{step.description}</p>
+                  <h4 className="font-bold text-sm text-zinc-900">{step.title}</h4>
+                  <p className="text-xs leading-relaxed text-zinc-600 mt-1">{step.description}</p>
                 </div>
-                <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-zinc-100">
-                  <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-2 py-1 sm:px-3 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold font-geist-mono border border-zinc-200 bg-zinc-50 text-zinc-600 hover:border-zinc-400 hover:text-zinc-800 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Prev Phase</button>
+                <div className="flex items-center justify-between pt-3 border-t border-zinc-100">
+                  <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-4 py-2.5 sm:px-3 sm:py-1.5 text-xs sm:text-[10px] font-bold font-geist-mono border border-zinc-200 bg-zinc-50 text-zinc-600 hover:border-zinc-400 hover:text-zinc-800 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Prev Phase</button>
                   <span className="text-[9px] font-geist-mono text-zinc-400 uppercase tracking-wider hidden sm:inline">Use Arrow Keys • Drag to pan</span>
-                  <button onClick={handleNextPhase} className="px-2 py-1 sm:px-3 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold font-geist-mono border border-zinc-900 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">
+                  <button onClick={handleNextPhase} className="px-4 py-2.5 sm:px-3 sm:py-1.5 text-xs sm:text-[10px] font-bold font-geist-mono border border-zinc-900 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">
                     {activeStep === LLM_STEPS.length - 1 ? 'Recycle & Loop ↺' : 'Next Phase \u2192'}
                   </button>
                 </div>

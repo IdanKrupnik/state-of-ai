@@ -68,22 +68,28 @@ async function fetchFeedXml(url: string): Promise<string> {
   }
 }
 
+const RSS_FEEDS = [
+  { name: 'TechCrunch', url: 'https://techcrunch.com/category/artificial-intelligence/feed/' },
+  { name: 'OpenAI', url: 'https://openai.com/news/rss.xml' },
+  { name: 'Hugging Face', url: 'https://huggingface.co/blog/feed.xml' },
+  { name: 'The Rundown AI', url: 'https://www.rundown.ai/feed' },
+  { name: 'Google Research', url: 'https://research.google/blog/rss/' },
+  { name: 'Anthropic Engineering', url: 'https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml' }
+];
+
 export async function fetchAndCombineFeeds(): Promise<ParsedItem[]> {
-  const [tcXml, openaiXml, hfXml, rundownXml] = await Promise.all([
-    fetchFeedXml('https://techcrunch.com/category/artificial-intelligence/feed/'),
-    fetchFeedXml('https://openai.com/news/rss.xml'),
-    fetchFeedXml('https://huggingface.co/blog/feed.xml'),
-    fetchFeedXml('https://www.rundown.ai/feed')
-  ]);
+  const feedPromises = RSS_FEEDS.map(async (feedConf) => {
+    try {
+      const xml = await fetchFeedXml(feedConf.url);
+      return xml ? parseRss(xml, feedConf.name) : [];
+    } catch (err) {
+      console.error(`Error processing feed ${feedConf.name}:`, err);
+      return [];
+    }
+  });
 
-  const feeds = [
-    tcXml ? parseRss(tcXml, 'TechCrunch') : [],
-    openaiXml ? parseRss(openaiXml, 'OpenAI') : [],
-    hfXml ? parseRss(hfXml, 'Hugging Face') : [],
-    rundownXml ? parseRss(rundownXml, 'The Rundown AI') : []
-  ];
-
-  const maxLen = Math.max(...feeds.map((f) => f.length));
+  const feeds = await Promise.all(feedPromises);
+  const maxLen = Math.max(...feeds.map((f) => f.length), 0);
 
   return Array.from({ length: maxLen })
     .flatMap((_, i) =>
