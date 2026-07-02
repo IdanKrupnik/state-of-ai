@@ -10,21 +10,6 @@ export const ConceptMuseum: React.FC = () => {
   const [promptTokens, setPromptTokens] = useState(['The', ' cat', ' sat']);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleFsChange = () => setIsFullScreen(!!document.fullscreenElement);
-    document.addEventListener('fullscreenchange', handleFsChange);
-    return () => document.removeEventListener('fullscreenchange', handleFsChange);
-  }, []);
-
-  const toggleFullscreen = () => {
-    if (!containerRef.current) return;
-    if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen().catch(() => {});
-    } else {
-      document.exitFullscreen().catch(() => {});
-    }
-  };
-
   const handleNextPhase = () => {
     if (activeStep === LLM_STEPS.length - 1) {
       const nextOptions: Record<string, string> = {
@@ -42,15 +27,31 @@ export const ConceptMuseum: React.FC = () => {
       };
       const text = promptTokens.join('');
       const nextWord = nextOptions[text];
-      if (nextWord) {
-        setPromptTokens(prev => [...prev, nextWord]);
-      } else {
-        setPromptTokens(['The', ' cat', ' sat']);
-      }
+      if (nextWord) setPromptTokens(prev => [...prev, nextWord]);
+      else setPromptTokens(['The', ' cat', ' sat']);
       setActiveStep(0);
-    } else {
-      setActiveStep(prev => prev + 1);
-    }
+    } else setActiveStep(prev => prev + 1);
+  };
+
+  useEffect(() => {
+    const handleFs = () => setIsFullScreen(!!document.fullscreenElement);
+    const handleKeys = (e: KeyboardEvent) => {
+      if (!isExplorerOpen || isIntro) return;
+      if (e.key === 'ArrowRight') handleNextPhase();
+      if (e.key === 'ArrowLeft') setActiveStep(prev => Math.max(0, prev - 1));
+    };
+    document.addEventListener('fullscreenchange', handleFs);
+    window.addEventListener('keydown', handleKeys);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFs);
+      window.removeEventListener('keydown', handleKeys);
+    };
+  }, [isExplorerOpen, isIntro, activeStep, promptTokens]);
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) containerRef.current.requestFullscreen().catch(() => {});
+    else document.exitFullscreen().catch(() => {});
   };
 
   const step = LLM_STEPS[activeStep];
@@ -121,7 +122,7 @@ export const ConceptMuseum: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between pt-3 border-t border-brand-black/5">
                   <button onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="prev-step-btn">&larr; Previous Phase</button>
-                  <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">Drag to pan • Scroll to zoom</span>
+                  <span className="text-[9px] font-geist-mono text-brand-warm-grey uppercase tracking-wider hidden sm:inline">Use Arrow Keys • Drag to pan</span>
                   <button onClick={handleNextPhase} className="px-3 py-1.5 text-[10px] font-bold font-geist-mono border border-brand-black/10 bg-brand-black text-brand-offwhite hover:bg-brand-black/90 disabled:opacity-30 rounded cursor-pointer transition-all duration-200" data-testid="next-step-btn">
                     {activeStep === LLM_STEPS.length - 1 ? 'Recycle & Loop ↺' : 'Next Phase \u2192'}
                   </button>
