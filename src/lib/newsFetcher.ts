@@ -78,8 +78,7 @@ const RSS_FEEDS = [
   { name: 'The Rundown AI', url: 'https://www.rundown.ai/feed' },
   { name: 'Google Research', url: 'https://research.google/blog/rss/' },
   { name: 'Anthropic Engineering', url: 'https://raw.githubusercontent.com/conoro/anthropic-engineering-rss-feed/main/anthropic_engineering_rss.xml' },
-  { name: 'Google API', url: 'https://developers.googleblog.com/atom.xml' },
-  { name: 'NVIDIA Blog', url: 'https://blogs.nvidia.com/feed/' }
+  { name: 'Google API', url: 'https://developers.googleblog.com/atom.xml' }
 ];
 
 export async function fetchAndCombineFeeds(): Promise<ParsedItem[]> {
