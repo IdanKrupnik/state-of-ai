@@ -27,6 +27,7 @@ A hand-drawn pencil sketch by a professional editorial artist on a clean, techni
 
 Composition & Subject: The visual focus is on a single, extremely simple, cute, and slightly amusing visual metaphor representing the article. The metaphor must be drawn with a few clean, simple pencil outlines and very light graphite shading. Keep the illustration extremely simple and clean, using only a single cute character, object, or interaction to convey the general idea at a glance.
 - If the article is about a partnership between two companies, draw a simple, cute partnership symbol (like a handshake, or a bridge) with the actual company names (e.g. "HP" and "OpenAI") neatly handwritten next to their respective sides. Do not draw complex brand logos; use simple handwritten text labels for the company names.
+- If the article is about a specific AI model, system, or algorithm (e.g. "DiScoFormer"), draw a simple, cute robot character performing a multi-task metaphor (like juggling different geometric shapes, or wearing multiple hats to represent versatility) with the model's actual name (e.g. "DiScoFormer") neatly handwritten next to it.
 - If the article is about a new app or device, draw a minimalist generic phone outline with a simple app icon inside it.
 - Absolutely no other text, no cluttered backgrounds, and no complex decorations.
 
