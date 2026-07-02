@@ -43,7 +43,7 @@ export interface AppProps {
 }
 
 export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCount = 0, initialModels = [] }) => {
-  const [activeTab, setActiveTab] = useState('feed');
+  const [activeTab, setActiveTab] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [articles, setArticles] = useState<Article[]>(initialArticles);
   const [isLoading, setIsLoading] = useState(false);
@@ -100,6 +100,8 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
             }
           }, 100);
         }
+      } else {
+        setActiveTab('feed');
       }
     };
 
