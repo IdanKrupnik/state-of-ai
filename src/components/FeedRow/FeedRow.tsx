@@ -115,7 +115,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
                     e.stopPropagation();
                     onHide();
                   }}
-                  className="px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black rounded flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer w-full"
+                  className="px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-transparent bg-transparent text-brand-warm-grey/75 hover:border-red-500/20 hover:bg-red-500/5 hover:text-red-500 rounded flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer w-full"
                   data-testid="feed-row-hide-btn"
                 >
                   <span className="material-symbols-outlined text-[10px]">
