@@ -39,8 +39,9 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
         transRef.current.zoom += (targetZoom - transRef.current.zoom) * 0.08;
       }
       ctx.save();
-      ctx.translate(canvas.width / 2 + transRef.current.panX, canvas.height / 2 + transRef.current.panY);
+      ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.scale(transRef.current.zoom, transRef.current.zoom);
+      ctx.translate(transRef.current.panX, transRef.current.panY);
       ctx.strokeStyle = 'rgba(24, 24, 27, 0.04)'; ctx.lineWidth = 1;
       const size = 40; const range = 2000;
       for (let x = -range; x <= range; x += size) {
@@ -99,8 +100,8 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token, promptTokens); ctx.restore();
       
       const rect = canvas.getBoundingClientRect();
-      const mouseVx = (mousePosRef.current.x - rect.left - canvas.width / 2 - transRef.current.panX) / transRef.current.zoom;
-      const mouseVy = (mousePosRef.current.y - rect.top - canvas.height / 2 - transRef.current.panY) / transRef.current.zoom;
+      const mouseVx = (mousePosRef.current.x - rect.left - canvas.width / 2) / transRef.current.zoom - transRef.current.panX;
+      const mouseVy = (mousePosRef.current.y - rect.top - canvas.height / 2) / transRef.current.zoom - transRef.current.panY;
       renderTooltipsAndCheckHover(ctx, mouseVx, mouseVy);
       ctx.restore();
       animFrameId = requestAnimationFrame(render);
@@ -112,14 +113,14 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   const getVirtualCoords = (clientX: number, clientY: number) => {
     const canvas = canvasRef.current!; const rect = canvas.getBoundingClientRect();
     return {
-      x: (clientX - rect.left - canvas.width / 2 - transRef.current.panX) / transRef.current.zoom,
-      y: (clientY - rect.top - canvas.height / 2 - transRef.current.panY) / transRef.current.zoom
+      x: (clientX - rect.left - canvas.width / 2) / transRef.current.zoom - transRef.current.panX,
+      y: (clientY - rect.top - canvas.height / 2) / transRef.current.zoom - transRef.current.panY
     };
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     transRef.current.isDragging = true; transRef.current.dragDist = 0;
-    transRef.current.startX = e.clientX - transRef.current.panX; transRef.current.startY = e.clientY - transRef.current.panY;
+    transRef.current.startX = e.clientX; transRef.current.startY = e.clientY;
     hasInteractedRef.current = true;
   };
 
@@ -128,10 +129,12 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
     const v = getVirtualCoords(e.clientX, e.clientY);
     handleVectorSpaceHover(statesRef.current.vector, v.x + 400, v.y);
     if (!transRef.current.isDragging) return;
-    const dx = e.clientX - (transRef.current.panX + transRef.current.startX);
-    const dy = e.clientY - (transRef.current.panY + transRef.current.startY);
+    const dx = e.clientX - transRef.current.startX;
+    const dy = e.clientY - transRef.current.startY;
     transRef.current.dragDist += Math.hypot(dx, dy);
-    transRef.current.panX = e.clientX - transRef.current.startX; transRef.current.panY = e.clientY - transRef.current.startY;
+    transRef.current.panX += dx / transRef.current.zoom;
+    transRef.current.panY += dy / transRef.current.zoom;
+    transRef.current.startX = e.clientX; transRef.current.startY = e.clientY;
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
