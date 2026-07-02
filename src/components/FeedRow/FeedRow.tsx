@@ -89,7 +89,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             <div className="mt-auto">
               <button
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1 text-[10px] font-bold font-geist-mono uppercase tracking-wider text-brand-warm-grey hover:text-brand-black transition-all duration-200 cursor-pointer"
+                className="px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black transition-all duration-200 rounded flex items-center gap-1.5 cursor-pointer"
                 data-testid="feed-row-more-btn"
               >
                 <span className="material-symbols-outlined text-[13px]">thumb_up</span>
