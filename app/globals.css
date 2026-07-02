@@ -53,7 +53,7 @@
   --brand-warm-grey: #9a9a90;
   --outline: #555555;
   --outline-variant: rgba(253, 248, 248, 0.15);
-  --brand-nav-bg: #222222;
+  --brand-nav-bg: #090909;
   --brand-nav-text: #fdf8f8;
 }
 
@@ -120,4 +120,35 @@ button,
 
 .nav-link-underline.active::after {
   transform: scaleX(1);
+}
+
+.dark .bg-brand-clay\/5 {
+  background-color: rgba(253, 248, 248, 0.04) !important;
+}
+.dark .bg-brand-clay\/10 {
+  background-color: rgba(253, 248, 248, 0.06) !important;
+}
+.dark .bg-brand-clay\/20 {
+  background-color: rgba(253, 248, 248, 0.1) !important;
+}
+.dark .bg-brand-clay\/30 {
+  background-color: rgba(253, 248, 248, 0.08) !important;
+}
+.dark .bg-brand-offwhite\/40 {
+  background-color: rgba(253, 248, 248, 0.04) !important;
+}
+.dark .border-brand-black\/5 {
+  border-color: rgba(253, 248, 248, 0.08) !important;
+}
+.dark .border-brand-black\/10 {
+  border-color: rgba(253, 248, 248, 0.12) !important;
+}
+.dark .border-brand-black\/15 {
+  border-color: rgba(253, 248, 248, 0.16) !important;
+}
+.dark .border-brand-black\/20 {
+  border-color: rgba(253, 248, 248, 0.2) !important;
+}
+.dark .border-brand-black\/25 {
+  border-color: rgba(253, 248, 248, 0.25) !important;
 }

@@ -39,6 +39,59 @@ export const TelemetryTicker: React.FC<TelemetryTickerProps> = ({
           <span>API Latency:</span>
           <span className="text-brand-black font-semibold">{apiLatency}</span>
         </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>GPU LOAD:</span>
+          <span className="text-brand-black font-semibold">87.4%</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>ACTIVE AGENTS:</span>
+          <span className="text-brand-black font-semibold">14,842</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>TOKEN VELOCITY:</span>
+          <span className="text-brand-black font-semibold">1,280/S</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>COST/M:</span>
+          <span className="text-brand-black font-semibold">$0.15</span>
+        </span>
+
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <SystemStatus label="Pipeline Active" isActive={true} className="text-[10px] leading-none text-brand-black/70" />
+          <span className="text-[9px] text-brand-warm-grey/60">({scannedTime})</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>Best Model:</span>
+          <span className="text-brand-black font-semibold">{bestModel}</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>Market Index:</span>
+          <span className="text-brand-black font-semibold">{marketIndex}</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>Latest Block:</span>
+          <span className="text-brand-black font-semibold">{latestBlock}</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>API Latency:</span>
+          <span className="text-brand-black font-semibold">{apiLatency}</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>GPU LOAD:</span>
+          <span className="text-brand-black font-semibold">87.4%</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>ACTIVE AGENTS:</span>
+          <span className="text-brand-black font-semibold">14,842</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>TOKEN VELOCITY:</span>
+          <span className="text-brand-black font-semibold">1,280/S</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 shrink-0 flex-nowrap">
+          <span>COST/M:</span>
+          <span className="text-brand-black font-semibold">$0.15</span>
+        </span>
       </div>
     </div>
   );
