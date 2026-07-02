@@ -18,13 +18,20 @@ export function updateAndRenderTokenization(
   state.timer += 16.67;
   const sentence = promptTokens.join('');
   if (state.tokens.length !== promptTokens.length) {
-    let currentX = -200;
-    state.tokens = promptTokens.map(text => {
+    state.tokens = promptTokens.map((text, idx) => {
       const id = VOCAB_IDS[text] || 999;
       const w = 55;
-      const box = { text, id, x: currentX, y: -10, width: w, height: 28, isFlipped: false };
-      currentX += w + 12;
-      return box;
+      const col = idx % 4;
+      const row = Math.floor(idx / 4);
+      return {
+        text,
+        id,
+        x: -130 + col * (w + 12),
+        y: -30 + row * 52,
+        width: w,
+        height: 28,
+        isFlipped: false
+      };
     });
   }
   if (state.timer >= 1200) {
@@ -33,7 +40,9 @@ export function updateAndRenderTokenization(
   }
   ctx.font = '9px Geist Mono, Courier New, monospace';
   ctx.fillStyle = '#18181b';
-  ctx.fillText(`INPUT STRING: "${sentence}"`, -200, -50);
+  ctx.fillText('INPUT STRING:', -130, -60);
+  ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
+  ctx.fillText(`"${sentence}"`, -130, -48);
   state.tokens.forEach((t, idx) => {
     const isScanning = idx === state.scanIndex;
     ctx.strokeStyle = isScanning ? '#2563eb' : 'rgba(24, 24, 27, 0.15)';
