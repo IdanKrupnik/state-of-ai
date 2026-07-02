@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface FeedRowProps {
   company: string;
@@ -19,6 +19,8 @@ export const FeedRow: React.FC<FeedRowProps> = ({
   source,
   imageUrl,
 }) => {
+  const [feedbackSent, setFeedbackSent] = useState(false);
+
   const getSourceDisplay = () => {
     if (source) return source;
     try {
@@ -88,12 +90,22 @@ export const FeedRow: React.FC<FeedRowProps> = ({
             
             <div className="mt-auto">
               <button
-                onClick={(e) => e.stopPropagation()}
-                className="px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black transition-all duration-200 rounded flex items-center gap-1.5 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFeedbackSent(true);
+                }}
+                disabled={feedbackSent}
+                className={`px-2.5 py-1.5 text-[10px] font-bold font-geist-mono uppercase tracking-wider border rounded flex items-center gap-1.5 transition-all duration-200 ${
+                  feedbackSent
+                    ? 'border-brand-neon-green/25 bg-brand-neon-green/5 text-brand-neon-green cursor-default'
+                    : 'border-brand-black/15 bg-brand-clay/5 text-brand-warm-grey hover:border-brand-black hover:text-brand-black cursor-pointer'
+                }`}
                 data-testid="feed-row-more-btn"
               >
-                <span className="material-symbols-outlined text-[13px]">thumb_up</span>
-                I want more like this
+                <span className="material-symbols-outlined text-[13px]">
+                  {feedbackSent ? 'check' : 'thumb_up'}
+                </span>
+                {feedbackSent ? 'Added to preferences' : 'I want more like this'}
               </button>
             </div>
           </div>
