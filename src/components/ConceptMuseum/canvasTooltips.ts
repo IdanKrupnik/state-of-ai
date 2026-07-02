@@ -1,14 +1,14 @@
 import { CanvasTooltipItem } from './types';
 
 const TOOLTIPS: CanvasTooltipItem[] = [
-  { id: 'vocab', exhibitX: -1200, lx: -100, ly: 40, term: 'Vocab ID', definition: 'A digital ID card for words! Computers are terrible at spelling but great at math, so they swap every word for a unique number.' },
-  { id: 'slice', exhibitX: -1200, lx: -20, ly: -50, term: 'Token Slicing', definition: 'Chops sentences into bite-sized word chunks. Think of it as pre-chewing text so the AI doesn\'t choke on long prompts.' },
-  { id: 'embed', exhibitX: -400, lx: 90, ly: -183, term: 'Embedding Vector', definition: 'A semantic map of the universe. Words with similar vibes (like "coffee" and "morning") are parked next to each other on a grid.' },
-  { id: 'att', exhibitX: -400, lx: 90, ly: 167, term: 'Attention Weights', definition: 'Fires virtual laser beams to measure context. It checks how much words care about each other (like "cat" caring about "mat").' },
-  { id: 'w', exhibitX: 400, lx: 60, ly: -90, term: 'Synaptic Weights', definition: 'Synapse volume dials! They act like dial knobs that turn up the volume on important signals and mute the useless ones.' },
-  { id: 'act', exhibitX: 400, lx: 60, ly: 90, term: 'Activation Function', definition: 'The ultimate filter gatekeeper! It inspects signals and only lets the loud, important ones pass to the next stage.' },
-  { id: 'prob', exhibitX: 1200, lx: 155, ly: -183, term: 'Probability Tree', definition: 'A forecast of candidate words. The AI calculates which word is most likely to win the next spot in the sentence.' },
-  { id: 'auto', exhibitX: 0, lx: 60, ly: -255, term: 'Autoregressive Loop', definition: 'Recycling at its finest! The AI feeds its own output back into its input over and over to compose full sentences.' }
+  { id: 'vocab', exhibitX: -1200, lx: 48, ly: 27, term: 'Vocab ID', definition: 'A digital ID card for words! Computers are terrible at spelling but great at math, so they swap every word for a unique number.' },
+  { id: 'slice', exhibitX: -1200, lx: -50, ly: -53, term: 'Token Slicing', definition: 'Chops sentences into bite-sized word chunks. Think of it as pre-chewing text so the AI doesn\'t choke on long prompts.' },
+  { id: 'embed', exhibitX: -400, lx: 98, ly: -173, term: 'Embedding Vector', definition: 'A semantic map of the universe. Words with similar vibes (like "coffee" and "morning") are parked next to each other on a grid.' },
+  { id: 'att', exhibitX: -400, lx: 103, ly: 157, term: 'Attention Weights', definition: 'Fires virtual laser beams to measure context. It checks how much words care about each other (like "cat" caring about "mat").' },
+  { id: 'w', exhibitX: 400, lx: 98, ly: -93, term: 'Synaptic Weights', definition: 'Synapse volume dials! They act like dial knobs that turn up the volume on important signals and mute the useless ones.' },
+  { id: 'act', exhibitX: 400, lx: 113, ly: 87, term: 'Activation Function', definition: 'The ultimate filter gatekeeper! It inspects signals and only lets the loud, important ones pass to the next stage.' },
+  { id: 'prob', exhibitX: 1200, lx: 98, ly: -173, term: 'Probability Tree', definition: 'A forecast of candidate words. The AI calculates which word is most likely to win the next spot in the sentence.' },
+  { id: 'auto', exhibitX: 0, lx: 175, ly: -258, term: 'Autoregressive Loop', definition: 'Recycling at its finest! The AI feeds its own output back into its input over and over to compose full sentences.' }
 ];
 
 export function renderTooltipsAndCheckHover(ctx: CanvasRenderingContext2D, vx: number, vy: number) {
