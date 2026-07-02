@@ -1,22 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import { Database } from '@/types/database.types';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const geminiApiKey = process.env.GEMINI_API_KEY || '';
-const togetherApiKey = process.env.TOGETHER_API_KEY || '';
 
 const supabase = createClient<Database>(supabaseUrl, supabaseServiceKey);
-const genAI = new GoogleGenerativeAI(geminiApiKey);
+const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
 type Article = Database['public']['Tables']['articles']['Row'];
 
 async function generateMetaphor(article: Article): Promise<string> {
-  const model = genAI.getGenerativeModel({
+  const content = `Title: ${article.original_title}\nSummary: ${article.short_summary}`;
+  const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
-    generationConfig: { temperature: 0.0 },
-    systemInstruction: `You are an expert UI/UX illustrator specializing in strict graphic minimalism. Your sole task is to translate a long article into a single, dead-simple visual metaphor for a text-to-image AI. 
+    contents: content,
+    config: {
+      temperature: 0.0,
+      systemInstruction: `You are an expert UI/UX illustrator specializing in strict graphic minimalism. Your sole task is to translate a long article into a single, dead-simple visual metaphor for a text-to-image AI. 
 
 The image must be simple enough that a user can understand the core concept of the article within exactly 1 second of glancing at it on a mobile feed.
 
@@ -26,44 +28,30 @@ Strict rules for your output:
 3. Completely avoid human faces or detailed bodies; prefer abstract silhouettes or iconic symbols.
 4. Always enforce a flat 2D style.
 5. Absolute ban on text, letters, slogans, complex textures, shadows, shading, realism, gradients, or blur.`,
+    },
   });
-
-  const content = `Title: ${article.original_title}\nSummary: ${article.short_summary}`;
-  const result = await model.generateContent(content);
-  return result.response.text().trim();
+  if (!response.text) {
+    throw new Error('No text returned from Gemini');
+  }
+  return response.text.trim();
 }
 
-async function generateFluxImage(prompt: string): Promise<Buffer> {
+async function generateImagenImage(prompt: string): Promise<Buffer> {
   const finalPrompt = `${prompt}, ultra-minimalist vector art, flat 2D design, simple iconic line art, solid shapes, sharp outlines, maximum 2 solid colors, textless, no shadows, no gradients, clean crisp solid white background.`;
-  const response = await fetch('https://api.together.xyz/v1/images/generations', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${togetherApiKey}`,
-      'Content-Type': 'application/json',
+  const response = await ai.models.generateImages({
+    model: 'imagen-3.0-generate-002',
+    prompt: finalPrompt,
+    config: {
+      numberOfImages: 1,
+      aspectRatio: '1:1',
+      outputMimeType: 'image/png',
     },
-    body: JSON.stringify({
-      model: 'black-forest-labs/FLUX.1-schnell',
-      prompt: finalPrompt,
-      width: 512,
-      height: 512,
-      steps: 4,
-      n: 1,
-      response_format: 'url',
-    }),
   });
-  if (!response.ok) {
-    throw new Error(`Together API failed: ${response.statusText}`);
+  const base64Image = response.generatedImages?.[0]?.image?.imageBytes;
+  if (!base64Image) {
+    throw new Error('No image bytes returned from Imagen API');
   }
-  const data = await response.json();
-  const imageUrl = data.data?.[0]?.url;
-  if (!imageUrl) {
-    throw new Error('No image URL returned from Together API');
-  }
-  const imgRes = await fetch(imageUrl, { headers: { 'User-Agent': 'state-of-ai/1.0' } });
-  if (!imgRes.ok) {
-    throw new Error(`Failed to fetch image data: ${imgRes.statusText}`);
-  }
-  return Buffer.from(await imgRes.arrayBuffer());
+  return Buffer.from(base64Image, 'base64');
 }
 
 async function uploadAndGetUrl(articleId: string, buffer: Buffer): Promise<string> {
@@ -85,7 +73,7 @@ export async function processArticle(article: Article): Promise<void> {
   try {
     console.log(`Processing article ${article.id}: ${article.original_title}`);
     const metaphor = await generateMetaphor(article);
-    const buffer = await generateFluxImage(metaphor);
+    const buffer = await generateImagenImage(metaphor);
     const publicUrl = await uploadAndGetUrl(article.id, buffer);
     const { error: updateError } = await supabase
       .from('articles')

@@ -10,6 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@google/genai": "^2.10.0",
     "@supabase/supabase-js": "^2.109.0",
     "framer-motion": "^12.42.0",
     "lucide-react": "^1.22.0",
