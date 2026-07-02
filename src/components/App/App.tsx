@@ -133,7 +133,7 @@ export const App: React.FC<AppProps> = ({ initialArticles = [], initialTotalCoun
                     description="A simple, curated feed of the latest developments in artificial intelligence."
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="articles-list">
+                  <div className="flex flex-col gap-6" data-testid="articles-list">
                     {articles.length === 0 ? (
                       <div className="border-t border-brand-black/15 pt-8 text-center text-brand-warm-grey italic text-sm">
                         No simplified articles found. Try another search or filter.

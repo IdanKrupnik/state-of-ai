@@ -23,18 +23,11 @@ async function generateMetaphor(article: Article): Promise<string> {
 You must output ONLY the final text-to-image prompt. No explanation, no quotes, no conversation.
 
 The output prompt must adhere strictly to this style and layout template:
-A hand-drawn pencil sketch illustration on a technical canvas background, replicating a clean, minimalist editorial newspaper graphic.
+A hand-drawn pencil sketch illustration on a clean, technical canvas background, replicating an extremely minimalist, slightly amusing editorial newspaper graphic.
 
-Composition & Subject: A conceptual layout representing an AI article summary. The visual focus is on [INSERT EXTREMELY MINIMALIST METAPHOR HERE] drawn with clean, simple pencil lines, graphite shading, and flat, offset-print color blocking. Absolutely no complex corporate logos that do not exist; DO NOT invent brand logos. Instead of complex brand logos, represent companies with simple, universally recognized generic symbols (e.g. a simple box monitor, a gear, a generic stylized letter, or two simple interlocking shapes).
+Composition & Subject: The visual focus is on a single, extremely simple, cute, and slightly amusing visual metaphor representing the article. The metaphor must be drawn with a few clean, simple pencil outlines and very light graphite shading. Absolutely no text, no letters, no words, no corporate logos, and no cluttered backgrounds. Keep the illustration extremely simple and clean, using only a single cute character or object interaction (e.g. a simple box computer monitor shaking hands with a smiley face, or a cute robot lifting a single massive weight) to convey the general idea at a glance.
 
-Color Palette & Texture: Limited and muted color palette consisting of deep black, dark navy blue, light blue shading, and stark white highlights. The background is a solid, warm off-white beige with a very subtle, fine paper grain texture. No gradients.
-
-Typography & Layout: Clean layout optimized for an article thumbnail. In the top-left, clean black sans-serif text reads: "[INSERT ARTICLE TITLE HERE]". Below the headline, a solid black rectangular text box contains white or light blue text reading: "[INSERT KEY PHRASE HERE]". In the top-right corner, minimalist branding text reads: "STATE OF AI".
-
-Instructions for replacing placeholders:
-1. Replace [INSERT EXTREMELY MINIMALIST METAPHOR HERE] with an extremely simple visual concept containing only one or two simple hand-drawn icons depicting the main entities or action. Keep it extremely clean, uncluttered, and simple.
-2. Replace [INSERT ARTICLE TITLE HERE] with the simplified title of the article (maximum 6 words).
-3. Replace [INSERT KEY PHRASE HERE] with a 2-4 word key phrase summarizing the topic of the article.`,
+Color Palette & Texture: Limited color palette consisting of deep black, dark navy blue, light blue shading, and stark white highlights. The background is a solid, warm off-white beige with a very subtle, fine paper grain texture. No gradients.`,
     },
   });
   if (!response.text) {
