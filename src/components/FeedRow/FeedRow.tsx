@@ -7,6 +7,7 @@ export interface FeedRowProps {
   sourceUrl: string;
   timestamp?: string;
   source?: string;
+  imageUrl?: string | null;
 }
 
 export const FeedRow: React.FC<FeedRowProps> = ({
@@ -16,6 +17,7 @@ export const FeedRow: React.FC<FeedRowProps> = ({
   sourceUrl,
   timestamp = '12:00 UTC',
   source,
+  imageUrl,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,6 +39,14 @@ export const FeedRow: React.FC<FeedRowProps> = ({
       className="group border-b border-outline-variant py-6 cursor-pointer hover:bg-surface-container-low transition-colors px-2 -mx-2"
     >
       <div className="flex items-start gap-4">
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-16 h-16 object-cover border border-brand-black/10 shrink-0 bg-brand-clay/10"
+            data-testid="feed-row-image"
+          />
+        )}
         <div className="flex-grow">
           <h4 className="font-headline-sm text-headline-sm group-hover:underline underline-offset-4 text-brand-black">
             {title}

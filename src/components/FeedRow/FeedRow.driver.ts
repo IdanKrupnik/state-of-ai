@@ -49,4 +49,13 @@ export class FeedRowDriver {
     const content = this.elementToUse.querySelector('[data-testid="feed-row-content"]');
     return content ? content.textContent : null;
   }
+
+  hasImage(): boolean {
+    return !!this.elementToUse.querySelector('[data-testid="feed-row-image"]');
+  }
+
+  getImageSrc(): string | null {
+    const img = this.elementToUse.querySelector('[data-testid="feed-row-image"]');
+    return img ? img.getAttribute('src') : null;
+  }
 }

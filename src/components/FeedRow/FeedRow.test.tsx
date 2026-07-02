@@ -30,4 +30,20 @@ describe('FeedRow Component', () => {
 
     expect(driver.isContentVisible()).toBe(false);
   });
+
+  it('should render the image when provided', () => {
+    const { container } = render(
+      <FeedRow
+        company="OpenAI"
+        title="GPT-4 Release"
+        summary="A major update to our LLM model."
+        sourceUrl="https://openai.com"
+        timestamp="10:00 UTC"
+        imageUrl="https://supabase.com/image.png"
+      />
+    );
+    const driver = new FeedRowDriver(container);
+    expect(driver.hasImage()).toBe(true);
+    expect(driver.getImageSrc()).toBe('https://supabase.com/image.png');
+  });
 });
