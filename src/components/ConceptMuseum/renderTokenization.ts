@@ -56,7 +56,7 @@ export function updateAndRenderTokenization(
     ctx.beginPath(); ctx.roundRect(t.x, t.y, t.width, t.height, 4); ctx.fill(); ctx.stroke();
     ctx.fillStyle = isGenerated ? '#10b981' : (isScanning ? '#2563eb' : '#18181b');
     ctx.font = 'bold 8px Geist Mono, Courier New, monospace';
-    const content = t.isFlipped ? `ID: ${t.id}` : (isGenerated ? '""' : `"${t.text}"`);
+    const content = t.isFlipped ? `ID: ${t.id}` : `"${t.text}"`;
     ctx.fillText(content, t.x + 8, t.y + 17);
     if (idx < state.scanIndex) {
       ctx.font = '6px Geist Mono, Courier New, monospace';
