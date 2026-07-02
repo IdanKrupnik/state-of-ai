@@ -22,6 +22,8 @@ vi.mock('../../lib/supabaseClient', () => {
                     source_url: 'https://microsoft.com',
                     original_title: 'Windows Copilot Released original',
                     created_at: '2026-06-30T14:00:00Z',
+                    source: 'Microsoft',
+                    image_url: null,
                   }
                 ],
                 count: 4,
@@ -46,6 +48,8 @@ describe('App Component', () => {
       source_url: 'https://supabase.com/blog/pitr',
       original_title: 'Database backups automated original',
       created_at: '2026-06-30T14:00:00Z',
+      source: 'Supabase',
+      image_url: null,
     },
     {
       id: '2',
@@ -56,6 +60,8 @@ describe('App Component', () => {
       source_url: 'https://openai.com/blog/gpt5',
       original_title: 'GPT-5 teaser released original',
       created_at: '2026-06-30T14:00:00Z',
+      source: 'OpenAI',
+      image_url: null,
     },
     {
       id: '3',
@@ -66,6 +72,8 @@ describe('App Component', () => {
       source_url: 'https://deepmind.google/gemini',
       original_title: 'Gemini 2.0 now live original',
       created_at: '2026-06-30T14:00:00Z',
+      source: 'Google',
+      image_url: null,
     },
   ];
 

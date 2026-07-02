@@ -25,6 +25,7 @@ export type Database = {
           simplified_title: string
           source_url: string
           source: string
+          image_url: string | null
         }
         Insert: {
           company?: string
@@ -36,6 +37,7 @@ export type Database = {
           simplified_title: string
           source_url: string
           source?: string
+          image_url?: string | null
         }
         Update: {
           company?: string
@@ -47,6 +49,7 @@ export type Database = {
           simplified_title?: string
           source_url?: string
           source?: string
+          image_url?: string | null
         }
         Relationships: []
       }
