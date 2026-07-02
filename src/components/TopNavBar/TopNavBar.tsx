@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Newspaper, Cpu, Calendar, Info, BookOpen, CreditCard } from 'lucide-react';
+import { Sun, Moon, Activity, Brain, Calendar, Info, BookOpen, DollarSign } from 'lucide-react';
 
 export interface TopNavBarProps {
   activeTab?: string;
@@ -69,12 +69,12 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   };
 
   const tabs = [
-    { id: 'feed', label: 'Feed', icon: Newspaper },
-    { id: 'models', label: 'Models', icon: Cpu },
+    { id: 'feed', label: 'Feed', icon: Activity },
+    { id: 'models', label: 'Models', icon: Brain },
     { id: 'events', label: 'Events', icon: Calendar },
     { id: 'about', label: 'About', icon: Info },
     { id: 'learn', label: 'Learn', icon: BookOpen },
-    { id: 'pricing', label: 'Pricing', icon: CreditCard },
+    { id: 'pricing', label: 'Pricing', icon: DollarSign },
   ];
 
   return (
