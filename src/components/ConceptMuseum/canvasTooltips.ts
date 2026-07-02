@@ -1,95 +1,43 @@
 import { CanvasTooltipItem } from './types';
 
 const TOOLTIPS: CanvasTooltipItem[] = [
-  {
-    id: 'vocab',
-    exhibitX: -1200,
-    lx: 55, ly: -53,
-    term: 'Vocab ID',
-    definition: 'A unique index number assigned to every word in the dictionary so the computer can calculate text.'
-  },
-  {
-    id: 'embeddings',
-    exhibitX: -400,
-    lx: 100, ly: -183,
-    term: 'Embedding',
-    definition: 'A coordinate location in vector space representing a word\'s core definition.'
-  },
-  {
-    id: 'attention',
-    exhibitX: -400,
-    lx: 90, ly: 167,
-    term: 'Attention Weights',
-    definition: 'Scores showing how much words in a sentence relate to each other (e.g. "sat" connects to "mat").'
-  },
-  {
-    id: 'backprop',
-    exhibitX: 400,
-    lx: 100, ly: 167,
-    term: 'Backpropagation',
-    definition: 'The learning process where prediction errors are sent backward to fine-tune neuron connections.'
-  },
-  {
-    id: 'prob-tree',
-    exhibitX: 1200,
-    lx: 120, ly: -183,
-    term: 'Probability Tree',
-    definition: 'A list of potential upcoming words scored by likelihood (e.g. "mat" has a 72% chance).'
-  }
+  { id: 'vocab', exhibitX: -1200, lx: -100, ly: 40, term: 'Vocab ID', definition: 'A unique integer representing a token in the model\'s vocabulary database.' },
+  { id: 'slice', exhibitX: -1200, lx: -20, ly: -50, term: 'Token Slicing', definition: 'Chopping prompt strings into clean chunks based on whitespace or character patterns.' },
+  { id: 'embed', exhibitX: -400, lx: 90, ly: -183, term: 'Embedding Vector', definition: 'A coordinate coordinate representing a word\'s core definition.' },
+  { id: 'att', exhibitX: -400, lx: 90, ly: 167, term: 'Attention Weights', definition: 'Laser scores highlighting connection strengths between prompt context words.' },
+  { id: 'w', exhibitX: 400, lx: 60, ly: -90, term: 'Synaptic Weights', definition: 'Multiplier values on connection lines scaling signals during feed-forward passes.' },
+  { id: 'act', exhibitX: 400, lx: 60, ly: 90, term: 'Activation Function', definition: 'Non-linear filter determining if a neuron fires based on input values.' },
+  { id: 'prob', exhibitX: 1200, lx: 155, ly: -183, term: 'Probability Tree', definition: 'Branches showing upcoming candidate word options and likelihoods.' },
+  { id: 'auto', exhibitX: 0, lx: 60, ly: -255, term: 'Autoregressive Loop', definition: 'Feeding predicted outputs back as inputs to generate words recursively.' }
 ];
 
-export function renderTooltipsAndCheckHover(
-  ctx: CanvasRenderingContext2D,
-  vx: number,
-  vy: number
-) {
-  let activeTooltip: CanvasTooltipItem | null = null;
+export function renderTooltipsAndCheckHover(ctx: CanvasRenderingContext2D, vx: number, vy: number) {
+  let active: CanvasTooltipItem | null = null;
   TOOLTIPS.forEach(t => {
     const gx = t.exhibitX + t.lx;
-    const gy = t.ly;
-    ctx.strokeStyle = '#2563eb';
-    ctx.lineWidth = 1;
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath();
-    ctx.arc(gx, gy, 5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = '#2563eb';
-    ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
-    ctx.fillText('?', gx - 2, gy + 2.5);
-    if (Math.hypot(gx - vx, gy - vy) < 8) {
-      activeTooltip = t;
-    }
+    ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1; ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(gx, t.ly, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#2563eb'; ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
+    ctx.fillText('?', gx - 2, t.ly + 2.5);
+    if (Math.hypot(gx - vx, t.ly - vy) < 8) active = t;
   });
-  if (activeTooltip) {
-    const t = activeTooltip as CanvasTooltipItem;
+  if (active) {
+    const t = active as CanvasTooltipItem;
     const gx = t.exhibitX + t.lx;
-    const gy = t.ly;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
-    ctx.strokeStyle = '#2563eb';
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.roundRect(gx + 10, gy - 30, 160, 48, 6);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = '#18181b';
-    ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
-    ctx.fillText(`${t.term.toUpperCase()}:`, gx + 15, gy - 18);
-    ctx.fillStyle = 'rgba(24, 24, 27, 0.7)';
-    ctx.font = '6px Geist Mono, Courier New, monospace';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.98)'; ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.roundRect(gx + 10, t.ly - 30, 160, 48, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#18181b'; ctx.font = 'bold 7px Geist Mono, Courier New, monospace';
+    ctx.fillText(`${t.term.toUpperCase()}:`, gx + 15, t.ly - 18);
+    ctx.fillStyle = 'rgba(24, 24, 27, 0.7)'; ctx.font = '6px Geist Mono, Courier New, monospace';
     const words = t.definition.split(' ');
-    let line = '';
-    let yOffset = -8;
+    let line = ''; let yOffset = -8;
     words.forEach(w => {
       if (ctx.measureText(line + w).width > 140) {
-        ctx.fillText(line, gx + 15, gy + yOffset);
-        line = w + ' ';
-        yOffset += 8;
-      } else {
-        line += w + ' ';
-      }
+        ctx.fillText(line, gx + 15, t.ly + yOffset);
+        line = w + ' '; yOffset += 8;
+      } else line += w + ' ';
     });
-    ctx.fillText(line, gx + 15, gy + yOffset);
+    ctx.fillText(line, gx + 15, t.ly + yOffset);
   }
 }
 

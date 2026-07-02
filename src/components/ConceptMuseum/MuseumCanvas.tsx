@@ -17,6 +17,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   const transRef = useRef({ zoom: 1.0, panX: 0, panY: 0, isDragging: false, startX: 0, startY: 0, dragDist: 0 });
   const statesRef = useRef({ tokenization: initTokenization(), net: initNeuralNet(), vector: initVectorSpace(), token: initTokenTree() });
   const hasInteractedRef = useRef(false);
+  const mousePosRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => { hasInteractedRef.current = false; }, [targetPanX, targetPanY, targetZoom]);
 
@@ -47,32 +48,38 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT A // TEXT TOKENIZATION & VOCAB ID PARSING', -1320, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Chops the prompt string into separate token boxes.', -1320, 160);
-      ctx.fillText('• Click token boxes to toggle vocabulary ID mapping.', -1320, 172);
+      ctx.fillText('• Chops the prompt string into separate token boxes.', -1320, 60);
+      ctx.fillText('• Click token boxes to toggle vocabulary ID mapping.', -1320, 72);
       ctx.fillText('INPUT TEXT', -1200, -8);
       ctx.fillText('VOCAB ID', -1200, 30);
+      ctx.fillText('TOKEN SLICING', -1320, -50);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT B // AMBIENT VECTOR SPACE EMBEDDINGS', -520, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Floating stars represent words in coordinate space.', -520, 160);
-      ctx.fillText('• Hover over word particles to view semantic lasers.', -520, 172);
+      ctx.fillText('• Floating stars represent words in coordinate space.', -520, 140);
+      ctx.fillText('• Hover over word particles to view semantic lasers.', -520, 152);
+      ctx.fillText('EMBEDDING VECTOR', -400, -170);
+      ctx.fillText('ATTENTION WEIGHTS', -400, 160);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT C // LIVING NEURAL NETWORK DYNAMICS', 280, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Signal pulses represent activations through layer synapses.', 280, 160);
-      ctx.fillText('• Click neuron nodes to manually trigger signal paths.', 280, 172);
+      ctx.fillText('• Signal pulses represent activations through layer synapses.', 280, 150);
+      ctx.fillText('• Click neuron nodes to manually trigger signal paths.', 280, 162);
       ctx.fillText('INPUT SYNAPSE', 220, 10);
       ctx.fillText('OUTPUT PREDICTION', 500, 10);
+      ctx.fillText('SYNAPTIC WEIGHTS', 400, -90);
+      ctx.fillText('ACTIVATION FUNCTION', 400, 90);
 
       ctx.font = 'bold 8px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.8)';
       ctx.fillText('EXHIBIT D // NEXT-TOKEN BRANCHING SELECTIONS', 1050, -180);
       ctx.font = '7px Geist Mono, Courier New, monospace'; ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
-      ctx.fillText('• Branches show predicted next word probability %.', 1050, 160);
-      ctx.fillText('• Click options to override next word selection.', 1050, 172);
+      ctx.fillText('• Branches show predicted next word probability %.', 1050, 60);
+      ctx.fillText('• Click options to override next word selection.', 1050, 72);
       ctx.fillText('PROMPT SO FAR', 650, -8);
       ctx.fillText('PREDICTED TOKENS', 930, 20);
+      ctx.fillText('PROBABILITY TREE', 1200, -170);
 
       if (nnStep === 7) {
         ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
@@ -89,9 +96,10 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
       ctx.save(); ctx.translate(400, 0); updateAndRenderNeuralNet(ctx, statesRef.current.net, nnStep); ctx.restore();
       ctx.save(); ctx.translate(1200, 0); updateAndRenderTokenTree(ctx, statesRef.current.token); ctx.restore();
       
-      const v = { x: (canvas.width / 2 + transRef.current.panX), y: (canvas.height / 2 + transRef.current.panY) };
-      const mouseCoords = { x: (transRef.current.startX - v.x) / transRef.current.zoom, y: (transRef.current.startY - v.y) / transRef.current.zoom };
-      renderTooltipsAndCheckHover(ctx, mouseCoords.x, mouseCoords.y);
+      const rect = canvas.getBoundingClientRect();
+      const mouseVx = (mousePosRef.current.x - rect.left - canvas.width / 2 - transRef.current.panX) / transRef.current.zoom;
+      const mouseVy = (mousePosRef.current.y - rect.top - canvas.height / 2 - transRef.current.panY) / transRef.current.zoom;
+      renderTooltipsAndCheckHover(ctx, mouseVx, mouseVy);
       ctx.restore();
       animFrameId = requestAnimationFrame(render);
     };
@@ -114,6 +122,7 @@ export const MuseumCanvas: React.FC<MuseumCanvasProps> = ({ targetPanX, targetPa
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    mousePosRef.current = { x: e.clientX, y: e.clientY };
     const v = getVirtualCoords(e.clientX, e.clientY);
     handleVectorSpaceHover(statesRef.current.vector, v.x + 400, v.y);
     if (!transRef.current.isDragging) return;
